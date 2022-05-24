@@ -45,11 +45,11 @@ PrefabInstance:
       objectReference: {fileID: 7108339969198208228, guid: 255a147754bb6564ba906ec1e8226e5f, type: 3}
     - target: {fileID: 8180104375668624129, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
       propertyPath: m_Name
-      value: 02-GraveRobber
+      value: 100-02-GraveRobber
       objectReference: {fileID: 0}
     - target: {fileID: 8960671908098936616, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d7e3ad0d5044d7e46ac4c724c11da335, type: 3}
+      objectReference: {fileID: -1238657190, guid: b07c2255161033c4e8c2643228cd35b3, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
