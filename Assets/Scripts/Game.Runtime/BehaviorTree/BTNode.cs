@@ -4,18 +4,15 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class BTNode : MonoBehaviour
+    public enum NodeState
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        FAILED = 0,
+        SUCCESS = 1,
+        CONTINUE = 2
+    }
+    
+    public class BTNode
+    {
         
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 }
