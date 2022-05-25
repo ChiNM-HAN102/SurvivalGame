@@ -1,8 +1,9 @@
-﻿using System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Zitga.Update
+namespace Game.Runtime
 {
     public class GlobalUpdateSystem : Singleton<GlobalUpdateSystem>
     {

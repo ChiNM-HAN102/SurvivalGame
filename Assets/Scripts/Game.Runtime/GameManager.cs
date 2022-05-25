@@ -14,7 +14,7 @@ namespace Game.Runtime
 
         void InitGlobalUpdateSystem()
         {
-
+            DontDestroyOnLoad(GlobalUpdateSystem.Instance.gameObject);
         }
     }
 }
