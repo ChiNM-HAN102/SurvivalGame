@@ -1,21 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class Unit : MonoBehaviour
+    public abstract class Unit : MonoBehaviour, IUpdateSystem
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public BehaviorState state;
         
+        protected virtual void OnEnable()
+        {
+            if (GlobalUpdateSystem.Instance != null)
+            {
+                GlobalUpdateSystem.Instance.Add(this);
+            }
         }
 
-        // Update is called once per frame
-        void Update()
+        protected virtual void OnDisable()
         {
-        
+            if (GlobalUpdateSystem.Instance != null)
+            {
+                GlobalUpdateSystem.Instance.Remove(this);
+            }
         }
+
+        public abstract void OnUpdate(float deltaTime);
+
     }
 }
