@@ -5,10 +5,8 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public abstract class Unit : Dummy, IUpdateSystem
+    public abstract class Dummy : MonoBehaviour , IUpdateSystem
     {
-        public BehaviorState state;
-        
         protected virtual void OnEnable()
         {
             if (GlobalUpdateSystem.Instance != null)
@@ -17,18 +15,15 @@ namespace Game.Runtime
             }
         }
 
-        protected virtual void OnDisable()
+        protected void OnDisable()
         {
-
+            
             if (GlobalUpdateSystem.Instance != null)
             {
                 GlobalUpdateSystem.Instance.Remove(this);
             }
         }
 
-        public override void OnUpdate(float deltaTime)
-        {
-            
-        }
+        public abstract void OnUpdate(float deltaTime);
     }
 }

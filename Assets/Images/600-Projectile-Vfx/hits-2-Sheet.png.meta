@@ -121,7 +121,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 37.333332
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -140,9 +140,9 @@ TextureImporter:
       name: hits-2-Sheet_1
       rect:
         serializedVersion: 2
-        x: 37
+        x: 32
         y: 0
-        width: 37.333332
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -161,9 +161,9 @@ TextureImporter:
       name: hits-2-Sheet_2
       rect:
         serializedVersion: 2
-        x: 74
+        x: 64
         y: 0
-        width: 37.333332
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -182,9 +182,9 @@ TextureImporter:
       name: hits-2-Sheet_3
       rect:
         serializedVersion: 2
-        x: 111
+        x: 96
         y: 0
-        width: 37.333332
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -203,9 +203,9 @@ TextureImporter:
       name: hits-2-Sheet_4
       rect:
         serializedVersion: 2
-        x: 148
+        x: 128
         y: 0
-        width: 37.333332
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -224,9 +224,9 @@ TextureImporter:
       name: hits-2-Sheet_5
       rect:
         serializedVersion: 2
-        x: 185
+        x: 160
         y: 0
-        width: 37.333332
+        width: 32
         height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -237,6 +237,27 @@ TextureImporter:
       bones: []
       spriteID: 01303b494d0a0574f8b3f388aaeb1a80
       internalID: -1722522283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hits-2-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73b9841f2ea8add48ba226d9a28bb024
+      internalID: -1383800221
       vertices: []
       indices: 
       edges: []
@@ -256,6 +277,7 @@ TextureImporter:
       hits-2-Sheet_2: -156641109
       hits-2-Sheet_4: -1686306604
       hits-2-Sheet_5: -1722522283
+      hits-2-Sheet_6: -1383800221
       hits-2-Sheet_0: -1701263613
       hits-2-Sheet_1: -1561162500
   spritePackingTag: 
