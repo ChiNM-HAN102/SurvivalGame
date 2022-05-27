@@ -47,58 +47,50 @@ namespace Game.Runtime
         {
             var inputX = Input.GetAxisRaw("Horizontal");
             var moveVector = new Vector2(inputX, 0);
-            //
 
-            if (this._state == UnitState.IDLE)
+            if (this._state != UnitState.ATTACK)
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.T))
                 {
+                    this._animator.Play("Attack_1");
                     SetAttack();
-                    this._animator.SetTrigger("Attack_1");
-                }
-                else if (Input.GetKeyDown(KeyCode.R))
-                {
-                    SetAttack();
-                    this._animator.SetTrigger("Attack_2");
-                }
-                else if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    SetAttack();
-                    this._animator.SetTrigger("Attack_3");
                 }
             }
-            
-            if (inputX != 0)
-            {
-                if (inputX < 0)
-                {
-                    if (this.faceRight)
-                    {
-                        Flip();
-                    }
-                }
-                else if (inputX > 0)
-                {
-                    if (!this.faceRight)
-                    {
-                        Flip();
-                    }
-                }
 
-                if (this._state != UnitState.MOVE)
-                {
-                    this._state = UnitState.MOVE;
-                    this._animator.SetTrigger("Run");
-                }
-
-                transform.position = transform.position + (Vector3)moveVector * (this.speed * Time.deltaTime);
-            }
-            else
+            if (this._state != UnitState.ATTACK)
             {
-                if (this._state == UnitState.MOVE || this._state == UnitState.NONE)
+                if (inputX != 0)
                 {
-                    this._state = UnitState.IDLE;
-                    this._animator.SetTrigger("Idle");
+                    if (inputX < 0)
+                    {
+                        if (this.faceRight)
+                        {
+                            Flip();
+                        }
+                    }
+                    else if (inputX > 0)
+                    {
+                        if (!this.faceRight)
+                        {
+                            Flip();
+                        }
+                    }
+
+                    if (this._state != UnitState.MOVE)
+                    {
+                        this._state = UnitState.MOVE;
+                        this._animator.Play("Run");
+                    }
+
+                    transform.position = transform.position + (Vector3)moveVector * (this.speed * Time.deltaTime);
+                }
+                else
+                {
+                    if (this._state != UnitState.IDLE)
+                    {
+                        this._state = UnitState.IDLE;
+                        this._animator.Play("Idle");
+                    }
                 }
             }
         }
@@ -112,7 +104,13 @@ namespace Game.Runtime
         async UniTaskVoid StopAttack()
         {
             this._state = UnitState.ATTACK;
-            await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+            await UniTask.Yield();
+            var clips = this._animator.GetCurrentAnimatorClipInfo(0);
+            if (clips.Length > 0)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
+            }
+            
             if (this._state == UnitState.ATTACK)
             {
                 this._state = UnitState.NONE;
