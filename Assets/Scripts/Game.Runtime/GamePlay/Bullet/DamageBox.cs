@@ -7,8 +7,9 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class BulletBase : Dummy
+    public class BulletBase : Dummy, IGetDamage
     {
+        private Vector3 directionVector;
 
         private void OnEnable()
         {
@@ -20,9 +21,17 @@ namespace Game.Runtime
             
         }
 
-        public virtual void InitBullet(float lifeTime)
+        public virtual void InitBullet(float lifeTime, Vector2 target, float speed)
         {
-            DestroyBullet(lifeTime).Forget();  
+            DestroyBullet(lifeTime).Forget();
+            if (target.x < transform.position.x)
+            {
+                
+            }
+            else
+            {
+                
+            }
         }
 
         async UniTaskVoid DestroyBullet(float lifeTime)
@@ -35,6 +44,15 @@ namespace Game.Runtime
         
 
         public override void OnUpdate(float deltaTime)
+        {
+            if (this.goLeft)
+            {
+                var directionVector = new Vector3(this.speed, 0);
+                transform.position = transform.position + directionVector;
+            }   
+        }
+
+        public float GetDamage(Unit target)
         {
             
         }

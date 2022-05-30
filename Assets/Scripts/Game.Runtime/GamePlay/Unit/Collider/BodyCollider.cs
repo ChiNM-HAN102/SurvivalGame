@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-  
-    
     public class BodyCollider : MonoBehaviour
     {
         public Unit Owner;
@@ -25,7 +23,7 @@ namespace Game.Runtime
             }
         }
 
-        public void TakeDamage(float damageInfo)
+        private void TakeDamage(float damageInfo)
         {
             this.Owner.GetHurt(damageInfo);
         }
