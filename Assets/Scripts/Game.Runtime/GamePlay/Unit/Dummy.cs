@@ -7,6 +7,14 @@ namespace Game.Runtime
 {
     public abstract class Dummy : MonoBehaviour , IUpdateSystem
     {
+        
+        protected bool faceRight;
+
+        protected virtual void Awake()
+        {
+            this.faceRight = true;
+        }
+
         protected virtual void OnEnable()
         {
             if (GlobalUpdateSystem.Instance != null)
@@ -25,5 +33,14 @@ namespace Game.Runtime
         }
 
         public abstract void OnUpdate(float deltaTime);
+        
+        protected virtual void Flip()
+        {
+            var newScale = transform.localScale;
+            newScale.x = -newScale.x;
+            transform.localScale = newScale;
+
+            this.faceRight = !this.faceRight;
+        }
     }
 }

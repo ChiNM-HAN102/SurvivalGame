@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Lean.Pool;
 using UnityEngine;
 
 namespace Game.Runtime
@@ -20,27 +21,21 @@ namespace Game.Runtime
     {
         [SerializeField] private float speed;
 
+        [SerializeField] private Transform spawnBulletPosition;
+
+        [SerializeField] private GameObject prefabBullet;
+
         private Animator _animator;
 
         private UnitState _state;
 
-        private bool faceRight;
+      
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _animator = GetComponentInChildren<Animator>();
             this._state = UnitState.IDLE;
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            this.faceRight = true;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
         }
 
         public override void OnUpdate(float deltaTime)
@@ -53,6 +48,7 @@ namespace Game.Runtime
                 if (Input.GetKeyDown(KeyCode.T))
                 {
                     this._animator.Play("Attack_1");
+                    ExecuteAttack1();
                     SetAttack();
                 }
             }
@@ -95,6 +91,20 @@ namespace Game.Runtime
             }
         }
 
+
+        void ExecuteAttack1()
+        {
+            SpawnBullet().Forget();
+        }
+
+        async UniTaskVoid SpawnBullet()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.45f));
+            var bullet = LeanPool.Spawn(this.prefabBullet, this.spawnBulletPosition.position, Quaternion.identity);
+            var bulletBase = bullet.GetComponent<BulletBase>();
+            bulletBase.InitBullet(2, this.faceRight ,20);
+        }
+        
         void SetAttack()
         {
             this._state = UnitState.ATTACK;
@@ -117,13 +127,6 @@ namespace Game.Runtime
             }
         }
 
-        void Flip()
-        {
-            var newScale = transform.localScale;
-            newScale.x = -newScale.x;
-            transform.localScale = newScale;
-
-            this.faceRight = !this.faceRight;
-        }
+       
     }
 }
