@@ -1,5 +1,62 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4542807623658073466
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2126135610470341350}
+    m_Modifications:
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.10815203
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.7348046
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706612157027719280, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5810449819688981355, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
+      propertyPath: m_Name
+      value: health_bar
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c0595405ea0e2242aa7ddd686274733, type: 3}
 --- !u!1001 &4868240045804669206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61,3 +118,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
+--- !u!4 &2126135610470341350 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6777631110867211248, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
+  m_PrefabInstance: {fileID: 4868240045804669206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2126135610470341351 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6777631110867211249, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
+  m_PrefabInstance: {fileID: 4868240045804669206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7176637828861613292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126135610470341351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 6754478917821666760}
+--- !u!114 &6754478917821666760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126135610470341351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de594d06bd6427a977f29eb3191931c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 0}

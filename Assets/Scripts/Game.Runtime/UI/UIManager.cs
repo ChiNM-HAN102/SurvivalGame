@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Runtime
 {
@@ -11,6 +12,10 @@ namespace Game.Runtime
         [SerializeField] private GameObject startGamePanel;
 
         [SerializeField] private GameObject btnPauseGame;
+        
+        [SerializeField] private Text currentEnemyTxt;
+        [SerializeField] private Text currentKilledEnemyTxt;
+        [SerializeField] private Text currentTimeCountTxt;
 
         // Start is called before the first frame update
         void Start()

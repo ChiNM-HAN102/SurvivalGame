@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    [CreateAssetMenu(fileName = "EnemyData", menuName = "Data/UnitData")]
+    [CreateAssetMenu(fileName = "EnemyData", menuName = "Data/EnemyData")]
     public class EnemyData : UnitData
     {
-        public int percentIncreaseHPbyLevel;
+        public float percentIncreaseHPbyLevel;
     }
 }

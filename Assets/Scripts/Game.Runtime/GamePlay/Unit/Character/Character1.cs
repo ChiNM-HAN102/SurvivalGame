@@ -17,13 +17,20 @@ namespace Game.Runtime
         DIE = 4
     }
 
-    public class Character1 : Dummy
+    public class Character1 : HeroBase
     {
         [SerializeField] private float speed;
 
         [SerializeField] private Transform spawnBulletPosition;
 
+        [SerializeField] private Transform spawnBullet2Position;
+        [SerializeField] private Transform spawnBullet3Position;
+
         [SerializeField] private GameObject prefabBullet;
+
+        [SerializeField] private GameObject prefabBullet2;
+
+        [SerializeField] private GameObject prefabBullet3;
 
         private Animator _animator;
 
@@ -47,8 +54,22 @@ namespace Game.Runtime
             {
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    this._animator.Play("Attack_1");
+             
                     ExecuteAttack1();
+                    SetAttack();
+                }
+
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                   
+                    ExecuteAttack2();
+                    SetAttack();
+                }
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                  
+                    ExecuteAttack3();
                     SetAttack();
                 }
             }
@@ -94,13 +115,42 @@ namespace Game.Runtime
 
         void ExecuteAttack1()
         {
+            this._animator.Play("Attack_1");
             SpawnBullet().Forget();
+        }
+
+        void ExecuteAttack2()
+        {
+            this._animator.Play("Attack_2");
+            SpawnBullet2().Forget();
+        }
+
+        void ExecuteAttack3()
+        {
+            this._animator.Play("Attack_3");
+            SpawnBullet3().Forget();
         }
 
         async UniTaskVoid SpawnBullet()
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.45f));
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             var bullet = LeanPool.Spawn(this.prefabBullet, this.spawnBulletPosition.position, Quaternion.identity);
+            var bulletBase = bullet.GetComponent<BulletBase>();
+            bulletBase.InitBullet(2, this.faceRight ,20);
+        }
+        
+        async UniTaskVoid SpawnBullet2()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            var bullet = LeanPool.Spawn(this.prefabBullet2, this.spawnBullet2Position.position, Quaternion.identity);
+            var bulletBase = bullet.GetComponent<BulletBase>();
+            bulletBase.InitBullet(2, this.faceRight ,20);
+        }
+        
+        async UniTaskVoid SpawnBullet3()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            var bullet = LeanPool.Spawn(this.prefabBullet3, this.spawnBullet3Position.position, Quaternion.identity);
             var bulletBase = bullet.GetComponent<BulletBase>();
             bulletBase.InitBullet(2, this.faceRight ,20);
         }

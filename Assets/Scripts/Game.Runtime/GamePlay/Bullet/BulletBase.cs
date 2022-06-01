@@ -9,6 +9,7 @@ namespace Game.Runtime
     public class BulletBase : DamageBox
     {
         [SerializeField] private bool initFaceLeft = false;
+        [SerializeField] private GameObject prefabImpact;
         
         private Vector3 directionVector;
         
@@ -37,6 +38,13 @@ namespace Game.Runtime
         async UniTaskVoid DestroyBullet(float lifeTime)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(lifeTime), ignoreTimeScale: false);
+         
+
+            if (this.prefabImpact != null)
+            {
+                LeanPool.Spawn(this.prefabImpact, transform.position, Quaternion.identity);
+            }
+
             LeanPool.Despawn(gameObject);
         }
         
