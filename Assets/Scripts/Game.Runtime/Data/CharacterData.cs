@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    [CreateAssetMenu(fileName = "CharacterData", menuName = "Data/UnitData")]
+    [CreateAssetMenu(fileName = "CharacterData", menuName = "Data/CharacterData")]
     public class CharacterData : UnitData
     {
-        public float cooldownSkill1;
-        public float cooldownSKill2;
-        public float cooldownNormalAttack;
+
     }
 }

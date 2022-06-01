@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Game.Runtime.RPGStats
+namespace Game.Runtime
 {
-    public class Health : RPGStat
+    public class Health : RPGStatModifiable
     {
         private float currentValue;
         

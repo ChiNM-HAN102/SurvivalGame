@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,16 +18,14 @@ namespace Game.Runtime
         [SerializeField] private Text currentKilledEnemyTxt;
         [SerializeField] private Text currentTimeCountTxt;
 
-        // Start is called before the first frame update
-        void Start()
-        {
         
-        }
+        public static UIManager Instance { get; set; }
 
-        // Update is called once per frame
-        void Update()
+        private void Awake()
         {
-        
+            Instance = this;
         }
+        
+        
     }
 }

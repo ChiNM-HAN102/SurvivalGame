@@ -116,7 +116,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: 200-01-Centipede
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7706637759693720529, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
 --- !u!4 &2126135610470341350 stripped
 Transform:
@@ -128,19 +129,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6777631110867211249, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
   m_PrefabInstance: {fileID: 4868240045804669206}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7176637828861613292
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2126135610470341351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 6754478917821666760}
 --- !u!114 &6754478917821666760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,3 +142,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: {fileID: 0}
+  data: {fileID: 0}
+--- !u!114 &7176637828861613292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126135610470341351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 6754478917821666760}

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Game.Runtime.RPGStats;
 using UnityEngine;
 
 namespace Game.Runtime
@@ -9,11 +8,9 @@ namespace Game.Runtime
     public abstract class Unit : Dummy, IUpdateSystem
     {
         public BehaviorState state;
-        
-        protected RPGStatCollection stats;
-        public virtual RPGStatCollection Stats => stats;
+        public RPGStatCollection Stats { get; set; }
 
-        protected StatusController statusController;
+        public StatusController StatusController { get; set; }
         
         public virtual bool IsAlive => true;
         public abstract void Remove();
