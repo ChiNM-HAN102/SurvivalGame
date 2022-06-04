@@ -11,5 +11,6 @@ namespace Game.Runtime
         public int attack;
         public int speed;
         public int attackSpeed;
+        
     }
 }

@@ -1,7 +1,12 @@
-﻿namespace Game.Runtime
+﻿using UnityEngine;
+
+namespace Game.Runtime
 {
     public class HeroBase : CharacterBase
     {
+        [SerializeField] private HeroData data;
+        
+        public HeroData Data { get => this.data; }
         protected override void Awake()
         {
             base.Awake();
@@ -10,9 +15,7 @@
 
         public virtual void SetInfo()
         {
-            Stats = new RPGStatCollection(this);
-            
-            
+            Stats = new HeroStatsCollection(this, data);
         }
     }
 }

@@ -1,11 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Game.Runtime
 {
-    public abstract class Unit : Dummy, IUpdateSystem
+    public enum UnitState
+    {
+        NONE = -1,
+        IDLE = 0,
+        MOVE = 1,
+        HURT = 2,
+        ATTACK = 3,
+        DIE = 4
+    }
+    
+    public abstract class Unit : Dummy
     {
         public BehaviorState state;
         public RPGStatCollection Stats { get; set; }
@@ -56,6 +67,16 @@ namespace Game.Runtime
         {
             var health = this.Stats.GetStat<Health>(RPGStatType.Health);
             health.TakeDamage(damageInfo);
+        }
+
+        public async UniTask WaitUntilFinishAnim(Animator _animator)
+        {
+            await UniTask.Yield();
+            var clips = _animator.GetCurrentAnimatorClipInfo(0);
+            if (clips.Length > 0)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
+            }
         }
     }
 }

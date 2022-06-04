@@ -7,36 +7,21 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public enum UnitState
-    {
-        NONE = -1,
-        IDLE = 0,
-        MOVE = 1,
-        HURT = 2,
-        ATTACK = 3,
-        DIE = 4
-    }
+ 
 
-    public class Character1 : HeroBase
+    public class Hero1 : HeroBase
     {
-        [SerializeField] private float speed;
-
         [SerializeField] private Transform spawnBulletPosition;
-
         [SerializeField] private Transform spawnBullet2Position;
         [SerializeField] private Transform spawnBullet3Position;
 
         [SerializeField] private GameObject prefabBullet;
-
         [SerializeField] private GameObject prefabBullet2;
-
         [SerializeField] private GameObject prefabBullet3;
 
         private Animator _animator;
 
         private UnitState _state;
-
-      
 
         protected override void Awake()
         {
@@ -47,6 +32,8 @@ namespace Game.Runtime
 
         public override void OnUpdate(float deltaTime)
         {
+            base.OnUpdate(deltaTime);
+            
             var inputX = Input.GetAxisRaw("Horizontal");
             var moveVector = new Vector2(inputX, 0);
 
@@ -99,7 +86,7 @@ namespace Game.Runtime
                         this._animator.Play("Run");
                     }
 
-                    transform.position = transform.position + (Vector3)moveVector * (this.speed * Time.deltaTime);
+                    transform.position = transform.position + (Vector3)moveVector * (this.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * Time.deltaTime);
                 }
                 else
                 {
@@ -136,7 +123,7 @@ namespace Game.Runtime
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             var bullet = LeanPool.Spawn(this.prefabBullet, this.spawnBulletPosition.position, Quaternion.identity);
             var bulletBase = bullet.GetComponent<BulletBase>();
-            bulletBase.InitBullet(2, this.faceRight ,20);
+            bulletBase.InitBullet(2, this.faceRight ,20, Stats.GetStat<Damage>(RPGStatType.Damage).StatValue);
         }
         
         async UniTaskVoid SpawnBullet2()
@@ -144,7 +131,7 @@ namespace Game.Runtime
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             var bullet = LeanPool.Spawn(this.prefabBullet2, this.spawnBullet2Position.position, Quaternion.identity);
             var bulletBase = bullet.GetComponent<BulletBase>();
-            bulletBase.InitBullet(2, this.faceRight ,20);
+            bulletBase.InitBullet(2, this.faceRight ,20, Stats.GetStat<Damage>(RPGStatType.Damage).StatValue);
         }
         
         async UniTaskVoid SpawnBullet3()
@@ -152,7 +139,7 @@ namespace Game.Runtime
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             var bullet = LeanPool.Spawn(this.prefabBullet3, this.spawnBullet3Position.position, Quaternion.identity);
             var bulletBase = bullet.GetComponent<BulletBase>();
-            bulletBase.InitBullet(2, this.faceRight ,20);
+            bulletBase.InitBullet(2, this.faceRight ,20, Stats.GetStat<Damage>(RPGStatType.Damage).StatValue);
         }
         
         void SetAttack()

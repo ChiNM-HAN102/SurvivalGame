@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lean.Pool;
 using UnityEngine;
@@ -10,12 +11,18 @@ namespace Game.Runtime
     {
         [SerializeField] private bool initFaceLeft = false;
         [SerializeField] private GameObject prefabImpact;
+
+        protected float attack;
+
+        private CancellationTokenSource cts = new CancellationTokenSource();
         
         private Vector3 directionVector;
         
 
-        public virtual void InitBullet(float lifeTime, bool targetFaceRight, float speed)
+        public virtual void InitBullet(float lifeTime, bool targetFaceRight, float speed, float attack)
         {
+            this.attack = attack;
+
             DestroyBullet(lifeTime).Forget();
             if (targetFaceRight)
             {
@@ -38,8 +45,15 @@ namespace Game.Runtime
         async UniTaskVoid DestroyBullet(float lifeTime)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(lifeTime), ignoreTimeScale: false);
-         
 
+            if (gameObject.activeSelf)
+            {
+                Remove();
+            }
+        }
+
+        void Remove()
+        {
             if (this.prefabImpact != null)
             {
                 LeanPool.Spawn(this.prefabImpact, transform.position, Quaternion.identity);
@@ -51,6 +65,12 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             transform.position = transform.position + directionVector * deltaTime;
+        }
+
+        public override float GetDamage(Unit target)
+        {
+            Remove();
+            return this.attack;
         }
     }
 }

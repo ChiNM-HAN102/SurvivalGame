@@ -9,7 +9,11 @@ namespace Game.Runtime
         public float CurrentValue
         {
             get => Mathf.Clamp(currentValue, 0, StatValue);
-            set => this.currentValue = Mathf.Clamp(value, 0, StatValue);
+            set
+            {
+                this.currentValue = Mathf.Clamp(value, 0, StatValue);
+                this.onChanged?.Invoke(value);
+            }
         }
 
         public bool IsFull => CurrentValue >= StatValue;

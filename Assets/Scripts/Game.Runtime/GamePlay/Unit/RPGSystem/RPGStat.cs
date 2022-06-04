@@ -8,7 +8,7 @@ namespace Game.Runtime
         protected float statBaseValue;
         public virtual float StatValue => StatBaseValue;
 
-        public delegate void OnChanged();
+        public delegate void OnChanged(float value);
 
         public OnChanged onChanged;
         
@@ -18,7 +18,7 @@ namespace Game.Runtime
             set
             {
                 this.statBaseValue = value;
-                this.onChanged?.Invoke();
+                this.onChanged?.Invoke(value);
             }
         }
 

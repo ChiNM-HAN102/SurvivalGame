@@ -16,9 +16,9 @@ namespace Game.Runtime
         }
 
 
-        public float GetDamage(Unit target)
+        public virtual float GetDamage(Unit target)
         {
-            return 100;
+            return 20;
         }
     }
 }

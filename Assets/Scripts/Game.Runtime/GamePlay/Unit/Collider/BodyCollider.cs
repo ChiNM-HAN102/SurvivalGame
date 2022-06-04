@@ -26,6 +26,8 @@ namespace Game.Runtime
         private void TakeDamage(float damageInfo)
         {
             this.Owner.GetHurt(damageInfo);
+            
+            Debug.Log("owner: " + this.Owner.name + " damage: " + damageInfo);
         }
     }
 }

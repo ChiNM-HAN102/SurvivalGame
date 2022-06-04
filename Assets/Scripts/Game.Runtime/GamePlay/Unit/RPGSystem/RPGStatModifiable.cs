@@ -30,22 +30,25 @@ namespace Game.Runtime
         public void AddModifier(RPGStatModifier mod)
         {
             this._statModifiers.Add(mod);
-            this.onChanged?.Invoke();
             UpdateModifiers();
+            
+            this.onChanged?.Invoke(StatModifiedValue);
         }
 
         public void RemoveModifier(RPGStatModifier mod)
         {
             this._statModifiers.Remove(mod);
-            this.onChanged?.Invoke();
             UpdateModifiers();
+            
+            this.onChanged?.Invoke(StatModifiedValue);
         }
 
         public void ClearModifiers()
         {
             this._statModifiers.Clear();
-            this.onChanged?.Invoke();
+       
             UpdateModifiers();
+            this.onChanged?.Invoke(StatModifiedValue);
         }
 
         public void UpdateModifiers()

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game.Runtime
@@ -11,13 +13,18 @@ namespace Game.Runtime
         [SerializeField] private GameObject endGamePanel;
         [SerializeField] private GameObject pauseGamePanel;
         [SerializeField] private GameObject startGamePanel;
+        [SerializeField] private GameObject hurtPanel;
+        [SerializeField] private GameObject startCountDown;
 
-        [SerializeField] private GameObject btnPauseGame;
+        [SerializeField] private Text startCountDownTxt;
         
         [SerializeField] private Text currentEnemyTxt;
         [SerializeField] private Text currentKilledEnemyTxt;
         [SerializeField] private Text currentTimeCountTxt;
+        
 
+
+        [SerializeField] private InfoUIController[] heroUIPrefabs;
         
         public static UIManager Instance { get; set; }
 
@@ -25,7 +32,122 @@ namespace Game.Runtime
         {
             Instance = this;
         }
+
+        public void InitCharacters(HeroBase[] characterList)
+        {
+            foreach (InfoUIController uiPrefab in this.heroUIPrefabs)
+            {
+                uiPrefab.gameObject.SetActive(false);
+            }
+
+            for (int i = 0; i < characterList.Length; i++)
+            {
+                this.heroUIPrefabs[i].InitData(characterList[i]);
+                this.heroUIPrefabs[i].gameObject.SetActive(true);
+            }
+        }
+
+        public void SetSelectedHero(int idx)
+        {
+            for (int i = 0; i < this.heroUIPrefabs.Length; i++)
+            {
+                if (i == idx)
+                {
+                    this.heroUIPrefabs[i].SetSelected(true);
+                }
+                else
+                {
+                    this.heroUIPrefabs[i].SetSelected(false);   
+                }
+            }
+        }
+
+        private bool isHurting = false;
+        public void PresentHurtAnimation()
+        {
+            if (!this.isHurting)
+            {
+                this.isHurting = true;
+                HurtPresent().Forget();
+            }
+        }
+
+        public void WaitGame()
+        {
+            this.startGamePanel.SetActive(true);
+            this.endGamePanel.SetActive(false);
+            this.pauseGamePanel.SetActive(false);
+            this.hurtPanel.SetActive(false);
+            this.startCountDown.SetActive(false);
+        }
         
+        public void StartGame(int time, Action callBack)
+        {
+            this.startGamePanel.SetActive(false);
+            this.endGamePanel.SetActive(false);
+            this.pauseGamePanel.SetActive(false);
+            this.hurtPanel.SetActive(false);
+            this.startCountDown.SetActive(true);
+            
+            CountDown(time, callBack);
+        }
+
+        async UniTaskVoid CountDown(int time, Action callback)
+        {
+            for (int i = time; i >= 0; i--)
+            {
+                startCountDownTxt.text = (i).ToString();
+                await UniTask.Delay(TimeSpan.FromSeconds(1), ignoreTimeScale: true);
+            }
+            
+            this.startCountDown.gameObject.SetActive(false);
+            callback?.Invoke();
+        }
+
+        public void EndGame()
+        {
+            this.startGamePanel.SetActive(false);
+            this.endGamePanel.SetActive(true);
+            this.pauseGamePanel.SetActive(false);
+            this.hurtPanel.SetActive(false);
+            this.startCountDown.SetActive(false);
+        }
         
+        public void PauseGame()
+        {
+            this.startGamePanel.SetActive(false);
+            this.endGamePanel.SetActive(false);
+            this.pauseGamePanel.SetActive(true);
+            this.hurtPanel.SetActive(false);
+            this.startCountDown.SetActive(false);
+        }
+
+        async UniTaskVoid HurtPresent()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                this.hurtPanel.SetActive(true);
+                await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+                this.hurtPanel.SetActive(false);
+                await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+            }
+
+            this.isHurting = false;
+        }
+
+        public void SetKillText(int number)
+        {
+            this.currentKilledEnemyTxt.text = "kill" + number;
+        }
+
+        public void SetEnemyText(int number)
+        {
+            this.currentEnemyTxt.text = "enemy " + number;
+        }
+
+        public void SetCountDown(int number)
+        {
+            this.currentTimeCountTxt.text = number + "s";
+        }
     }
 }

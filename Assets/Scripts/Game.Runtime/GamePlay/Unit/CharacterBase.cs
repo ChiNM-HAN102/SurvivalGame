@@ -18,5 +18,17 @@ namespace Game.Runtime
         {
             
         }
+
+        public override void OnUpdate(float deltaTime)
+        {
+            base.OnUpdate(deltaTime);
+            
+            if (GamePlayController.Instance.State != GameState.RUNNING)
+            {
+                return;
+            }
+            
+            
+        }
     }
 }

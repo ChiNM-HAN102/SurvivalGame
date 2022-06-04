@@ -3,10 +3,12 @@
     public class EnemyStatsCollection : RPGStatCollection
     {
         private EnemyData data;
+        private int level;
         
-        public EnemyStatsCollection(Unit unit, EnemyData data) : base(unit)
+        public EnemyStatsCollection(Unit unit, EnemyData data, int level) : base(unit)
         {
             this.data = data;
+            this.level = level;
             
             ConfigStats();
         }
@@ -14,7 +16,7 @@
         public override void ConfigStats()
         {
             var health = CreateStat<Health>(RPGStatType.Health);
-            health.StatBaseValue = this.data.hp;
+            health.StatBaseValue = this.data.hp * (1 + level * this.data.percentIncreaseHPbyLevel);
             health.CurrentValue = health.StatBaseValue;
 
             var moveSpeed = CreateStat<MoveSpeed>(RPGStatType.MoveSpeed);

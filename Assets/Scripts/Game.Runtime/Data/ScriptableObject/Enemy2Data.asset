@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06eb39b9ed890fd4fa946682e0e09911, type: 3}
-  m_Name: Enemy1Data
+  m_Name: Enemy2Data
   m_EditorClassIdentifier: 
-  hp: 200
+  hp: 300
   attack: 20
   speed: 3
   attackSpeed: 3
-  percentIncreaseHPbyLevel: 0.1
-  meleeDetect: 0.5
+  percentIncreaseHPbyLevel: 0.05
+  meleeDetect: 1.5
   rangeDetect: 0

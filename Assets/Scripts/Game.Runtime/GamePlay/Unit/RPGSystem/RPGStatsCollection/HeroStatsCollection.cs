@@ -3,9 +3,9 @@ namespace Game.Runtime
 {
     public class HeroStatsCollection : RPGStatCollection
     {
-        private CharacterData data;
+        private HeroData data;
         
-        public HeroStatsCollection(Unit unit, CharacterData data) : base(unit)
+        public HeroStatsCollection(Unit unit, HeroData data) : base(unit)
         {
             this.data = data;
             ConfigStats();

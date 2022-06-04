@@ -8,5 +8,7 @@ namespace Game.Runtime
     public class EnemyData : UnitData
     {
         public float percentIncreaseHPbyLevel;
+        public float meleeDetect;
+        public float rangeDetect;
     }
 }

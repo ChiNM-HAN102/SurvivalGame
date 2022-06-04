@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: {fileID: 0}
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 4e1d43d888d4642448e1b6186d5dfd9d, type: 2}
 --- !u!114 &7176637828861613292
 MonoBehaviour:
   m_ObjectHideFlags: 0

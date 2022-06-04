@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3e970640cb44a3e98e9d897ca65793d, type: 3}
+  m_Name: GamePlayData
+  m_EditorClassIdentifier: 
+  timeCountDownStartGame: 3
+  timeCountDownSpawnEnemy: 5
+  heroBases:
+  - {fileID: 1859771918, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
+  - {fileID: 1859771918, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
+  - {fileID: 1859771918, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
+  enemyBases:
+  - {fileID: 6754478917821666760, guid: c7683039a05304f4bb1033b2c7e9fcec, type: 3}
+  - {fileID: -630548777406701875, guid: 8d1aa37030588354483744e33c11ec26, type: 3}
+  - {fileID: 4062025196137177853, guid: f06e331b2e45a5c4ba4abf81e425f906, type: 3}
