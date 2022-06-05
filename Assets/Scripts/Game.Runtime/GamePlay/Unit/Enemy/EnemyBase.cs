@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using Cysharp.Threading.Tasks;
+using Game.Runtime.Impact;
 using Lean.Pool;
 using UnityEngine;
 
@@ -9,27 +11,22 @@ namespace Game.Runtime
     {
         [SerializeField] public EnemyData data;
 
+        [SerializeField] private EnemyNormalDamageBox _damageBox;
+
         protected HealthBarController _healthBarController;
         
         protected Animator _animator;
         protected UnitState _state;
         protected HeroBase target;
 
-        protected string _animAttack;
-        protected string _animMove;
-        protected string _animIdle;
-        protected string _animHurt;
-        protected string _animDie;
+        [SerializeField] protected string _animAttack = "Attack_1";
+        [SerializeField] protected string _animMove = "Walk";
+        [SerializeField] protected string _animIdle = "Idle";
+        [SerializeField] protected string _animHurt = "Hurt";
+        [SerializeField] protected string _animDie = "Death";
 
         protected override void Awake()
         {
-            this._animAttack = "Attack_1";
-            this._animMove = "Walk";
-            this._animIdle = "Idle";
-            this._animHurt = "Hurt";
-            this._animDie = "Death";
-            
-           
             this._animator = GetComponentInChildren<Animator>();
             this._healthBarController = GetComponentInChildren<HealthBarController>();
             
@@ -46,7 +43,11 @@ namespace Game.Runtime
             this.faceRight = false;
             this._state = UnitState.IDLE;
             this._animator.Play(this._animIdle);
+            
+            this._damageBox.ToggleActive(false);
         }
+
+        private float currentAttackCoolDown = 0;
 
         public override void OnUpdate(float deltaTime)
         {
@@ -56,6 +57,8 @@ namespace Game.Runtime
             {
                 return;
             }
+
+            this.currentAttackCoolDown += deltaTime;
             
             if (this.target == null)
             {
@@ -84,12 +87,48 @@ namespace Game.Runtime
                 }
                 else
                 {
-                    if (this._state != UnitState.IDLE)
+                    if (this.currentAttackCoolDown > data.attackSpeed)
                     {
-                        this._state = UnitState.IDLE;
-                        this._animator.Play(this._animIdle);
+                        this.currentAttackCoolDown = 0;
+                        if (this._state != UnitState.ATTACK)
+                        {
+                            this._state = UnitState.ATTACK;
+                            this._animator.Play(this._animAttack);
+                            StartCoroutine(PLayAttack());
+                        }
                     }
+                    else
+                    {
+                        if (this._state == UnitState.NONE || this._state == UnitState.MOVE)
+                        {
+                            this._state = UnitState.IDLE;
+                            this._animator.Play(this._animIdle);
+                        }
+                    }
+
                 }
+            }
+        }
+
+        IEnumerator PLayAttack()
+        {
+            yield return new WaitForSeconds(0.5f);
+            if (this._state == UnitState.ATTACK)
+            {
+                this._damageBox.ToggleActive(true);
+                yield return new WaitForFixedUpdate();
+                this._damageBox.ToggleActive(false);
+            }
+
+            if (this._state == UnitState.ATTACK)
+            {
+                yield return null;
+                var clips = _animator.GetCurrentAnimatorClipInfo(0);
+                if (clips.Length > 0)
+                {
+                    yield return new WaitForSeconds(clips[0].clip.length);
+                }
+                this._state = UnitState.NONE;
             }
         }
 

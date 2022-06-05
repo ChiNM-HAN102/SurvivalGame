@@ -27,8 +27,8 @@ namespace Game.Runtime
             this.avatar.sprite = heroBase.Data.avatar;
             this.attackText.text = heroBase.Data.attack.ToString();
 
-            this._heroBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged += OnHealthChange;
-            this._heroBase.Stats.GetStat<Damage>(RPGStatType.Damage).onChanged += OnAttackChange;
+            this._heroBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged = OnHealthChange;
+            this._heroBase.Stats.GetStat<Damage>(RPGStatType.Damage).onChanged = OnAttackChange;
             
             UpdateHealthBar();
         }

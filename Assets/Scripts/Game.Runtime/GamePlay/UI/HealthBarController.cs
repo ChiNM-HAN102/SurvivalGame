@@ -13,7 +13,7 @@ namespace Game.Runtime
         {
             this._characterBase = characterBase;
             
-            this._characterBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged += OnHealthChange;
+            this._characterBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged = OnHealthChange;
             
             UpdateHealthBar();
         }

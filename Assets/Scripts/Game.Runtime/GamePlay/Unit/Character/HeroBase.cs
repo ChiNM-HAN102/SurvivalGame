@@ -17,5 +17,16 @@ namespace Game.Runtime
         {
             Stats = new HeroStatsCollection(this, data);
         }
+
+        public override void GetHurt(float damageInfo)
+        {
+            base.GetHurt(damageInfo);
+
+            if (IsAlive)
+            {
+                UIManager.Instance.PresentHurtAnimation();
+                CameraController.Instance.SetShakeDuration(0.3f);
+            }
+        }
     }
 }

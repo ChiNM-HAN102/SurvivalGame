@@ -78,5 +78,6 @@ namespace Game.Runtime
                 await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
             }
         }
+        
     }
 }

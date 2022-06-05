@@ -11,13 +11,13 @@ namespace Game.Runtime
         private Transform target;
         
         // How long the object should shake for.
-        public float shakeDuration = 0f;
+        private float shakeDuration = 0f;
         
         // Amplitude of the shake. A larger value shakes the camera harder.
-        public float shakeAmount = 2f;
-        public float decreaseFactor = 3.0f;
+        private float shakeAmount = 2f;
+        private float decreaseFactor = 3.0f;
 
-        public Vector3 originPosition;
+        private Vector3 originPosition;
         
         public static CameraController Instance { get; set; }
 

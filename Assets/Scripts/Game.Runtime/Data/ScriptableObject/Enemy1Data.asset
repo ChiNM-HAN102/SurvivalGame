@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy1Data
   m_EditorClassIdentifier: 
   hp: 200
-  attack: 20
+  attack: 21
   speed: 3
   attackSpeed: 3
   percentIncreaseHPbyLevel: 0.1

@@ -74,6 +74,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 823936436899495553, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1486872847061304585, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
       propertyPath: m_SpriteKey
       value: 8.351275e-27
@@ -90,6 +94,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ef2c91129ac99a6459f3b790e9aa532d, type: 3}
+    - target: {fileID: 7549291625657170744, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7821843148133233799, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
       propertyPath: m_SpriteLibraryAsset
       value: 
@@ -123,7 +131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   data: {fileID: 11400000, guid: 554eae9a627b00a4db5bb2756bff9cfe, type: 2}
-  speed: 10
   spawnBulletPosition: {fileID: 8468515569954920646}
   spawnBullet2Position: {fileID: 8468515569954920646}
   spawnBullet3Position: {fileID: 8468515569954920646}
@@ -142,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
+  Owner: {fileID: 1859771918}
 --- !u!4 &7313240399960301013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 374343760511972883, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
