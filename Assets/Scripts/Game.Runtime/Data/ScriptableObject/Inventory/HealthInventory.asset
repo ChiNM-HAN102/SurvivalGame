@@ -16,3 +16,4 @@ MonoBehaviour:
   value: 20
   lastTime: 0
   permanent: 1
+  icon: {fileID: 1158899574, guid: 6bc95c69506f3b9489bf88c9f69ff20c, type: 3}

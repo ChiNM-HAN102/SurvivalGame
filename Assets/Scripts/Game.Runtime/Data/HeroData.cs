@@ -7,6 +7,7 @@ namespace Game.Runtime
     [CreateAssetMenu(fileName = "HeroData", menuName = "Data/HeroData")]
     public class HeroData : UnitData
     {
+        public int coolDownChangeHero;
         public Sprite avatar;
     }
 }

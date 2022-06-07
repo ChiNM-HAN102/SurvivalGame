@@ -95,6 +95,10 @@ namespace Game.Runtime
         public void ResetGame()
         {
             ClearMap();
+            
+            UIManager.Instance.Clear();
+            
+            GamePlayStatusController.Instance.ClearInventory();
            
             WaitingGame();
         }
@@ -235,6 +239,11 @@ namespace Game.Runtime
             return this.listHeroes[this.selectedHeroIdx];
         }
 
+        public List<HeroBase> GetAllHero()
+        {
+            return this.listHeroes;
+        }
+
         public void SelectHero()
         {
             if (this.selectedHeroIdx < this.listHeroes.Count - 1)
@@ -253,7 +262,7 @@ namespace Game.Runtime
             var oldPosition = oldSelectedHero.transform.position;
             var faceRight = oldSelectedHero.GetFaceRight();
             this.selectedHeroIdx = idx;
-            UIManager.Instance.SetSelectedHero(selectedHeroIdx);
+            UIManager.Instance.SetSelectedHero(selectedHeroIdx, this.listHeroes[this.selectedHeroIdx].Data.coolDownChangeHero);
             
             for (int i = 0; i < this.listHeroes.Count; i++)
             {

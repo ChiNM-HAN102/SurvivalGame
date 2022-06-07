@@ -9,6 +9,6 @@ namespace Game.Runtime
         public int value;
         public float lastTime;
         public bool permanent;
-        private Sprite icon;
+        public Sprite icon;
     }
 }

@@ -1,92 +1,88 @@
 ﻿using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class GamePlayStatusController : MonoBehaviour, IUpdateSystem
+    public class GamePlayStatusController : MonoBehaviour
     {
+        [SerializeField] private Transform container;
+        [SerializeField] private InventoryUI prefabUI;
+        
         public static GamePlayStatusController Instance { get; set; }
         
-        private void OnEnable()
-        {
-            if (GlobalUpdateSystem.Instance != null)
-            {
-                GlobalUpdateSystem.Instance.Add(this);
-            }
-        }
-
         private void Awake()
         {
             Instance = this;
         }
         
-        private void OnDisable()
+        
+        private Dictionary<string, InventoryData> dictStatuses = new Dictionary<string, InventoryData>();
+
+        public void ClearInventory()
         {
-            
-            if (GlobalUpdateSystem.Instance != null)
+            this.dictStatuses.Clear();
+            foreach (Transform trans in this.container)
             {
-                GlobalUpdateSystem.Instance.Remove(this);
+                LeanPool.Despawn(trans.gameObject);
             }
-        }
-        
-        private Dictionary<string, (InventoryData, float)> dictStatuses = new Dictionary<string, (InventoryData, float)>();
-        
-        public void OnUpdate(float deltaTime)
-        {
-            
         }
 
         public void AddInventory(string id, InventoryData data)
         {
-            if (!this.dictStatuses.ContainsKey(id))
-            {
-                this.dictStatuses.Add(id, (data, 0));
-            }
-            else
-            {
-                this.dictStatuses[id] = (data, 0);
-            }
-            
             var currentHero = GamePlayController.Instance.GetSelectedHero();
             if (data.type == RPGStatType.Health)
             {
                 if (data.permanent)
                 {
                     currentHero.Stats.GetStat<Health>(RPGStatType.Health).Heal(data.value);
+                    UIManager.Instance.CreateFloatingText("+" + data.value, new Color32(0, 219, 4, 255),  
+                        new Vector2(currentHero.transform.position.x, currentHero.transform.position.y + 1.5f));
                 }
             }
             else
             {
-                if (data.permanent)
+                if (!this.dictStatuses.ContainsKey(id))
                 {
-                
+                    this.dictStatuses.Add(id, data);
                 }
                 else
                 {
+                    this.dictStatuses[id] = data;
+                }
+
+                var allHeroes = GamePlayController.Instance.GetAllHero();
+
+                
+                
+                if (data.permanent)
+                {
+                    foreach (HeroBase hero in allHeroes)
+                    {
+                        hero.Stats.GetStat(data.type).StatBaseValue += data.value;
+                    }
+                }
+                else
+                {
+                    var modifier = new RPGStatModifier(RPGModifierType.BaseAdd, data.value, null);
+
+                    foreach (HeroBase hero in allHeroes)
+                    {
+                        hero.Stats.AddStatModifier(data.type, modifier);
+                    }
                     
+                    UIManager.Instance.CreateFloatingText("+" + data.value, new Color32(101, 193, 219, 255),  
+                        new Vector2(currentHero.transform.position.x, currentHero.transform.position.y + 1.5f));
+
+                    var inventoryUI = LeanPool.Spawn(this.prefabUI, this.container);
+                    inventoryUI.InitData(data, () => {
+                        foreach (HeroBase hero in allHeroes)
+                        {
+                            hero.Stats.RemoveStatModifier(data.type, modifier);
+                        }
+                    });
                 }
             }
         }
-
-        // public void RemoveInventory(string id)
-        // {
-        //     //UPDATE CURRENT HERO STATS
-        //     if (this.dictStatuses.ContainsKey(id))
-        //     {
-        //         inventory = 
-        //     }
-        //     
-        // }
-        //
-        // public void UpdateCurrentHeroStatus()
-        // {
-        //    
-        //
-        //     foreach (InventoryData inventory in listStats)
-        //     {
-        //         var stat = currentHero.Stats.GetStat(inventory.type);
-        //         stat.
-        //     }
-        // }
     }
 }

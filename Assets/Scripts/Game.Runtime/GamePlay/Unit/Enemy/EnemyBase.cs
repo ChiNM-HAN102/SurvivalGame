@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Game.Runtime.Impact;
 using Lean.Pool;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.Runtime
 {
@@ -144,7 +145,11 @@ namespace Game.Runtime
 
         public override void GetHurt(float damageInfo)
         {
+            
             base.GetHurt(damageInfo);
+            
+            UIManager.Instance.CreateFloatingText("-" + damageInfo, new Color32(219, 64, 53, 255),  
+                new Vector2(transform.position.x, transform.position.y + 1.5f));
             
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0 && this._state != UnitState.DIE)
             {
@@ -170,6 +175,17 @@ namespace Game.Runtime
                 await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
                 renderer.color = new Color32(255, 255, 255 , 255);
                 await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+            }
+
+            if (this.data.dropItems.Length > 0)
+            {
+                var random = Random.Range(0, 0.999f);
+                if (random < this.data.percentDropItems)
+                {
+                    var itemRandomIdx = Random.Range(0, this.data.dropItems.Length);
+                    var dropItem = this.data.dropItems[itemRandomIdx];
+                    LeanPool.Spawn(dropItem, new Vector2(transform.position.x,-3f), Quaternion.identity);
+                }
             }
             LeanPool.Despawn(gameObject);
         }

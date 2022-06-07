@@ -19,3 +19,6 @@ MonoBehaviour:
   percentIncreaseHPbyLevel: 0.05
   meleeDetect: 1.5
   rangeDetect: 0
+  percentDropItems: 0.5
+  dropItems:
+  - {fileID: 8062157959215500191, guid: 8f74743588f413847816f3cace0f58ff, type: 3}

@@ -10,5 +10,8 @@ namespace Game.Runtime
         public float percentIncreaseHPbyLevel;
         public float meleeDetect;
         public float rangeDetect;
+
+        public float percentDropItems;
+        public InventoryBase[] dropItems;
     }
 }

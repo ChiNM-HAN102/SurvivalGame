@@ -87,11 +87,6 @@ namespace Game.Runtime
                     }
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                GamePlayController.Instance.SelectHero();
-            }
         }
 
 

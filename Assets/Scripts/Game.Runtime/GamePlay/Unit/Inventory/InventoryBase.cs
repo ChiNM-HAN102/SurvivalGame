@@ -15,14 +15,9 @@ namespace Game.Runtime
             id = Guid.NewGuid().ToString();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay2D(Collider2D other)
         {
-            var hero = other.GetComponent<HeroBase>();
-            if (hero.IsAlive)
-            {
-                
-            }
-            
+            GamePlayStatusController.Instance.AddInventory(this.id, this.data);
             LeanPool.Despawn(gameObject);
         }
     }

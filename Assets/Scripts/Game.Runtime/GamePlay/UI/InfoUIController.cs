@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Runtime
@@ -14,14 +17,34 @@ namespace Game.Runtime
         [SerializeField] private Text attackText;
         [SerializeField] private Text bonusAttackText;
 
-        [SerializeField] private Transform itemContainer;
+        [SerializeField] private Button btnSelect;
+        [SerializeField] private Text countDown;
+        [SerializeField] private GameObject countDownPanel;
+        
 
         private HeroBase _heroBase;
-
+        private int idx;
+        private bool canSelect = false;
+        private CancellationToken cancelToken;
+        
         private bool isSelected;
 
-        public void InitData(HeroBase heroBase)
+        private void Awake()
         {
+            this.btnSelect.onClick.AddListener(OnSelect);
+        }
+
+        void OnSelect()
+        {
+            if (this.canSelect)
+            {
+                GamePlayController.Instance.SelectHero(idx);
+            }
+        }
+
+        public void InitData(HeroBase heroBase, int idx)
+        {
+            this.idx = idx;
             this._heroBase = heroBase;
             
             this.avatar.sprite = heroBase.Data.avatar;
@@ -29,6 +52,9 @@ namespace Game.Runtime
 
             this._heroBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged = OnHealthChange;
             this._heroBase.Stats.GetStat<Damage>(RPGStatType.Damage).onChanged = OnAttackChange;
+
+            this.countDownPanel.SetActive(false);
+            this.canSelect = true;
             
             UpdateHealthBar();
         }
@@ -49,16 +75,6 @@ namespace Game.Runtime
            this.healthBarFrame.fillAmount = ratio / 1;
         }
 
-        public void AddInventory()
-        {
-            
-        }
-
-        public void RemoveInventory()
-        {
-            
-        }
-
         public void SetSelected(bool value)
         {
             this.isSelected = value;
@@ -72,6 +88,27 @@ namespace Game.Runtime
                 transform.localScale = new Vector3(0.75f,0.75f,0.75f);
                 this.backgroundImage.color = new Color32(255,255,255, 150);
             }
+        }
+
+        public void SetCountDown(int time, CancellationToken cancelToken)
+        {
+            this.countDownPanel.SetActive(true);
+            this.canSelect = false;
+            this.cancelToken = cancelToken;
+            CountDown(time).Forget();
+        }
+
+        async UniTaskVoid CountDown(int time)
+        {
+            this.countDown.text = time.ToString();
+            for (int i = 0; i < time; i++)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: this.cancelToken);
+                this.countDown.text = (time - i).ToString();
+            }
+
+            this.canSelect = true;
+            this.countDownPanel.SetActive(false);
         }
     }
 }

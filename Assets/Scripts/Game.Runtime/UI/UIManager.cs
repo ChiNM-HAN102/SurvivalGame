@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
+using Lean.Pool;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -21,10 +23,13 @@ namespace Game.Runtime
         [SerializeField] private Text currentEnemyTxt;
         [SerializeField] private Text currentKilledEnemyTxt;
         [SerializeField] private Text currentTimeCountTxt;
-        
+
+        [SerializeField] private FloatingText floatTextPrefab;
 
 
         [SerializeField] private InfoUIController[] heroUIPrefabs;
+
+        private CancellationTokenSource ctsCountDownChangeHero;
         
         public static UIManager Instance { get; set; }
 
@@ -42,13 +47,14 @@ namespace Game.Runtime
 
             for (int i = 0; i < characterList.Length; i++)
             {
-                this.heroUIPrefabs[i].InitData(characterList[i]);
+                this.heroUIPrefabs[i].InitData(characterList[i], i);
                 this.heroUIPrefabs[i].gameObject.SetActive(true);
             }
         }
 
-        public void SetSelectedHero(int idx)
+        public void SetSelectedHero(int idx, int countTime)
         {
+            this.ctsCountDownChangeHero = new CancellationTokenSource();
             for (int i = 0; i < this.heroUIPrefabs.Length; i++)
             {
                 if (i == idx)
@@ -58,6 +64,7 @@ namespace Game.Runtime
                 else
                 {
                     this.heroUIPrefabs[i].SetSelected(false);   
+                    this.heroUIPrefabs[i].SetCountDown(countTime, this.ctsCountDownChangeHero.Token);
                 }
             }
         }
@@ -135,6 +142,11 @@ namespace Game.Runtime
             this.isHurting = false;
         }
 
+        public void Clear()
+        {
+            this.ctsCountDownChangeHero.Cancel();
+        }
+
         public void SetKillText(int number)
         {
             this.currentKilledEnemyTxt.text = "kill" + number;
@@ -148,6 +160,12 @@ namespace Game.Runtime
         public void SetCountDown(int number)
         {
             this.currentTimeCountTxt.text = number + "s";
+        }
+
+        public void CreateFloatingText(string value, Color32 color, Vector3 position)
+        {
+           var floatingText = LeanPool.Spawn(this.floatTextPrefab, position, Quaternion.identity);
+            floatingText.Setup(value, color);
         }
     }
 }

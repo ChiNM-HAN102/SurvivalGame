@@ -14,7 +14,7 @@ namespace Game.Runtime
         
         protected UnitState _state;
         protected Animator _animator;
-        
+
         public HeroData Data { get => this.data; }
         protected override void Awake()
         {
