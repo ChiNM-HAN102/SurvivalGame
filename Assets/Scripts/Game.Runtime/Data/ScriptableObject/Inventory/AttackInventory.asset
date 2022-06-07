@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06eb39b9ed890fd4fa946682e0e09911, type: 3}
-  m_Name: Enemy1Data
+  m_Script: {fileID: 11500000, guid: 3ebaaf44a9174811b11e0c49d3d852c1, type: 3}
+  m_Name: AttackInventory
   m_EditorClassIdentifier: 
-  hp: 200
-  attack: 21
-  speed: 3
-  attackSpeed: 3
-  percentIncreaseHPbyLevel: 0.1
-  meleeDetect: 1
-  rangeDetect: 0
+  type: 2
+  value: 20
+  lastTime: 20
+  permanent: 0

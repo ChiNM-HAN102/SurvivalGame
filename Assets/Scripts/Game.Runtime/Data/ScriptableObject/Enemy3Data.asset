@@ -17,5 +17,5 @@ MonoBehaviour:
   speed: 2
   attackSpeed: 2
   percentIncreaseHPbyLevel: 0.1
-  meleeDetect: 0.5
+  meleeDetect: 1
   rangeDetect: 0

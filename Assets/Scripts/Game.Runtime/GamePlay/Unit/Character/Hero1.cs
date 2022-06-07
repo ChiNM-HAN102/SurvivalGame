@@ -18,17 +18,7 @@ namespace Game.Runtime
         [SerializeField] private GameObject prefabBullet;
         [SerializeField] private GameObject prefabBullet2;
         [SerializeField] private GameObject prefabBullet3;
-
-        private Animator _animator;
-
-        private UnitState _state;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _animator = GetComponentInChildren<Animator>();
-            this._state = UnitState.IDLE;
-        }
+        
 
         public override void OnUpdate(float deltaTime)
         {
@@ -83,7 +73,7 @@ namespace Game.Runtime
                     if (this._state != UnitState.MOVE)
                     {
                         this._state = UnitState.MOVE;
-                        this._animator.Play("Run");
+                        this._animator.Play(this._animMove);
                     }
 
                     transform.position = transform.position + (Vector3)moveVector * (this.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * Time.deltaTime);
@@ -93,28 +83,33 @@ namespace Game.Runtime
                     if (this._state != UnitState.IDLE)
                     {
                         this._state = UnitState.IDLE;
-                        this._animator.Play("Idle");
+                        this._animator.Play(this._animIdle);
                     }
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                GamePlayController.Instance.SelectHero();
             }
         }
 
 
         void ExecuteAttack1()
         {
-            this._animator.Play("Attack_1");
+            this._animator.Play(this._animSkill1);
             SpawnBullet().Forget();
         }
 
         void ExecuteAttack2()
         {
-            this._animator.Play("Attack_2");
+            this._animator.Play(this._animSkill2);
             SpawnBullet2().Forget();
         }
 
         void ExecuteAttack3()
         {
-            this._animator.Play("Attack_3");
+            this._animator.Play(this._animSkill3);
             SpawnBullet3().Forget();
         }
 

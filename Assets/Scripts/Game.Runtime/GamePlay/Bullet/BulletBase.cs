@@ -7,16 +7,40 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class BulletBase : DamageBox
+    public class BulletBase : DamageBox, IUpdateSystem, ICanClear
     {
         [SerializeField] private bool initFaceLeft = false;
         [SerializeField] private GameObject prefabImpact;
 
         protected float attack;
 
+        protected bool faceRight;
+
         private CancellationTokenSource cts = new CancellationTokenSource();
         
         private Vector3 directionVector;
+        
+        protected virtual void Awake()
+        {
+            this.faceRight = true;
+        }
+
+        protected virtual void OnEnable()
+        {
+            if (GlobalUpdateSystem.Instance != null)
+            {
+                GlobalUpdateSystem.Instance.Add(this);
+            }
+        }
+
+        protected void OnDisable()
+        {
+            
+            if (GlobalUpdateSystem.Instance != null)
+            {
+                GlobalUpdateSystem.Instance.Remove(this);
+            }
+        }
         
 
         public virtual void InitBullet(float lifeTime, bool targetFaceRight, float speed, float attack)
@@ -46,7 +70,7 @@ namespace Game.Runtime
         {
             await UniTask.Delay(TimeSpan.FromSeconds(lifeTime), ignoreTimeScale: false);
 
-            if (gameObject.activeSelf)
+            if (gameObject != null && gameObject.activeSelf)
             {
                 Remove();
             }
@@ -62,7 +86,7 @@ namespace Game.Runtime
             LeanPool.Despawn(gameObject);
         }
         
-        public override void OnUpdate(float deltaTime)
+        public virtual void OnUpdate(float deltaTime)
         {
             transform.position = transform.position + directionVector * deltaTime;
         }
@@ -71,6 +95,15 @@ namespace Game.Runtime
         {
             Remove();
             return this.attack;
+        }
+        
+        protected virtual void Flip()
+        {
+            var newScale = transform.localScale;
+            newScale.x = -newScale.x;
+            transform.localScale = newScale;
+
+            this.faceRight = !this.faceRight;
         }
     }
 }

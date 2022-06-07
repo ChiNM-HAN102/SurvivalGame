@@ -16,8 +16,9 @@ namespace Game.Runtime
         DIE = 4
     }
     
-    public abstract class Unit : Dummy
+    public abstract class Unit : Dummy, ICanClear
     {
+
         public BehaviorState state;
         public RPGStatCollection Stats { get; set; }
 

@@ -29,15 +29,12 @@ namespace Game.Runtime
         {
             this._animator = GetComponentInChildren<Animator>();
             this._healthBarController = GetComponentInChildren<HealthBarController>();
-            
-            this.faceRight = false;
         }
 
         public virtual void SetInfo(int level)
         {
             Stats = new EnemyStatsCollection(this, data, level);
             this._healthBarController.InitData(this);
-
             this._healthBarController.transform.localScale = new Vector3(1,1,1);
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = false;
@@ -53,18 +50,17 @@ namespace Game.Runtime
         {
             base.OnUpdate(deltaTime);
 
-            if (this._state == UnitState.HURT || this._state == UnitState.DIE)
+            if (this._state == UnitState.HURT || this._state == UnitState.DIE || this._state == UnitState.ATTACK)
             {
                 return;
             }
 
             this.currentAttackCoolDown += deltaTime;
             
-            if (this.target == null)
-            {
-                target = FindTarget();
-            }
-            else
+            
+            target = FindTarget();
+            
+            if(this.target != null)
             {
                 
                 
@@ -137,7 +133,7 @@ namespace Game.Runtime
             return GamePlayController.Instance.GetSelectedHero();
         }
 
-        protected override void Flip()
+        public override void Flip()
         {
             base.Flip();
 

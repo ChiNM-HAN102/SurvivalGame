@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class CameraController : Dummy
+    public class CameraController : MonoBehaviour , IUpdateSystem
     {
         public float followSpeed = 2f;
         public float yOffset = 1f;
@@ -21,11 +21,26 @@ namespace Game.Runtime
         
         public static CameraController Instance { get; set; }
 
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
-
             Instance = this;
+        }
+        
+        protected virtual void OnEnable()
+        {
+            if (GlobalUpdateSystem.Instance != null)
+            {
+                GlobalUpdateSystem.Instance.Add(this);
+            }
+        }
+
+        protected void OnDisable()
+        {
+            
+            if (GlobalUpdateSystem.Instance != null)
+            {
+                GlobalUpdateSystem.Instance.Remove(this);
+            }
         }
 
         public void SetShakeDuration(float value)
@@ -33,7 +48,7 @@ namespace Game.Runtime
             this.shakeDuration = value;
         }
 
-        public override void OnUpdate(float deltaTime)
+        public void OnUpdate(float deltaTime)
         {
             if (this.shakeDuration > 0)
             {
@@ -43,19 +58,17 @@ namespace Game.Runtime
             }
             else
             {
+                var heroBase = GamePlayController.Instance.GetSelectedHero();
+                if (heroBase != null)
+                {
+                    this.target = heroBase.transform; 
+                }
+                
                 if (this.target != null)
                 {
                     Vector3 newPos = new Vector3(this.target.position.x, this.target.position.y + this.yOffset, - 10f);
                     transform.position = Vector3.Slerp(transform.position, newPos, this.followSpeed * Time.deltaTime);
                     this.originPosition = transform.position;
-                }
-                else
-                {
-                    var heroBase = GamePlayController.Instance.GetSelectedHero();
-                    if (heroBase != null)
-                    {
-                        this.target = heroBase.transform; 
-                    }
                 }
             }
         }

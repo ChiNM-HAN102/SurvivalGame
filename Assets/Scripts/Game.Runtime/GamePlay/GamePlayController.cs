@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Lean.Pool;
 using UnityEngine;
 
@@ -22,9 +25,17 @@ namespace Game.Runtime
         [SerializeField] private Transform[] spawnCharacterList;
         [SerializeField] private Transform[] spawnEnemyList;
 
+        private CancellationTokenSource ctsCountSurvivalTime = new CancellationTokenSource();
+
         private GameState _state;
 
         private int selectedHeroIdx;
+
+        private int countTimeSurvival;
+
+        private int enemyLevel;
+        
+        
         private List<HeroBase> listHeroes = new List<HeroBase>();
         public GameState State { get => this._state; }
         
@@ -56,18 +67,21 @@ namespace Game.Runtime
 
         private void Start()
         {
-            InitCharacter();
             WaitingGame();
         }
 
         void WaitingGame()
         {
+            this.enemyLevel = 0;
+            Time.timeScale = 1;
+            InitCharacter();
             this._state = GameState.WAITING;
             UIManager.Instance.WaitGame();
         }
 
         public void StartGame()
         {
+            this.countTimeSurvival = 0;
             UIManager.Instance.StartGame(3, CallBackStartGame);
         }
 
@@ -80,20 +94,42 @@ namespace Game.Runtime
 
         public void ResetGame()
         {
-            
+            ClearMap();
+           
+            WaitingGame();
+        }
+
+        void ClearMap()
+        {
+            var allObjects = FindObjectsOfType<Unit>();
+            foreach (var go in allObjects)        
+            {
+                LeanPool.Despawn(go.gameObject);
+            }
         }
 
         public void ResumeGame()
         {
-            UIManager.Instance.StartGame(2, () => {
-                CallBackStartGame();
-                Time.timeScale = 1;
-            });
+            UIManager.Instance.StartGame(2, CallBackStartGame);
         }
-
+        
         public void EndGame()
         {
-            
+            Time.timeScale = 0;
+            this._state = GameState.END;
+            SaveData();
+            UIManager.Instance.EndGame();
+           
+        }
+
+        void SaveData()
+        {
+            PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this.countTimeSurvival);
+            var highestScore = PlayerPrefs.GetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY);
+            if (this.countTimeSurvival > highestScore)
+            {
+                PlayerPrefs.SetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY, this.countTimeSurvival);
+            }
         }
         
         public void QuitGame()
@@ -104,7 +140,22 @@ namespace Game.Runtime
         void CallBackStartGame()
         {
             this._state = GameState.RUNNING;
+            ctsCountSurvivalTime.Cancel();
+            ctsCountSurvivalTime = new CancellationTokenSource();
+            StartCountTimeSurvival().Forget();
+            Time.timeScale = 1;
         }
+
+        async UniTask StartCountTimeSurvival()
+        {
+            while (this._state == GameState.RUNNING)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: this.ctsCountSurvivalTime.Token);
+                this.countTimeSurvival += 1;
+                UIManager.Instance.SetCountDown(this.countTimeSurvival);
+            }
+        }
+        
         void InitCharacter()
         {
             SpawnHeroes();
@@ -117,6 +168,7 @@ namespace Game.Runtime
             for (int i = 0; i < this.data.heroBases.Length; i++)
             {
                 var go = LeanPool.Spawn(this.data.heroBases[i], this.spawnCharacterList[i].position, Quaternion.identity);
+                go.SetInfo();
                 this.listHeroes.Add(go);
             }
             
@@ -173,7 +225,8 @@ namespace Game.Runtime
             if (this.data.enemyBases.Length > 0)
             {
                 var enemy = LeanPool.Spawn(this.data.enemyBases[index], randomTransform.position, Quaternion.identity);
-                enemy.GetComponent<EnemyBase>().SetInfo(0);
+                enemy.GetComponent<EnemyBase>().SetInfo(this.enemyLevel);
+                this.enemyLevel += 1;
             }
         }
 
@@ -182,9 +235,24 @@ namespace Game.Runtime
             return this.listHeroes[this.selectedHeroIdx];
         }
 
+        public void SelectHero()
+        {
+            if (this.selectedHeroIdx < this.listHeroes.Count - 1)
+            {
+                SelectHero(this.selectedHeroIdx + 1);
+            }
+            else
+            {
+                SelectHero(0);
+            }
+        }
+
         public void SelectHero(int idx)
         {
-            this.selectedHeroIdx = 0;
+            var oldSelectedHero = this.listHeroes[this.selectedHeroIdx];
+            var oldPosition = oldSelectedHero.transform.position;
+            var faceRight = oldSelectedHero.GetFaceRight();
+            this.selectedHeroIdx = idx;
             UIManager.Instance.SetSelectedHero(selectedHeroIdx);
             
             for (int i = 0; i < this.listHeroes.Count; i++)
@@ -192,6 +260,13 @@ namespace Game.Runtime
                 if (idx == i)
                 {
                     this.listHeroes[i].gameObject.SetActive(true);
+
+                    this.listHeroes[i].transform.position = oldPosition;
+                    if (faceRight != this.listHeroes[i].GetFaceRight())
+                    {
+                        this.listHeroes[i].Flip();
+                    }
+                    
                 }
                 else
                 {

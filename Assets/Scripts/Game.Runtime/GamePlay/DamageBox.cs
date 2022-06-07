@@ -7,15 +7,8 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class DamageBox : Dummy, IGetDamage
+    public class DamageBox : MonoBehaviour, IGetDamage
     {
-
-        public override void OnUpdate(float deltaTime)
-        {
-            
-        }
-
-
         public virtual float GetDamage(Unit target)
         {
             return 20;
