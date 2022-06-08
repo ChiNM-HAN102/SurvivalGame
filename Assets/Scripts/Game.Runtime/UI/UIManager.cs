@@ -20,9 +20,11 @@ namespace Game.Runtime
 
         [SerializeField] private Text startCountDownTxt;
         
-        [SerializeField] private Text currentEnemyTxt;
         [SerializeField] private Text currentKilledEnemyTxt;
         [SerializeField] private Text currentTimeCountTxt;
+
+        [SerializeField] private Text highestKilledEnemyTxt;
+        [SerializeField] private Text highestTimeCountTxt;
 
         [SerializeField] private FloatingText floatTextPrefab;
 
@@ -81,6 +83,12 @@ namespace Game.Runtime
 
         public void WaitGame()
         {
+            var highestSurvival = PlayerPrefs.GetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY);
+            this.highestTimeCountTxt.text = "Highest Survived: " + highestSurvival + "s";
+
+            var highestKilled = PlayerPrefs.GetInt(Constants.DATA_HIGHEST_KILL_ENEMY);
+            this.highestKilledEnemyTxt.text = "Highest Killed: " + highestKilled;
+            
             this.startGamePanel.SetActive(true);
             this.endGamePanel.SetActive(false);
             this.pauseGamePanel.SetActive(false);
@@ -149,13 +157,9 @@ namespace Game.Runtime
 
         public void SetKillText(int number)
         {
-            this.currentKilledEnemyTxt.text = "kill" + number;
+            this.currentKilledEnemyTxt.text = "kill " + number;
         }
-
-        public void SetEnemyText(int number)
-        {
-            this.currentEnemyTxt.text = "enemy " + number;
-        }
+        
 
         public void SetCountDown(int number)
         {

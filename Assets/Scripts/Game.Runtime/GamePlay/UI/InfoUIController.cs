@@ -36,6 +36,7 @@ namespace Game.Runtime
 
         void OnSelect()
         {
+            SoundController.Instance.PlayClick();
             if (this.canSelect)
             {
                 GamePlayController.Instance.SelectHero(idx);
@@ -53,6 +54,7 @@ namespace Game.Runtime
             this._heroBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged = OnHealthChange;
             this._heroBase.Stats.GetStat<Damage>(RPGStatType.Damage).onChanged = OnAttackChange;
 
+            this.bonusAttackText.text = "";
             this.countDownPanel.SetActive(false);
             this.canSelect = true;
             

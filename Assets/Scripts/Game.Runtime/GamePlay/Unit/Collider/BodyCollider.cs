@@ -17,7 +17,7 @@ namespace Game.Runtime
 
             var damageInfo = objDamage?.GetDamage(this.Owner);
 
-            if (damageInfo != null)
+            if (damageInfo != null && damageInfo > 0)
             {
                 TakeDamage((float)damageInfo);
             }

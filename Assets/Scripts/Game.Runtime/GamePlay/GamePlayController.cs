@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Lean.Pool;
@@ -34,6 +35,8 @@ namespace Game.Runtime
         private int countTimeSurvival;
 
         private int enemyLevel;
+
+        private int totalKillEnemy;
         
         
         private List<HeroBase> listHeroes = new List<HeroBase>();
@@ -67,12 +70,18 @@ namespace Game.Runtime
 
         private void Start()
         {
+            SoundController.Instance.Init();
             WaitingGame();
         }
 
         void WaitingGame()
         {
+            SoundController.Instance.PlayWaitingMusic();
+            SoundController.Instance.PlayWaitingSound();
             this.enemyLevel = 0;
+            this.totalKillEnemy = 0;
+            UIManager.Instance.SetKillText(0);
+            UIManager.Instance.SetCountDown(0);
             Time.timeScale = 1;
             InitCharacter();
             this._state = GameState.WAITING;
@@ -81,6 +90,7 @@ namespace Game.Runtime
 
         public void StartGame()
         {
+            SoundController.Instance.PlayStartSound();
             this.countTimeSurvival = 0;
             UIManager.Instance.StartGame(3, CallBackStartGame);
         }
@@ -119,6 +129,8 @@ namespace Game.Runtime
         
         public void EndGame()
         {
+            SoundController.Instance.StopMusic();
+            SoundController.Instance.PlayEndSound();
             Time.timeScale = 0;
             this._state = GameState.END;
             SaveData();
@@ -134,6 +146,15 @@ namespace Game.Runtime
             {
                 PlayerPrefs.SetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY, this.countTimeSurvival);
             }
+            
+            PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this.totalKillEnemy);
+            var highestScoreKill = PlayerPrefs.GetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY);
+            if (this.totalKillEnemy > highestScoreKill)
+            {
+                PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this.totalKillEnemy);
+            }
+            
+            PlayerPrefs.Save();
         }
         
         public void QuitGame()
@@ -148,6 +169,7 @@ namespace Game.Runtime
             ctsCountSurvivalTime = new CancellationTokenSource();
             StartCountTimeSurvival().Forget();
             Time.timeScale = 1;
+            SoundController.Instance.PlayGamePlayMusic();
         }
 
         async UniTask StartCountTimeSurvival()
@@ -196,15 +218,15 @@ namespace Game.Runtime
                     SpawnEnemy(0);
                 }
                 
-                // if (this.countDownSpawnEnemy >= this.data.timeCountDownSpawnEnemy)
-                // {
-                //    SpawnEnemy();
-                //    this.countDownSpawnEnemy = 0;
-                // }
-                // else
-                // {
-                //     this.countDownSpawnEnemy += deltaTime;
-                // }
+                if (this.countDownSpawnEnemy >= this.data.timeCountDownSpawnEnemy)
+                {
+                   SpawnEnemy();
+                   this.countDownSpawnEnemy = 0;
+                }
+                else
+                {
+                    this.countDownSpawnEnemy += deltaTime;
+                }
             }
         }
 
@@ -218,7 +240,7 @@ namespace Game.Runtime
             {
                 var enemyIdx = Random.Range(0, data.enemyBases.Length);
                 var enemy = LeanPool.Spawn(this.data.enemyBases[enemyIdx], randomTransform.position, Quaternion.identity);
-                enemy.GetComponent<EnemyBase>().SetInfo(0);
+                enemy.GetComponent<EnemyBase>().SetInfo(this.enemyLevel);
             }
         }
         
@@ -282,6 +304,12 @@ namespace Game.Runtime
                     this.listHeroes[i].gameObject.SetActive(false);
                 }
             }
+        }
+
+        public void IncreaseTotalKillEnemy()
+        {
+            this.totalKillEnemy++;
+            UIManager.Instance.SetKillText(this.totalKillEnemy);
         }
     }
 }

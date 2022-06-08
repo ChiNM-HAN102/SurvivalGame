@@ -20,5 +20,3 @@ MonoBehaviour:
   - {fileID: 1859771918, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
   enemyBases:
   - {fileID: 6754478917821666760, guid: c7683039a05304f4bb1033b2c7e9fcec, type: 3}
-  - {fileID: -630548777406701875, guid: 8d1aa37030588354483744e33c11ec26, type: 3}
-  - {fileID: 4062025196137177853, guid: f06e331b2e45a5c4ba4abf81e425f906, type: 3}

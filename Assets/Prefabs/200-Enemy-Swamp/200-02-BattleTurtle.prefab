@@ -133,6 +133,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: {fileID: 0}
   data: {fileID: 11400000, guid: 25d0a83e7383f2f4e967995f94200a8a, type: 2}
+  _damageBox: {fileID: 0}
+  _animAttack: Attack_3
+  _animMove: Walk
+  _animIdle: Idle
+  _animHurt: Hurt
+  _animDie: Death
 --- !u!114 &402891128327838968
 MonoBehaviour:
   m_ObjectHideFlags: 0

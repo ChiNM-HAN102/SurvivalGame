@@ -29,12 +29,14 @@ namespace Game.Runtime
 
         void PlayAgain()
         {
+            SoundController.Instance.PlayClick();
             GamePlayController.Instance.ResetGame();
         }
 
 
         void Quit()
         {
+            SoundController.Instance.PlayClick();
             Application.Quit();
         }
         

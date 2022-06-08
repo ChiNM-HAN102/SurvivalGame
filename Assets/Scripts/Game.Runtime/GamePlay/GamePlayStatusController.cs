@@ -30,6 +30,8 @@ namespace Game.Runtime
 
         public void AddInventory(string id, InventoryData data)
         {
+            SoundController.Instance.PlayPickItem();
+            
             var currentHero = GamePlayController.Instance.GetSelectedHero();
             if (data.type == RPGStatType.Health)
             {

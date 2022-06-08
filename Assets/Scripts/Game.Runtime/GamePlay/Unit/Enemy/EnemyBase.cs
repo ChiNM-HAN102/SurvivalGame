@@ -43,6 +43,8 @@ namespace Game.Runtime
             this._animator.Play(this._animIdle);
             
             this._damageBox.ToggleActive(false);
+            
+            SoundController.Instance.PlayCallEnemy();
         }
 
         private float currentAttackCoolDown = 0;
@@ -151,8 +153,11 @@ namespace Game.Runtime
             UIManager.Instance.CreateFloatingText("-" + damageInfo, new Color32(219, 64, 53, 255),  
                 new Vector2(transform.position.x, transform.position.y + 1.5f));
             
+            SoundController.Instance.PlayEnemyHurt();
+            
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0 && this._state != UnitState.DIE)
             {
+                GamePlayController.Instance.IncreaseTotalKillEnemy();
                 this._state = UnitState.DIE;
                 this._animator.Play(this._animDie);
                 Die().Forget();

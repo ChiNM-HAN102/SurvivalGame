@@ -38,6 +38,7 @@ namespace Game.Runtime
 
             if (IsAlive)
             {
+                SoundController.Instance.PlayHeroHurt();
                 UIManager.Instance.PresentHurtAnimation();
                 CameraController.Instance.SetShakeDuration(0.3f);
             }

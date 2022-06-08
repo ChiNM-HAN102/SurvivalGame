@@ -11,12 +11,15 @@ namespace Game.Runtime
     {
         [SerializeField] private bool initFaceLeft = false;
         [SerializeField] private GameObject prefabImpact;
+        [SerializeField] private bool isAoe;
 
         protected float attack;
 
         protected bool faceRight;
 
-        private CancellationTokenSource cts = new CancellationTokenSource();
+        protected bool canDamage;
+
+        private CancellationTokenSource cts;
         
         private Vector3 directionVector;
         
@@ -46,7 +49,8 @@ namespace Game.Runtime
         public virtual void InitBullet(float lifeTime, bool targetFaceRight, float speed, float attack)
         {
             this.attack = attack;
-
+            canDamage = true;
+            cts = new CancellationTokenSource();
             DestroyBullet(lifeTime).Forget();
             if (targetFaceRight)
             {
@@ -68,7 +72,7 @@ namespace Game.Runtime
         
         async UniTaskVoid DestroyBullet(float lifeTime)
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(lifeTime), ignoreTimeScale: false);
+            await UniTask.Delay(TimeSpan.FromSeconds(lifeTime), cancellationToken: this.cts.Token);
 
             if (gameObject != null && gameObject.activeSelf)
             {
@@ -83,6 +87,7 @@ namespace Game.Runtime
                 LeanPool.Spawn(this.prefabImpact, transform.position, Quaternion.identity);
             }
 
+            this.cts.Cancel();
             LeanPool.Despawn(gameObject);
         }
         
@@ -93,8 +98,14 @@ namespace Game.Runtime
 
         public override float GetDamage(Unit target)
         {
-            Remove();
-            return this.attack;
+            if (this.canDamage || this.isAoe)
+            {
+                this.canDamage = false;
+                Remove();
+                return this.attack;
+            }
+
+            return 0;
         }
         
         protected virtual void Flip()
