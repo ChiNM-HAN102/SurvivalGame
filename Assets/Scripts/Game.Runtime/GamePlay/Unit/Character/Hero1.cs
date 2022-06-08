@@ -31,7 +31,6 @@ namespace Game.Runtime
             {
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-             
                     ExecuteAttack1();
                     SetAttack();
                 }

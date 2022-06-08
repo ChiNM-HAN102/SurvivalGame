@@ -12,8 +12,6 @@ namespace Game.Runtime
         
         protected bool faceRight;
         
-        
-        public BehaviorState state;
         public RPGStatCollection Stats { get; set; }
 
         public StatusController StatusController { get; set; }

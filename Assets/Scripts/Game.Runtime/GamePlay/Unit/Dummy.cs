@@ -7,8 +7,6 @@ namespace Game.Runtime
 {
     public abstract class Dummy : MonoBehaviour , IUpdateSystem
     {
-       
-
         protected virtual void OnEnable()
         {
             if (GlobalUpdateSystem.Instance != null)
