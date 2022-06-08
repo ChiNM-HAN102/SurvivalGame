@@ -11,7 +11,7 @@ namespace Game.Runtime
         [SerializeField] protected string _animMove = "Walk";
         [SerializeField] protected string _animIdle = "Idle";
         [SerializeField] protected string _animDie = "Death";
-        
+
         protected Animator _animator;
 
         public HeroData Data { get => this.data; }
@@ -50,11 +50,6 @@ namespace Game.Runtime
             {
                 GamePlayController.Instance.EndGame();
             }
-        }
-
-        public void AddInventory()
-        {
-            
         }
     }
 }

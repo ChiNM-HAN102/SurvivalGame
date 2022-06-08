@@ -30,7 +30,6 @@ namespace Game.Runtime
 
         protected void OnDisable()
         {
-            
             if (GlobalUpdateSystem.Instance != null)
             {
                 GlobalUpdateSystem.Instance.Remove(this);
@@ -46,6 +45,7 @@ namespace Game.Runtime
         {
             if ( this.unit.IsAlive && this.unit.UnitState.CanUseSkill() && Input.GetKeyDown(this._keyCode))
             {
+                this.unit.UseSkill(this.animName);
                 this.skill.Execute();
             }
         }
