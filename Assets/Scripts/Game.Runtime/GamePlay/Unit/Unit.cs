@@ -6,24 +6,25 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public enum UnitState
-    {
-        NONE = -1,
-        IDLE = 0,
-        MOVE = 1,
-        HURT = 2,
-        ATTACK = 3,
-        DIE = 4
-    }
-    
     public abstract class Unit : Dummy
     {
-
+        protected Animator _animator;
+        
+        protected bool faceRight;
+        
+        
         public BehaviorState state;
         public RPGStatCollection Stats { get; set; }
 
         public StatusController StatusController { get; set; }
         
+        public UnitState UnitState { get; set; } = new UnitState();
+
+        protected virtual void Awake()
+        {
+            this._animator = GetComponentInChildren<Animator>();
+        }
+
         public virtual bool IsAlive
         {
             get
@@ -94,5 +95,24 @@ namespace Game.Runtime
             }
         }
         
+        public virtual void Flip()
+        {
+            var newScale = transform.localScale;
+            newScale.x = -newScale.x;
+            transform.localScale = newScale;
+
+            this.faceRight = !this.faceRight;
+        }
+
+        public bool GetFaceRight()
+        {
+            return this.faceRight;
+        }
+
+        public void UseSkill(string anim)
+        {
+            UnitState.Set(State.ATTACK);
+            this._animator.Play(anim);
+        }
     }
 }

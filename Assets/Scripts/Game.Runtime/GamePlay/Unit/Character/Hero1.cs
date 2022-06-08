@@ -27,7 +27,7 @@ namespace Game.Runtime
             var inputX = Input.GetAxisRaw("Horizontal");
             var moveVector = new Vector2(inputX, 0);
 
-            if (this._state != UnitState.ATTACK)
+            if (UnitState.Current != State.ATTACK)
             {
                 if (Input.GetKeyDown(KeyCode.T))
                 {
@@ -51,7 +51,7 @@ namespace Game.Runtime
                 }
             }
 
-            if (this._state != UnitState.ATTACK)
+            if (UnitState.Current != State.ATTACK)
             {
                 if (inputX != 0)
                 {
@@ -70,9 +70,9 @@ namespace Game.Runtime
                         }
                     }
 
-                    if (this._state != UnitState.MOVE)
+                    if (UnitState.Current != State.MOVE)
                     {
-                        this._state = UnitState.MOVE;
+                        UnitState.Set(State.MOVE);
                         this._animator.Play(this._animMove);
                     }
 
@@ -80,9 +80,9 @@ namespace Game.Runtime
                 }
                 else
                 {
-                    if (this._state != UnitState.IDLE)
+                    if (UnitState.Current != State.IDLE)
                     {
-                        this._state = UnitState.IDLE;
+                        UnitState.Set(State.IDLE);
                         this._animator.Play(this._animIdle);
                     }
                 }
@@ -134,13 +134,12 @@ namespace Game.Runtime
         
         void SetAttack()
         {
-            this._state = UnitState.ATTACK;
+            UnitState.Set(State.ATTACK);
             StopAttack().Forget();
         }
 
         async UniTaskVoid StopAttack()
         {
-            this._state = UnitState.ATTACK;
             await UniTask.Yield();
             var clips = this._animator.GetCurrentAnimatorClipInfo(0);
             if (clips.Length > 0)
@@ -148,9 +147,9 @@ namespace Game.Runtime
                 await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
             }
             
-            if (this._state == UnitState.ATTACK)
+            if (UnitState.Current == State.ATTACK)
             {
-                this._state = UnitState.NONE;
+                UnitState.Set(State.NONE);
             }
         }
 

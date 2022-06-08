@@ -12,7 +12,6 @@ namespace Game.Runtime
         [SerializeField] protected string _animIdle = "Idle";
         [SerializeField] protected string _animDie = "Death";
         
-        protected UnitState _state;
         protected Animator _animator;
 
         public HeroData Data { get => this.data; }
@@ -20,14 +19,14 @@ namespace Game.Runtime
         {
             base.Awake();
             _animator = GetComponentInChildren<Animator>();
-            this._state = UnitState.IDLE;
+            UnitState.Set(State.IDLE);
         }
 
         public virtual void SetInfo()
         {
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = true;
-            this._state = UnitState.IDLE;
+            UnitState.Set(State.IDLE);
             this._animator.Play(this._animIdle);
             Stats = new HeroStatsCollection(this, data);
         }
