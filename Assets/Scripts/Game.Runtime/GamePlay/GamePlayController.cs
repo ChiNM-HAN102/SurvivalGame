@@ -291,7 +291,6 @@ namespace Game.Runtime
                 if (idx == i)
                 {
                     this.listHeroes[i].gameObject.SetActive(true);
-
                     this.listHeroes[i].transform.position = oldPosition;
                     if (faceRight != this.listHeroes[i].GetFaceRight())
                     {

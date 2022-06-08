@@ -7,9 +7,9 @@ namespace Game.Runtime
         [SerializeField] private GameObject healthBarFrame;
         [SerializeField] private Transform healthBar;
         
-        private CharacterBase _characterBase;
+        private Unit _characterBase;
         
-        public void InitData(CharacterBase characterBase)
+        public void InitData(Unit characterBase)
         {
             this._characterBase = characterBase;
             

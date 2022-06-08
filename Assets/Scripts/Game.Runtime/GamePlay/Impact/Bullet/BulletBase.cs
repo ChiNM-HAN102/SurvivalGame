@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    public class BulletBase : DamageBox, IUpdateSystem, ICanClear
+    public class BulletBase : DamageBox, IUpdateSystem
     {
         [SerializeField] private bool initFaceLeft = false;
         [SerializeField] private GameObject prefabImpact;

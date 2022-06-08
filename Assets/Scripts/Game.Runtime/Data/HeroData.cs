@@ -9,5 +9,9 @@ namespace Game.Runtime
     {
         public int coolDownChangeHero;
         public Sprite avatar;
+
+        public int cooldownSkill1;
+        public int cooldownSkill2;
+        public int cooldownSkill3;
     }
 }

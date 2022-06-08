@@ -16,7 +16,7 @@ namespace Game.Runtime
         DIE = 4
     }
     
-    public abstract class Unit : Dummy, ICanClear
+    public abstract class Unit : Dummy
     {
 
         public BehaviorState state;
@@ -24,7 +24,16 @@ namespace Game.Runtime
 
         public StatusController StatusController { get; set; }
         
-        public virtual bool IsAlive => true;
+        public virtual bool IsAlive
+        {
+            get
+            {
+                if (gameObject == null) return false;
+
+                return gameObject.activeSelf && Stats.GetStat<Health>(RPGStatType.Health).CurrentValue > 0;
+            }
+        }
+        
         public abstract void Remove();
         
         protected virtual void OnEnable()
@@ -46,7 +55,10 @@ namespace Game.Runtime
 
         public override void OnUpdate(float deltaTime)
         {
-            
+            if (GamePlayController.Instance.State != GameState.RUNNING)
+            {
+                return;
+            }
         }
         public virtual void GetHurt(float damageInfo)
         {
@@ -63,6 +75,8 @@ namespace Game.Runtime
                 Remove();
             }
         }
+        
+        
         
         protected virtual void CalculateHealthPoint(float damageInfo)
         {

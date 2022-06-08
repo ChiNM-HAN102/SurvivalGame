@@ -2,7 +2,7 @@
 
 namespace Game.Runtime
 {
-    public class HeroBase : CharacterBase
+    public class HeroBase : Unit
     {
         [SerializeField] private HeroData data;
         [SerializeField] protected string _animSkill1 = "Attack_1";
@@ -30,6 +30,11 @@ namespace Game.Runtime
             this._state = UnitState.IDLE;
             this._animator.Play(this._animIdle);
             Stats = new HeroStatsCollection(this, data);
+        }
+
+        public override void Remove()
+        {
+            
         }
 
         public override void GetHurt(float damageInfo)

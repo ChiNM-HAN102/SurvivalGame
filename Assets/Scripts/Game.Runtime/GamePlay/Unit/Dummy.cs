@@ -8,8 +8,6 @@ namespace Game.Runtime
     public abstract class Dummy : MonoBehaviour , IUpdateSystem
     {
         protected bool faceRight;
-        
-         
 
         protected virtual void Awake()
         {

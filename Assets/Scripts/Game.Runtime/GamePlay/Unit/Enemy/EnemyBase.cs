@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Game.Runtime
 {
-    public class EnemyBase : CharacterBase
+    public class EnemyBase : Unit
     {
         [SerializeField] public EnemyData data;
 
@@ -48,6 +48,11 @@ namespace Game.Runtime
         }
 
         private float currentAttackCoolDown = 0;
+
+        public override void Remove()
+        {
+            
+        }
 
         public override void OnUpdate(float deltaTime)
         {
@@ -93,7 +98,7 @@ namespace Game.Runtime
                         {
                             this._state = UnitState.ATTACK;
                             this._animator.Play(this._animAttack);
-                            StartCoroutine(PLayAttack());
+                            PLayAttack().Forget();
                         }
                     }
                     else
@@ -109,24 +114,19 @@ namespace Game.Runtime
             }
         }
 
-        IEnumerator PLayAttack()
+        async UniTaskVoid PLayAttack()
         {
-            yield return new WaitForSeconds(0.5f);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             if (this._state == UnitState.ATTACK)
             {
                 this._damageBox.ToggleActive(true);
-                yield return new WaitForFixedUpdate();
+                await UniTask.Yield();
                 this._damageBox.ToggleActive(false);
             }
 
             if (this._state == UnitState.ATTACK)
             {
-                yield return null;
-                var clips = _animator.GetCurrentAnimatorClipInfo(0);
-                if (clips.Length > 0)
-                {
-                    yield return new WaitForSeconds(clips[0].clip.length);
-                }
+                await WaitUntilFinishAnim(this._animator);
                 this._state = UnitState.NONE;
             }
         }
