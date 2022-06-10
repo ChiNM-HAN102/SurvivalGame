@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
+    [CreateAssetMenu(fileName = "SequenceNode", menuName = "BehaviorTree/Node/Composite/SequenceNode")]
     public class SequenceNode : CompositeNode
     {
         private int current;
@@ -18,10 +19,10 @@ namespace Game.Runtime
             
         }
 
-        protected override NodeState OnUpdate()
+        protected override NodeState OnUpdate(float deltaTime)
         {
             var child = this.children[this.current];
-            switch (child.Update())
+            switch (child.Update(deltaTime))
             {
                 case NodeState.Running:
                     return NodeState.Running;

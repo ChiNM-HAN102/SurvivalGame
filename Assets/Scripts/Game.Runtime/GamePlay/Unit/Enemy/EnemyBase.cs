@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Game.Runtime.Impact;
 using Lean.Pool;
@@ -10,41 +11,44 @@ namespace Game.Runtime
 {
     public class EnemyBase : Unit
     {
-        [SerializeField] public EnemyData data;
-
-        [SerializeField] private EnemyNormalDamageBox _damageBox;
+        [SerializeField] private EnemyData data;
+        [SerializeField] private BehaviorTree tree;
 
         protected HealthBarController _healthBarController;
-        protected HeroBase target;
 
-        [SerializeField] protected string _animAttack = "Attack_1";
-        [SerializeField] protected string _animMove = "Walk";
-        [SerializeField] protected string _animIdle = "Idle";
-        [SerializeField] protected string _animHurt = "Hurt";
-        [SerializeField] protected string _animDie = "Death";
+        public override UnitData Data { get => this.data;}
 
         protected override void Awake()
         {
             base.Awake();
             this._healthBarController = GetComponentInChildren<HealthBarController>();
+            InitSkill();
+        }
+
+        void InitSkill()
+        {
+            this.Skills?.UnRegisterSkill();
+            
+            var skillNormal = new Skill();
+            skillNormal.InitData(this.data.attackSpeed);
+            var dict = new Dictionary<SkillType, Skill> {{SkillType.NormalAttack, skillNormal}};
+            
+            Skills?.Init(dict);
+            Skills?.RegisterSkill();
         }
 
         public virtual void SetInfo(int level)
         {
             Stats = new EnemyStatsCollection(this, data, level);
+
             this._healthBarController.InitData(this);
             this._healthBarController.transform.localScale = new Vector3(1,1,1);
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = false;
-            UnitState.Set(State.IDLE);
-            this._animator.Play(this._animIdle);
-            
-            this._damageBox.ToggleActive(false);
-            
+
             SoundController.Instance.PlayCallEnemy();
         }
-
-        private float currentAttackCoolDown = 0;
+        
 
         public override void Remove()
         {
@@ -54,89 +58,14 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-
-            if (UnitState.Current == State.HURT || UnitState.Current == State.DIE || UnitState.Current == State.ATTACK)
-            {
-                return;
-            }
-
-            this.currentAttackCoolDown += deltaTime;
-            
-            
-            target = FindTarget();
-            
-            if(this.target != null)
-            {
-                
-                
-                if (this.target.transform.position.x > transform.position.x && !this.faceRight || 
-                    this.target.transform.position.x < transform.position.x && this.faceRight)
-                {
-                    Flip();
-                }
-
-                if (Vector2.Distance(this.target.transform.position, transform.position) > data.meleeDetect)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, this.target.transform.position,
-                        Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
-                    
-                    if (UnitState.Current != State.MOVE)
-                    {
-                        UnitState.Set(State.MOVE);
-                        this._animator.Play(this._animMove);
-                    }
-                }
-                else
-                {
-                    if (this.currentAttackCoolDown > data.attackSpeed)
-                    {
-                        this.currentAttackCoolDown = 0;
-                        if (UnitState.Current != State.ATTACK)
-                        {
-                            UnitState.Set(State.ATTACK);
-                            this._animator.Play(this._animAttack);
-                            PLayAttack().Forget();
-                        }
-                    }
-                    else
-                    {
-                        if (UnitState.Current == State.NONE || UnitState.Current == State.MOVE)
-                        {
-                            UnitState.Set(State.IDLE);
-                            this._animator.Play(this._animIdle);
-                        }
-                    }
-
-                }
-            }
+            this.tree.Update(deltaTime);
         }
-
-        async UniTaskVoid PLayAttack()
-        {
-            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-            if (UnitState.Current == State.ATTACK)
-            {
-                this._damageBox.ToggleActive(true);
-                await UniTask.Yield();
-                this._damageBox.ToggleActive(false);
-            }
-
-            if (UnitState.Current == State.ATTACK)
-            {
-                await WaitUntilFinishAnim(this._animator);
-                UnitState.Set(State.NONE);
-            }
-        }
-
-        protected virtual HeroBase FindTarget()
-        {
-            return GamePlayController.Instance.GetSelectedHero();
-        }
+        
+        
 
         public override void Flip()
         {
             base.Flip();
-
             var newScale = this._healthBarController.transform.localScale;
             newScale.x = -newScale.x;
             _healthBarController.transform.localScale = newScale;
@@ -155,14 +84,14 @@ namespace Game.Runtime
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0 && UnitState.Current != State.DIE)
             {
                 GamePlayController.Instance.IncreaseTotalKillEnemy();
-                UnitState.Set(State.DIE);
-                this._animator.Play(this._animDie);
+                // UnitState.Set(State.DIE);
+                // this._animator.Play(this._animDie);
                 Die().Forget();
             }
             else
             {
                 UnitState.Set(State.HURT);
-                this._animator.Play(this._animHurt);
+                // this._animator.Play(this._animHurt);
                 EndHurt().Forget();
             }
         }
@@ -201,5 +130,6 @@ namespace Game.Runtime
                 UnitState.Set(State.IDLE);
             }
         }
+        
     }
 }

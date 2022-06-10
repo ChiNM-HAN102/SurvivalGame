@@ -18,7 +18,7 @@ namespace Game.Runtime
             Debug.Log($"OnStop {this.message}");
         }
 
-        protected override NodeState OnUpdate()
+        protected override NodeState OnUpdate(float deltaTime)
         {
             Debug.Log($"OnUpdate {this.message}");
             return Node.NodeState.Success;

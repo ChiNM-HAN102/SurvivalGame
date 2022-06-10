@@ -11,5 +11,7 @@ namespace Game.Runtime
         Damage = 2,
         MoveSpeed = 3,
         AttackSpeed = 4,
+        MeleeDetectRange = 5,
+        RangeDetectRange = 6
     }
 }

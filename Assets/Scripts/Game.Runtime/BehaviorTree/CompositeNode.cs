@@ -8,5 +8,6 @@ namespace Game.Runtime
     {
         public List<Node> children = new List<Node>();
         
+        public override NodeType _NodeType { get; } = NodeType.Composite;
     }
 }

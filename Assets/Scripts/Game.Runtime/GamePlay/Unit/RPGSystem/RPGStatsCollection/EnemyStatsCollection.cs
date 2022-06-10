@@ -24,6 +24,12 @@
 
             var damageAtk = CreateStat<Damage>(RPGStatType.Damage);
             damageAtk.StatBaseValue = this.data.attack;
+
+            var meleeDetectRange = CreateStat<MeleeDetectRange>(RPGStatType.MeleeDetectRange);
+            meleeDetectRange.StatBaseValue = this.data.meleeDetect;
+            
+            var rangeDetectRange = CreateStat<RangeDetectRange>(RPGStatType.RangeDetectRange);
+            rangeDetectRange.StatBaseValue = this.data.meleeDetect;
         }
     }
 }

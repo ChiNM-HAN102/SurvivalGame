@@ -11,16 +11,22 @@ namespace Game.Runtime
         protected Animator _animator;
         
         protected bool faceRight;
-        
-        public RPGStatCollection Stats { get; set; }
 
-        public StatusController StatusController { get; set; }
+        public Unit target;
+
+        public virtual UnitData Data { get;}
+
+        public RPGStatCollection Stats { get; set; }
+        
+        public SkillController Skills { get; set; }
+
         
         public UnitState UnitState { get; set; } = new UnitState();
 
         protected virtual void Awake()
         {
             this._animator = GetComponentInChildren<Animator>();
+            Skills = new SkillController();
         }
 
         public virtual bool IsAlive
@@ -76,7 +82,6 @@ namespace Game.Runtime
         }
         
         
-        
         protected virtual void CalculateHealthPoint(float damageInfo)
         {
             var health = this.Stats.GetStat<Health>(RPGStatType.Health);
@@ -98,7 +103,6 @@ namespace Game.Runtime
             var newScale = transform.localScale;
             newScale.x = -newScale.x;
             transform.localScale = newScale;
-
             this.faceRight = !this.faceRight;
         }
 
@@ -111,6 +115,11 @@ namespace Game.Runtime
         {
             UnitState.Set(State.ATTACK);
             this._animator.Play(anim);
+        }
+
+        public virtual void DoAnim(string animName)
+        {
+            this._animator.Play(animName);
         }
     }
 }

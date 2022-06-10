@@ -13,10 +13,22 @@ namespace Game.Runtime
             Success
         }
 
-        public NodeState nodeState = NodeState.Running;
-        public bool started = false;
+        public enum NodeType
+        {
+            Decorator,
+            Composite,
+            Action
+        }
+        
+        public virtual NodeType _NodeType {get;}
 
-        public NodeState Update()
+        public BehaviorTree tree;
+
+        public NodeState CurrentNodeState { get; set; }
+        
+        private bool started = false;
+
+        public NodeState Update(float deltaTime)
         {
             if (!this.started)
             {
@@ -24,19 +36,24 @@ namespace Game.Runtime
                 this.started = true;
             }
 
-            this.nodeState = OnUpdate();
+            this.CurrentNodeState = OnUpdate(deltaTime);
 
-            if (this.nodeState == NodeState.Failure || this.nodeState == NodeState.Success)
+            if (this.CurrentNodeState == NodeState.Failure || this.CurrentNodeState == NodeState.Success)
             {
                 OnStop();
                 this.started = false;
             }
 
-            return this.nodeState;
+            return this.CurrentNodeState;
         }
 
         protected abstract void OnStart();
         protected abstract void OnStop();
-        protected abstract NodeState OnUpdate();
+        protected abstract NodeState OnUpdate(float deltaTime);
+
+        public void SetTree(BehaviorTree tree)
+        {
+            this.tree = tree;
+        }
     }
 }

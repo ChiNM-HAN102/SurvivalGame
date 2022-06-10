@@ -5,21 +5,30 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    [CreateAssetMenu()]
+    [CreateAssetMenu(fileName = "BehaviorTree", menuName = "BehaviorTree/Tree")]
     public class BehaviorTree : ScriptableObject
     {
         public Node rootNode;
 
-        public Node.NodeState treeState = Node.NodeState.Running;
+        public List<Node> listNode;
 
-        public Node.NodeState Update()
+        public Unit owner;
+
+        public Node.NodeState TreeState { get; set; } = Node.NodeState.Running;
+
+        public Node.NodeState Update(float deltaTime)
         {
-            if (this.rootNode.nodeState == Node.NodeState.Running)
+            if (this.rootNode != null && this.rootNode.CurrentNodeState == Node.NodeState.Running)
             {
-                this.treeState = this.rootNode.Update();
+                this.TreeState = this.rootNode.Update(deltaTime);
             }
 
-            return this.treeState;
+            return this.TreeState;
+        }
+
+        public void SetUpTree(Unit owner)
+        {
+            this.owner = owner;
         }
     }
 }

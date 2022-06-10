@@ -12,9 +12,9 @@ namespace Game.Runtime
         [SerializeField] protected string _animIdle = "Idle";
         [SerializeField] protected string _animDie = "Death";
 
-        protected Animator _animator;
 
-        public HeroData Data { get => this.data; }
+        public override UnitData Data { get => this.data;}
+
         protected override void Awake()
         {
             base.Awake();

@@ -48,7 +48,7 @@ namespace Game.Runtime
             this.idx = idx;
             this._heroBase = heroBase;
             
-            this.avatar.sprite = heroBase.Data.avatar;
+            this.avatar.sprite = ((HeroData)heroBase.Data).avatar;
             this.attackText.text = heroBase.Data.attack.ToString();
 
             this._heroBase.Stats.GetStat<Health>(RPGStatType.Health).onChanged = OnHealthChange;
