@@ -111,5 +111,13 @@ namespace Game.Runtime
         {
             this.animator.Play(animName);
         }
+        
+    #if UNITY_EDITOR
+        public State debugState;
+        private void Update()
+        {
+            this.debugState = UnitState.Current;
+        }
+#endif
     }
 }

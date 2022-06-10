@@ -9,20 +9,22 @@ namespace Game.Runtime
         private EnemyBase _owner;
         
         public string animHurt;
+        public string animIdle;
 
         private bool _endHurtProcess;
         
         protected override void OnStart()
         {
             this._endHurtProcess = false;
-            this._owner = this.tree.owner.GetComponent<EnemyBase>();
+            this._owner = this.tree.Owner.GetComponent<EnemyBase>();
             this._owner.DoAnim(this.animHurt);
             EndHurt().Forget();
         }
 
         protected override void OnStop()
         {
-            
+            this.tree.Owner.UnitState.Set(State.IDLE);
+            this.tree.Owner.DoAnim(this.animIdle);
         }
 
         protected override NodeState OnUpdate(float deltaTime)

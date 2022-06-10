@@ -1,4 +1,5 @@
-﻿using Lean.Pool;
+﻿using System;
+using Lean.Pool;
 using UnityEngine;
 
 namespace Game.Runtime.Impact
@@ -10,12 +11,8 @@ namespace Game.Runtime.Impact
         [SerializeField] EnemyBase owner;
 
         [SerializeField] private Collider2D _collider2D;
-
-        public void ToggleActive(bool value)
-        {
-            this._collider2D.enabled = value;
-        }
         
+
         public override float GetDamage(Unit target)
         {
             Remove();

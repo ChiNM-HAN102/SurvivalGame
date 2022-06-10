@@ -14,6 +14,8 @@ namespace Game.Runtime
         [SerializeField] private EnemyData data;
         [SerializeField] private BehaviorTree tree;
 
+        private BehaviorTree _cloneTree;
+
         protected HealthBarController _healthBarController;
 
         public override UnitData Data { get => this.data;}
@@ -48,6 +50,10 @@ namespace Game.Runtime
             this.faceRight = false;
 
             SoundController.Instance.PlayCallEnemy();
+
+            this._cloneTree = Instantiate(this.tree);
+            
+            this._cloneTree.SetUpTree(this);
         }
         
 
@@ -59,7 +65,10 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            this.tree.DoUpdate(deltaTime);
+            if (this._cloneTree.Owner != null)
+            {
+                this._cloneTree.DoUpdate(deltaTime);
+            }
         }
         
         

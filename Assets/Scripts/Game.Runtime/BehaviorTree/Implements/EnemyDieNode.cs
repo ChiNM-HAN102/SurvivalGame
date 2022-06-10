@@ -12,13 +12,14 @@ namespace Game.Runtime
         private EnemyBase _owner;
         
         public string animDie;
+        public string animIdle;
 
         private bool _endDieProcess;
         
         protected override void OnStart()
         {
             this._endDieProcess = false;
-            this._owner = this.tree.owner.GetComponent<EnemyBase>();
+            this._owner = this.tree.Owner.GetComponent<EnemyBase>();
             this._owner.DoAnim(this.animDie);
             Die().Forget();
         }
@@ -26,7 +27,10 @@ namespace Game.Runtime
         protected override void OnStop()
         {
             GamePlayController.Instance.IncreaseTotalKillEnemy();
-            LeanPool.Despawn(this.tree.owner.gameObject);
+            LeanPool.Despawn(this.tree.Owner.gameObject);
+            
+            this.tree.Owner.UnitState.Set(State.IDLE);
+            this.tree.Owner.DoAnim(this.animIdle);
         }
 
         protected override NodeState OnUpdate(float deltaTime)
@@ -42,7 +46,7 @@ namespace Game.Runtime
         async UniTaskVoid Die()
         {
             await Utilities.WaitUntilFinishAnim(_owner.animator);
-            var renderer = this.tree.owner.GetComponentInChildren<SpriteRenderer>();
+            var renderer = this.tree.Owner.GetComponentInChildren<SpriteRenderer>();
             if (renderer)
             {
                 for (int i = 0; i < 4; i++)

@@ -12,7 +12,7 @@ namespace Game.Runtime
 
         public List<Node> listNode;
 
-        public Unit owner;
+        public Unit Owner { get; set; }
 
         public Node.NodeState TreeState { get; set; } = Node.NodeState.Running;
 
@@ -28,7 +28,17 @@ namespace Game.Runtime
 
         public void SetUpTree(Unit owner)
         {
-            this.owner = owner;
+            this.Owner = owner;
+        }
+
+        public BehaviorTree CloneTree()
+        {
+            var tree = Instantiate(this);
+            tree.rootNode = Instantiate(this.rootNode);
+            
+            var 
+
+            return tree;
         }
     }
 }

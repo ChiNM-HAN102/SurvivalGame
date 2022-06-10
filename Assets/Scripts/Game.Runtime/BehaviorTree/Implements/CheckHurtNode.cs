@@ -17,7 +17,7 @@ namespace Game.Runtime
 
         protected override NodeState OnUpdate(float deltaTime)
         {
-            if (this.tree.owner.UnitState.Current == State.HURT)
+            if (this.tree.Owner.UnitState.Current == State.HURT)
             {
                 return NodeState.Success;
             }

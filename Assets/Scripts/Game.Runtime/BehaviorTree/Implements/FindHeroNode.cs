@@ -10,7 +10,7 @@ namespace Game.Runtime
         
         protected override void OnStart()
         {
-            this.owner = this.tree.owner;
+            this.owner = this.tree.Owner;
         }
 
         protected override void OnStop()

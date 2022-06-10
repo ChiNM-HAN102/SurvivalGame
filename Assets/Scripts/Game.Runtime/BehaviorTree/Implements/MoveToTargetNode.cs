@@ -12,20 +12,28 @@ namespace Game.Runtime
         
         protected override void OnStart()
         {
-            this.owner = this.tree.owner;
+            this.owner = this.tree.Owner;
             this.owner.UnitState.Set(State.MOVE);
             this.owner.DoAnim(this.moveName);
         }
 
         protected override void OnStop()
         {
-            this.owner.UnitState.Set(State.IDLE);
-            this.owner.DoAnim(this.idleName);
+            if (this.tree.Owner.UnitState.Current == State.MOVE)
+            {
+                this.tree.Owner.UnitState.Set(State.IDLE);
+                this.tree.Owner.DoAnim(this.idleName);
+            }
         }
 
         protected override NodeState OnUpdate(float deltaTime)
         {
             if (this.owner.target == null)
+            {
+                return NodeState.Failure;
+            }
+
+            if (this.owner.UnitState.Current != State.MOVE)
             {
                 return NodeState.Failure;
             }
