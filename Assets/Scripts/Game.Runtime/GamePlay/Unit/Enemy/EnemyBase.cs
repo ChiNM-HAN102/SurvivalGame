@@ -51,7 +51,7 @@ namespace Game.Runtime
 
             SoundController.Instance.PlayCallEnemy();
 
-            this._cloneTree = Instantiate(this.tree);
+            this._cloneTree = this.tree.CloneTree();
             
             this._cloneTree.SetUpTree(this);
         }

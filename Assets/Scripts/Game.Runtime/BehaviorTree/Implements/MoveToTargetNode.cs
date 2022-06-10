@@ -49,7 +49,6 @@ namespace Game.Runtime
             
 
             var meleeDetect = this.owner.Stats.GetStat<MeleeDetectRange>(RPGStatType.MeleeDetectRange);
-
             var meleeDetectValue = meleeDetect == null ? 0 : meleeDetect.StatValue;
             
             if (Vector2.Distance(targetPosition, transform.position) > meleeDetectValue)

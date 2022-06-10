@@ -9,5 +9,14 @@ namespace Game.Runtime
         public List<Node> children = new List<Node>();
         
         public override NodeType _NodeType { get; } = NodeType.Composite;
+
+        public override Node Clone()
+        {
+            var node = Instantiate(this);
+
+            node.children = this.children.ConvertAll(x => x.Clone());
+
+            return node;
+        }
     }
 }

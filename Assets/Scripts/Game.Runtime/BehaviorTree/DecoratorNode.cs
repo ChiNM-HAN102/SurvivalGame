@@ -9,5 +9,13 @@ namespace Game.Runtime
         public Node child;
         
         public override NodeType _NodeType { get; } = NodeType.Decorator;
+
+        public override Node Clone()
+        {
+            var node = Instantiate(this);
+            node.child = this.child.Clone();
+
+            return node;
+        }
     }
 }

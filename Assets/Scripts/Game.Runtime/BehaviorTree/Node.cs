@@ -51,6 +51,12 @@ namespace Game.Runtime
         protected abstract void OnStop();
         protected abstract NodeState OnUpdate(float deltaTime);
 
+        public virtual Node Clone()
+        {
+            var node = Instantiate(this);
+            return node;
+        }
+
         public void SetTree(BehaviorTree tree)
         {
             this.tree = tree;

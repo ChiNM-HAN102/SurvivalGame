@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: SequenceNodeNormal
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
-  nodeState: 0
-  started: 0
   children:
   - {fileID: 11400000, guid: 4db4caa9b9002e7449d1a793ab57d928, type: 2}
   - {fileID: 11400000, guid: ea842ff3e3ae796438d99bb49c24482d, type: 2}
-  - {fileID: 11400000, guid: 0c4820b97e2ae5e41bc140893120bd9a, type: 2}
+  - {fileID: 11400000, guid: 16c41a88a79cb8f44b3f286b7bc15976, type: 2}
   - {fileID: 11400000, guid: 3cd5726fba624df458aaa51d44707891, type: 2}

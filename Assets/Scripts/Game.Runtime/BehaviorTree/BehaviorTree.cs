@@ -34,9 +34,7 @@ namespace Game.Runtime
         public BehaviorTree CloneTree()
         {
             var tree = Instantiate(this);
-            tree.rootNode = Instantiate(this.rootNode);
-            
-            var 
+            tree.rootNode = this.rootNode.Clone();
 
             return tree;
         }
