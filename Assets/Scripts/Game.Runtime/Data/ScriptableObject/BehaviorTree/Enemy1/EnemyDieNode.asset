@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89f2788b12164c4099a446dca2fbc187, type: 3}
-  m_Name: FindHeroNode
+  m_Script: {fileID: 11500000, guid: 3e28d111299747cb9aca507b9fbb24c9, type: 3}
+  m_Name: EnemyDieNode
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
+  animDie: Death
+  endDieProcess: 0

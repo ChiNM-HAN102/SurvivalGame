@@ -8,7 +8,7 @@ namespace Game.Runtime
 {
     public abstract class Unit : Dummy
     {
-        protected Animator _animator;
+        public Animator animator;
         
         protected bool faceRight;
 
@@ -25,7 +25,7 @@ namespace Game.Runtime
 
         protected virtual void Awake()
         {
-            this._animator = GetComponentInChildren<Animator>();
+            this.animator = GetComponentInChildren<Animator>();
             Skills = new SkillController();
         }
 
@@ -88,16 +88,6 @@ namespace Game.Runtime
             health.TakeDamage(damageInfo);
         }
 
-        public async UniTask WaitUntilFinishAnim(Animator _animator)
-        {
-            await UniTask.Yield();
-            var clips = _animator.GetCurrentAnimatorClipInfo(0);
-            if (clips.Length > 0)
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
-            }
-        }
-        
         public virtual void Flip()
         {
             var newScale = transform.localScale;
@@ -114,12 +104,12 @@ namespace Game.Runtime
         public void UseSkill(string anim)
         {
             UnitState.Set(State.ATTACK);
-            this._animator.Play(anim);
+            this.animator.Play(anim);
         }
 
         public virtual void DoAnim(string animName)
         {
-            this._animator.Play(animName);
+            this.animator.Play(animName);
         }
     }
 }

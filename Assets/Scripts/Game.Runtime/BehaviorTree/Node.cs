@@ -28,18 +28,22 @@ namespace Game.Runtime
         
         private bool started = false;
 
-        public NodeState Update(float deltaTime)
+        public NodeState DoUpdate(float deltaTime)
         {
             if (!this.started)
             {
+                Debug.Log("Start " + this.GetType().FullName);
                 OnStart();
                 this.started = true;
             }
+            
+            Debug.Log("Update " + this.GetType().FullName);
 
             this.CurrentNodeState = OnUpdate(deltaTime);
 
             if (this.CurrentNodeState == NodeState.Failure || this.CurrentNodeState == NodeState.Success)
             {
+                Debug.Log("Stop " + this.GetType().FullName);
                 OnStop();
                 this.started = false;
             }

@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89f2788b12164c4099a446dca2fbc187, type: 3}
-  m_Name: FindHeroNode
+  m_Script: {fileID: 11500000, guid: 961892a7839263b48945455a018f6058, type: 3}
+  m_Name: SequenceNodeDie
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
+  children:
+  - {fileID: 11400000, guid: 03f6ba8b243940541b9fe87bc8ad5c38, type: 2}
+  - {fileID: 11400000, guid: 1cf304065c165a1489d13bf93d35ea3a, type: 2}

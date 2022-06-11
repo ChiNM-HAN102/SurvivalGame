@@ -22,7 +22,7 @@ namespace Game.Runtime
         protected override NodeState OnUpdate(float deltaTime)
         {
             var child = this.children[this.current];
-            switch (child.Update(deltaTime))
+            switch (child.DoUpdate(deltaTime))
             {
                 case NodeState.Running:
                     return NodeState.Running;

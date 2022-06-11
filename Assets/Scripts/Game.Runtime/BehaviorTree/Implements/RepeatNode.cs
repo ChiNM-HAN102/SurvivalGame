@@ -19,7 +19,7 @@ namespace Game.Runtime
 
         protected override NodeState OnUpdate(float deltaTime)
         {
-            this.child.Update(deltaTime);
+            this.child.DoUpdate(deltaTime);
             return Node.NodeState.Running;
         }
     }

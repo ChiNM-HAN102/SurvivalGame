@@ -21,6 +21,7 @@ namespace Game.Runtime
         protected override void Awake()
         {
             base.Awake();
+            this.tree.SetUpTree(this);
             this._healthBarController = GetComponentInChildren<HealthBarController>();
             InitSkill();
         }
@@ -58,7 +59,7 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            this.tree.Update(deltaTime);
+            this.tree.DoUpdate(deltaTime);
         }
         
         
@@ -83,53 +84,13 @@ namespace Game.Runtime
             
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0 && UnitState.Current != State.DIE)
             {
-                GamePlayController.Instance.IncreaseTotalKillEnemy();
-                // UnitState.Set(State.DIE);
-                // this._animator.Play(this._animDie);
-                Die().Forget();
+                UnitState.Set(State.DIE);
             }
             else
             {
                 UnitState.Set(State.HURT);
-                // this._animator.Play(this._animHurt);
-                EndHurt().Forget();
             }
         }
 
-        async UniTaskVoid Die()
-        {
-            await WaitUntilFinishAnim(this._animator);
-            var renderer = GetComponentInChildren<SpriteRenderer>();
-            for (int i = 0; i < 4; i++)
-            {
-                renderer.color = new Color32(255, 255, 255 , 100);
-                await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
-                renderer.color = new Color32(255, 255, 255 , 255);
-                await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
-            }
-
-            if (this.data.dropItems.Length > 0)
-            {
-                var random = Random.Range(0, 0.999f);
-                if (random < this.data.percentDropItems)
-                {
-                    var itemRandomIdx = Random.Range(0, this.data.dropItems.Length);
-                    var dropItem = this.data.dropItems[itemRandomIdx];
-                    LeanPool.Spawn(dropItem, new Vector2(transform.position.x,-3f), Quaternion.identity);
-                }
-            }
-            LeanPool.Despawn(gameObject);
-        }
-
-        async UniTaskVoid EndHurt()
-        {
-            await WaitUntilFinishAnim(this._animator);
-
-            if (this.UnitState.Current == State.HURT)
-            {
-                UnitState.Set(State.IDLE);
-            }
-        }
-        
     }
 }

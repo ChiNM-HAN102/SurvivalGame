@@ -218,15 +218,15 @@ namespace Game.Runtime
                     SpawnEnemy(0);
                 }
                 
-                if (this.countDownSpawnEnemy >= this.data.timeCountDownSpawnEnemy)
-                {
-                   SpawnEnemy();
-                   this.countDownSpawnEnemy = 0;
-                }
-                else
-                {
-                    this.countDownSpawnEnemy += deltaTime;
-                }
+                // if (this.countDownSpawnEnemy >= this.data.timeCountDownSpawnEnemy)
+                // {
+                //    SpawnEnemy();
+                //    this.countDownSpawnEnemy = 0;
+                // }
+                // else
+                // {
+                //     this.countDownSpawnEnemy += deltaTime;
+                // }
             }
         }
 

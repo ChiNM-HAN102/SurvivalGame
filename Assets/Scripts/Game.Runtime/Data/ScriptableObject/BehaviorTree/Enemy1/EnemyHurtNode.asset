@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89f2788b12164c4099a446dca2fbc187, type: 3}
-  m_Name: FindHeroNode
+  m_Script: {fileID: 11500000, guid: fecd3f8a11e54162b83b9f56dca90488, type: 3}
+  m_Name: EnemyHurtNode
   m_EditorClassIdentifier: 
   tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
+  animHurt: Hurt

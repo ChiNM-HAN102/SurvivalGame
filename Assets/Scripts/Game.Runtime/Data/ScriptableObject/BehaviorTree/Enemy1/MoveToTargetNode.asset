@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb31cee43948f582446da55ea4a8a7, type: 3}
   m_Name: MoveToTargetNode
   m_EditorClassIdentifier: 
-  tree: {fileID: 0}
+  tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
   moveName: Walk
   idleName: Idle

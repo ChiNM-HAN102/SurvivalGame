@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17dd7c3818534f0dbeb90dd1e9b800a3, type: 3}
   m_Name: NormalMeleeAttackNode
   m_EditorClassIdentifier: 
-  tree: {fileID: 0}
+  tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
   attackName: Attack_3

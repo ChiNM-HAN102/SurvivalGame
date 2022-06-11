@@ -26,7 +26,7 @@ namespace Game.Runtime
 
         public void RegisterSkill()
         {
-            if (GlobalUpdateSystem.Instance != null)
+            if (GlobalUpdateSystem.Instance != null && dictSkill != null)
             {
                 var allSkills = this.dictSkill.Values;
                 foreach (var skill in allSkills)
@@ -39,7 +39,7 @@ namespace Game.Runtime
 
         public void UnRegisterSkill()
         {
-            if (GlobalUpdateSystem.Instance != null)
+            if (GlobalUpdateSystem.Instance != null && dictSkill != null)
             {
                 var allSkills = this.dictSkill.Values;
                 foreach (var skill in allSkills)

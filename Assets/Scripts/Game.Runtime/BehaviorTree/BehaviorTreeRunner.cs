@@ -42,7 +42,7 @@ namespace Game.Runtime
 
         private void Update()
         {
-            this.tree.Update(Time.deltaTime);
+            this.tree.DoUpdate(Time.deltaTime);
         }
     }
 }

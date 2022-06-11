@@ -16,11 +16,11 @@ namespace Game.Runtime
 
         public Node.NodeState TreeState { get; set; } = Node.NodeState.Running;
 
-        public Node.NodeState Update(float deltaTime)
+        public Node.NodeState DoUpdate(float deltaTime)
         {
             if (this.rootNode != null && this.rootNode.CurrentNodeState == Node.NodeState.Running)
             {
-                this.TreeState = this.rootNode.Update(deltaTime);
+                this.TreeState = this.rootNode.DoUpdate(deltaTime);
             }
 
             return this.TreeState;

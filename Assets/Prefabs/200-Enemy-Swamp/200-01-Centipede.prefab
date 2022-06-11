@@ -145,14 +145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de594d06bd6427a977f29eb3191931c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: {fileID: 0}
+  animator: {fileID: 0}
+  target: {fileID: 0}
   data: {fileID: 11400000, guid: 4e1d43d888d4642448e1b6186d5dfd9d, type: 2}
-  _damageBox: {fileID: 6558043101623080307}
-  _animAttack: Attack_3
-  _animMove: Walk
-  _animIdle: Idle
-  _animHurt: Hurt
-  _animDie: Death
+  tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
 --- !u!114 &7176637828861613292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +221,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy_damage_box
       objectReference: {fileID: 0}
+    - target: {fileID: 269801185439441798, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 269801185439441799, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
       propertyPath: m_Size.x
       value: 3.0074368
@@ -243,14 +243,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
---- !u!114 &6558043101623080307 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 269801185439441793, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
-  m_PrefabInstance: {fileID: 6394090900198864626}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a33a6bcacb0945a09152b4e207e64dea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

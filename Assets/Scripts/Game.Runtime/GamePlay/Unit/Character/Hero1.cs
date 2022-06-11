@@ -72,7 +72,7 @@ namespace Game.Runtime
                     if (UnitState.Current != State.MOVE)
                     {
                         UnitState.Set(State.MOVE);
-                        this._animator.Play(this._animMove);
+                        this.animator.Play(this._animMove);
                     }
 
                     transform.position = transform.position + (Vector3)moveVector * (this.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * Time.deltaTime);
@@ -82,7 +82,7 @@ namespace Game.Runtime
                     if (UnitState.Current != State.IDLE)
                     {
                         UnitState.Set(State.IDLE);
-                        this._animator.Play(this._animIdle);
+                        this.animator.Play(this._animIdle);
                     }
                 }
             }
@@ -91,19 +91,19 @@ namespace Game.Runtime
 
         void ExecuteAttack1()
         {
-            this._animator.Play(this._animSkill1);
+            this.animator.Play(this._animSkill1);
             SpawnBullet().Forget();
         }
 
         void ExecuteAttack2()
         {
-            this._animator.Play(this._animSkill2);
+            this.animator.Play(this._animSkill2);
             SpawnBullet2().Forget();
         }
 
         void ExecuteAttack3()
         {
-            this._animator.Play(this._animSkill3);
+            this.animator.Play(this._animSkill3);
             SpawnBullet3().Forget();
         }
 
@@ -140,7 +140,7 @@ namespace Game.Runtime
         async UniTaskVoid StopAttack()
         {
             await UniTask.Yield();
-            var clips = this._animator.GetCurrentAnimatorClipInfo(0);
+            var clips = this.animator.GetCurrentAnimatorClipInfo(0);
             if (clips.Length > 0)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
