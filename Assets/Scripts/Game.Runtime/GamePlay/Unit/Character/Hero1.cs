@@ -69,21 +69,13 @@ namespace Game.Runtime
                         }
                     }
 
-                    if (UnitState.Current != State.MOVE)
-                    {
-                        UnitState.Set(State.MOVE);
-                        this.animator.Play(this._animMove);
-                    }
+                    this.AnimController.DoAnim(this._animMove, State.MOVE);
 
                     transform.position = transform.position + (Vector3)moveVector * (this.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * Time.deltaTime);
                 }
                 else
                 {
-                    if (UnitState.Current != State.IDLE)
-                    {
-                        UnitState.Set(State.IDLE);
-                        this.animator.Play(this._animIdle);
-                    }
+                    this.AnimController.DoAnim(this._animIdle, State.IDLE);
                 }
             }
         }
@@ -91,19 +83,19 @@ namespace Game.Runtime
 
         void ExecuteAttack1()
         {
-            this.animator.Play(this._animSkill1);
+            this.AnimController.DoAnim(this._animSkill1, State.USE_SKILL_1);
             SpawnBullet().Forget();
         }
 
         void ExecuteAttack2()
         {
-            this.animator.Play(this._animSkill2);
+            this.AnimController.DoAnim(this._animSkill2, State.USE_SKILL_2);
             SpawnBullet2().Forget();
         }
 
         void ExecuteAttack3()
         {
-            this.animator.Play(this._animSkill3);
+            this.AnimController.DoAnim(this._animSkill3, State.USE_SKILL_3);
             SpawnBullet3().Forget();
         }
 
@@ -139,12 +131,7 @@ namespace Game.Runtime
 
         async UniTaskVoid StopAttack()
         {
-            await UniTask.Yield();
-            var clips = this.animator.GetCurrentAnimatorClipInfo(0);
-            if (clips.Length > 0)
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(clips[0].clip.length));
-            }
+            await AnimController.WaitUntilFinishAnim();
             
             if (UnitState.Current == State.ATTACK)
             {

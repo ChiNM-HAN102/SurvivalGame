@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ff2f8ac07c4f949b1a81dd1793cd90, type: 3}
   m_Name: RepeatNode
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
-  child: {fileID: 11400000, guid: c6e35494c9edb32468f7793f3820cb2f, type: 2}
+  child: {fileID: 11400000, guid: b3b13d97ec7153246b7832c737bc5fa7, type: 2}

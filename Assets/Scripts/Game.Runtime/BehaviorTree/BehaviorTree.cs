@@ -12,9 +12,10 @@ namespace Game.Runtime
 
         public List<Node> listNode;
 
-        public Unit Owner { get; set; }
+        public Unit Owner { get; private set; }
 
         public Node.NodeState TreeState { get; set; } = Node.NodeState.Running;
+        
 
         public Node.NodeState DoUpdate(float deltaTime)
         {
@@ -34,7 +35,7 @@ namespace Game.Runtime
         public BehaviorTree CloneTree()
         {
             var tree = Instantiate(this);
-            tree.rootNode = this.rootNode.Clone();
+            tree.rootNode = this.rootNode.Clone(tree);
 
             return tree;
         }

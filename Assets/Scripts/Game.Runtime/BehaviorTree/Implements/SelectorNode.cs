@@ -5,11 +5,9 @@ namespace Game.Runtime
     [CreateAssetMenu(fileName = "SelectorNode", menuName = "BehaviorTree/Node/Composite/SelectorNode")]
     public class SelectorNode : CompositeNode
     {
-        private int current;
-        
         protected override void OnStart()
         {
-            this.current = 0;
+            
         }
 
         protected override void OnStop()
@@ -19,19 +17,26 @@ namespace Game.Runtime
 
         protected override NodeState OnUpdate(float deltaTime)
         {
-            var child = this.children[this.current];
-            switch (child.DoUpdate(deltaTime))
+            var childNeedReset = CurrentNodeState != NodeState.Running;
+            foreach (Node node in this.children)
             {
-                case NodeState.Running:
-                    return NodeState.Running;
-                case NodeState.Failure:
-                    this.current++;
-                    break;
-                case NodeState.Success:
-                    return NodeState.Success;
+                var nodeState = node.DoUpdate(deltaTime, childNeedReset);
+                switch (nodeState)
+                {
+                    case NodeState.Running:
+                        CurrentNodeState = NodeState.Running;
+                        return CurrentNodeState;
+                    case NodeState.Failure:
+                        continue;
+                    case NodeState.Success:
+                        CurrentNodeState = NodeState.Success;
+                        return CurrentNodeState;
+                }
             }
 
-            return this.current == this.children.Count ? NodeState.Success : NodeState.Running;
+            CurrentNodeState = NodeState.Failure;
+
+            return CurrentNodeState;
         }
     }
 }

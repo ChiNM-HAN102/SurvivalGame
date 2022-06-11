@@ -10,11 +10,11 @@ namespace Game.Runtime
         
         public override NodeType _NodeType { get; } = NodeType.Composite;
 
-        public override Node Clone()
+        public override Node Clone(BehaviorTree tree)
         {
             var node = Instantiate(this);
-
-            node.children = this.children.ConvertAll(x => x.Clone());
+            Debug.Log("Clone " + GetType().Name);
+            node.children = this.children.ConvertAll(x => x.Clone(tree));
 
             return node;
         }

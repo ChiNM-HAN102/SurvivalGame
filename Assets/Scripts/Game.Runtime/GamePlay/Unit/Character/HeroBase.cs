@@ -18,7 +18,6 @@ namespace Game.Runtime
         protected override void Awake()
         {
             base.Awake();
-            this.animator = GetComponentInChildren<Animator>();
             UnitState.Set(State.IDLE);
         }
 
@@ -26,8 +25,7 @@ namespace Game.Runtime
         {
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = true;
-            UnitState.Set(State.IDLE);
-            this.animator.Play(this._animIdle);
+            this.AnimController.DoAnim(this._animIdle, State.IDLE);
             Stats = new HeroStatsCollection(this, data);
         }
 

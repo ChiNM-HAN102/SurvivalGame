@@ -12,17 +12,14 @@ namespace Game.Runtime
         
         protected override void OnStart()
         {
-            this.owner = this.tree.Owner;
-            this.owner.UnitState.Set(State.MOVE);
-            this.owner.DoAnim(this.moveName);
+            this.owner = this.Tree.Owner;
         }
 
         protected override void OnStop()
         {
-            if (this.tree.Owner.UnitState.Current == State.MOVE)
+            if (this.owner.UnitState.Current == State.MOVE)
             {
-                this.tree.Owner.UnitState.Set(State.IDLE);
-                this.tree.Owner.DoAnim(this.idleName);
+                this.owner.AnimController.DoAnim(this.idleName, State.IDLE);
             }
         }
 
@@ -33,11 +30,6 @@ namespace Game.Runtime
                 return NodeState.Failure;
             }
 
-            if (this.owner.UnitState.Current != State.MOVE)
-            {
-                return NodeState.Failure;
-            }
-            
             var transform = this.owner.transform;
             var targetPosition = this.owner.target.transform.position;
             
@@ -47,7 +39,6 @@ namespace Game.Runtime
                 this.owner.Flip();
             }
             
-
             var meleeDetect = this.owner.Stats.GetStat<MeleeDetectRange>(RPGStatType.MeleeDetectRange);
             var meleeDetectValue = meleeDetect == null ? 0 : meleeDetect.StatValue;
             
@@ -55,6 +46,8 @@ namespace Game.Runtime
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition,
                     this.owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
+                
+                this.owner.AnimController.DoAnim(this.moveName, State.MOVE);
                 
                 return NodeState.Running;
             }

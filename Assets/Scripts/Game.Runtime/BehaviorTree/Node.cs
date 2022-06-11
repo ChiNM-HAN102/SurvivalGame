@@ -22,14 +22,19 @@ namespace Game.Runtime
         
         public virtual NodeType _NodeType {get;}
 
-        public BehaviorTree tree;
+        public BehaviorTree Tree { get; set; }
 
         public NodeState CurrentNodeState { get; set; }
         
         private bool started = false;
 
-        public NodeState DoUpdate(float deltaTime)
+        public NodeState DoUpdate(float deltaTime, bool reset = false)
         {
+            if (reset)
+            {
+                this.started = false;
+            }
+            
             if (!this.started)
             {
                 OnStart();
@@ -51,15 +56,16 @@ namespace Game.Runtime
         protected abstract void OnStop();
         protected abstract NodeState OnUpdate(float deltaTime);
 
-        public virtual Node Clone()
+        public virtual Node Clone(BehaviorTree tree)
         {
             var node = Instantiate(this);
+            node.Tree = tree;
             return node;
         }
 
-        public void SetTree(BehaviorTree tree)
+        public void SetTree(BehaviorTree inputTree)
         {
-            this.tree = tree;
+            this.Tree = inputTree;
         }
     }
 }

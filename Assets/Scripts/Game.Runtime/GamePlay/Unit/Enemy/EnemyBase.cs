@@ -11,6 +11,9 @@ namespace Game.Runtime
 {
     public class EnemyBase : Unit
     {
+        [SerializeField] private string animDie = "Death";
+        [SerializeField] private string animHurt = "Hurt";
+        [SerializeField] private string animIdle = "Idle";
         [SerializeField] private EnemyData data;
         [SerializeField] private BehaviorTree tree;
 
@@ -23,9 +26,11 @@ namespace Game.Runtime
         protected override void Awake()
         {
             base.Awake();
-            this.tree.SetUpTree(this);
             this._healthBarController = GetComponentInChildren<HealthBarController>();
             InitSkill();
+            
+            this._cloneTree = this.tree.CloneTree();
+            this._cloneTree.SetUpTree(this);
         }
 
         void InitSkill()
@@ -50,10 +55,6 @@ namespace Game.Runtime
             this.faceRight = false;
 
             SoundController.Instance.PlayCallEnemy();
-
-            this._cloneTree = this.tree.CloneTree();
-            
-            this._cloneTree.SetUpTree(this);
         }
         
 
@@ -65,10 +66,11 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            if (this._cloneTree.Owner != null)
+            if (this._cloneTree.Owner == null)
             {
-                this._cloneTree.DoUpdate(deltaTime);
+                
             }
+            this._cloneTree.DoUpdate(deltaTime);
         }
         
         
@@ -91,14 +93,51 @@ namespace Game.Runtime
             
             SoundController.Instance.PlayEnemyHurt();
             
-            if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0 && UnitState.Current != State.DIE)
+            if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0)
             {
-                UnitState.Set(State.DIE);
+                AnimController.DoAnim(animDie, State.DIE,  () => {
+                    Die().Forget();
+                });
+                
+                GamePlayController.Instance.IncreaseTotalKillEnemy();
             }
             else
             {
-                UnitState.Set(State.HURT);
+                AnimController.DoAnim(this.animHurt, State.HURT, () => {
+                    AnimController.DoAnim(animIdle, State.IDLE);
+                });
             }
+        }
+        
+        async UniTaskVoid Die()
+        {
+            await AnimController.WaitUntilFinishAnim();
+            var renderer = GetComponentInChildren<SpriteRenderer>();
+            if (renderer)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    renderer.color = new Color32(255, 255, 255 , 100);
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+                    renderer.color = new Color32(255, 255, 255 , 255);
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+                }
+            }
+
+            var data = (EnemyData)Data;
+            if (data.dropItems.Length > 0)
+            {
+                var random = Random.Range(0, 0.999f);
+                if (random < data.percentDropItems)
+                {
+                    var itemRandomIdx = Random.Range(0, data.dropItems.Length);
+                    var dropItem = data.dropItems[itemRandomIdx];
+                    LeanPool.Spawn(dropItem, new Vector2(this.transform.position.x,-3f), Quaternion.identity);
+                }
+            }
+
+            LeanPool.Despawn(gameObject);
+            AnimController.DoAnim(animIdle, State.IDLE);
         }
 
     }

@@ -17,47 +17,37 @@ namespace Game.Runtime
         
         protected override void OnStart()
         {
-            var owner = this.tree.Owner;
+            var owner = this.Tree.Owner;
             skill = owner.Skills.GetSkill(SkillType.NormalAttack);
 
             if (skill != null && this.skill.CanUse)
             {
-                owner.UnitState.Set(State.ATTACK);
-                owner.DoAnim(this.attackName);
+                owner.AnimController.DoAnim(this.attackName, State.ATTACK, EndAction);
 
                 this.skill.StartCoolDown();
                 
                 this._successTrigger = false;
-            
-                this._skillTriggerEvent = owner.GetComponentInChildren<SkillTriggerEvent>();
-
-                if (this._skillTriggerEvent)
-                {
-                    this._skillTriggerEvent.EndAction = EndAction;
-                }
             }
         }
 
         void EndAction()
         {
             this._successTrigger = true;
+            if (this.Tree.Owner.UnitState.Current == State.ATTACK)
+            {
+                this.Tree.Owner.AnimController.DoAnim(this.idleName, State.IDLE);
+            }
         }
 
         protected override void OnStop()
         {
-            this.tree.Owner.UnitState.Set(State.IDLE);
-            this.tree.Owner.DoAnim(this.idleName);
+            
         }
 
         protected override NodeState OnUpdate(float deltaTime)
         {
 
-            if (!this._skillTriggerEvent || skill == null || this.skill.CanUse)
-            {
-                return NodeState.Failure;
-            }
-
-            if (this.tree.Owner.UnitState.Current != State.ATTACK)
+            if (skill == null)
             {
                 return NodeState.Failure;
             }

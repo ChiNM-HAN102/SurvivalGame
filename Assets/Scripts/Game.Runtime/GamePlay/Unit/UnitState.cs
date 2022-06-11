@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.Runtime
 {
@@ -9,8 +10,11 @@ namespace Game.Runtime
         IDLE = 0,
         MOVE = 1,
         HURT = 2,
-        ATTACK = 3,
-        DIE = 4
+        DIE = 3,
+        ATTACK = 4,
+        USE_SKILL_1 = 5,
+        USE_SKILL_2 = 6,
+        USE_SKILL_3 = 7
     }
     
     public class UnitState
@@ -44,7 +48,8 @@ namespace Game.Runtime
         
         public bool CanUseSkill()
         {
-            if (Current == State.DIE || Current == State.HURT || Current == State.ATTACK)
+            if (Current == State.DIE || Current == State.HURT || Current == State.ATTACK || 
+                Current == State.USE_SKILL_1 || Current == State.USE_SKILL_2 || Current == State.USE_SKILL_3)
             {
                 return false;
             }

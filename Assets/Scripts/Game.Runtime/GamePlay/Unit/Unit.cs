@@ -8,8 +8,6 @@ namespace Game.Runtime
 {
     public abstract class Unit : Dummy
     {
-        public Animator animator;
-        
         protected bool faceRight;
 
         public Unit target;
@@ -19,14 +17,16 @@ namespace Game.Runtime
         public RPGStatCollection Stats { get; set; }
         
         public SkillController Skills { get; set; }
+        
+        public UnitAnimController AnimController { get; set; }
 
         
         public UnitState UnitState { get; set; } = new UnitState();
 
         protected virtual void Awake()
         {
-            this.animator = GetComponentInChildren<Animator>();
             Skills = new SkillController();
+            AnimController = new UnitAnimController(this);
         }
 
         public virtual bool IsAlive
@@ -103,16 +103,10 @@ namespace Game.Runtime
 
         public void UseSkill(string anim)
         {
-            UnitState.Set(State.ATTACK);
-            this.animator.Play(anim);
+            this.AnimController.DoAnim(anim, State.ATTACK);
         }
 
-        public virtual void DoAnim(string animName)
-        {
-            this.animator.Play(animName);
-        }
-        
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         public State debugState;
         private void Update()
         {
