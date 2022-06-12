@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bf3e8d8e1c826c4b94a20a178ed6262, type: 3}
-  m_Name: Hero1Data
+  m_Script: {fileID: 11500000, guid: 3f1dc15b58144e258f438acee3badd6b, type: 3}
+  m_Name: CheckSkillCoolDownNode0
   m_EditorClassIdentifier: 
-  hp: 200
-  attack: 40
-  speed: 8
-  attackSpeed: 0
-  coolDownChangeHero: 5
-  avatar: {fileID: 21300000, guid: ef2c91129ac99a6459f3b790e9aa532d, type: 3}
-  cooldownSkill1: 0
-  cooldownSkill2: 0
+  skillType: 0

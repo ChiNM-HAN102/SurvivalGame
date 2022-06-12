@@ -7,13 +7,29 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
+    public class BulletData
+    {
+        public float LifeTime { get; set; }
+        public float Damage { get; set; }
+        public float Speed { get; set; }
+        public bool Flip { get; set; }
+        
+        public BulletData(float lifeTime, bool flip, float speed, float damage)
+        {
+            this.LifeTime = lifeTime;
+            this.Damage = damage;
+            this.Speed = speed;
+            this.Flip = flip;
+        }
+    }
+    
     public class BulletBase : DamageBox, IUpdateSystem
     {
         [SerializeField] private bool initFaceLeft = false;
         [SerializeField] private GameObject prefabImpact;
         [SerializeField] private bool isAoe;
 
-        protected float attack;
+        protected BulletData data;
 
         protected bool faceRight;
 
@@ -46,15 +62,15 @@ namespace Game.Runtime
         }
         
 
-        public virtual void InitBullet(float lifeTime, bool targetFaceRight, float speed, float attack)
+        public virtual void InitBullet(BulletData inputData)
         {
-            this.attack = attack;
+            this.data = inputData;
             canDamage = true;
             cts = new CancellationTokenSource();
-            DestroyBullet(lifeTime).Forget();
-            if (targetFaceRight)
+            DestroyBullet(this.data.LifeTime).Forget();
+            if (this.data.Flip)
             {
-                this.directionVector = new Vector3(speed, 0);
+                this.directionVector = new Vector3(this.data.Speed, 0);
                 if (this.initFaceLeft)
                 {
                     Flip();
@@ -62,7 +78,7 @@ namespace Game.Runtime
             }
             else
             {
-                this.directionVector = new Vector3(-speed, 0);
+                this.directionVector = new Vector3(- this.data.Speed, 0);
                 if (!this.initFaceLeft)
                 {
                     Flip();
@@ -102,7 +118,7 @@ namespace Game.Runtime
             {
                 this.canDamage = false;
                 Remove();
-                return this.attack;
+                return this.data.Damage;
             }
 
             return 0;

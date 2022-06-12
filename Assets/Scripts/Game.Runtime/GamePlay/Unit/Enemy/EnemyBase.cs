@@ -66,10 +66,6 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            if (this._cloneTree.Owner == null)
-            {
-                
-            }
             this._cloneTree.DoUpdate(deltaTime);
         }
         

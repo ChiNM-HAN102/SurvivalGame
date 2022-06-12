@@ -12,6 +12,5 @@ namespace Game.Runtime
 
         public int cooldownSkill1;
         public int cooldownSkill2;
-        public int cooldownSkill3;
     }
 }

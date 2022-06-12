@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bf3e8d8e1c826c4b94a20a178ed6262, type: 3}
-  m_Name: Hero1Data
+  m_Script: {fileID: 11500000, guid: f4ff2f8ac07c4f949b1a81dd1793cd90, type: 3}
+  m_Name: RepeatNode
   m_EditorClassIdentifier: 
-  hp: 200
-  attack: 40
-  speed: 8
-  attackSpeed: 0
-  coolDownChangeHero: 5
-  avatar: {fileID: 21300000, guid: ef2c91129ac99a6459f3b790e9aa532d, type: 3}
-  cooldownSkill1: 0
-  cooldownSkill2: 0
+  child: {fileID: 11400000, guid: d4741e919ea76bd459910641e74281a7, type: 2}

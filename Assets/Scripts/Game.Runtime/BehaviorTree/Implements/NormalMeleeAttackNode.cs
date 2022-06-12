@@ -13,18 +13,18 @@ namespace Game.Runtime
 
         private SkillTriggerEvent _skillTriggerEvent;
 
-        private Skill skill;
+        private Skill _skill;
         
         protected override void OnStart()
         {
             var owner = this.Tree.Owner;
-            skill = owner.Skills.GetSkill(SkillType.NormalAttack);
+            this._skill = owner.Skills.GetSkill(SkillType.NormalAttack);
 
-            if (skill != null && this.skill.CanUse)
+            if (this._skill != null)
             {
                 owner.AnimController.DoAnim(this.attackName, State.ATTACK, EndAction);
 
-                this.skill.StartCoolDown();
+                this._skill.StartCoolDown();
                 
                 this._successTrigger = false;
             }
@@ -47,7 +47,7 @@ namespace Game.Runtime
         protected override NodeState OnUpdate(float deltaTime)
         {
 
-            if (skill == null)
+            if (this._skill == null)
             {
                 return NodeState.Failure;
             }

@@ -18,9 +18,11 @@ namespace Game.Runtime
 
         protected override NodeState OnUpdate(float deltaTime)
         {
+            
+            var childNeedReset = CurrentNodeState == NodeState.Failure;
             foreach (Node node in this.children)
             {
-                var nodeState = node.DoUpdate(deltaTime);
+                var nodeState = node.DoUpdate(deltaTime, childNeedReset);
                 switch (nodeState)
                 {
                     case NodeState.Failure:

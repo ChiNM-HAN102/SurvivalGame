@@ -23,6 +23,8 @@ namespace Game.Runtime
         
         public UnitState UnitState { get; set; } = new UnitState();
 
+        public InputControlType CurrentControlType { get; set; } = InputControlType.NONE;
+
         protected virtual void Awake()
         {
             Skills = new SkillController();
