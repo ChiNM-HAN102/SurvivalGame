@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6583464362812752301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2554768345249844328}
+  m_Layer: 0
+  m_Name: spawnBulletPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2554768345249844328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6583464362812752301}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.494, y: 0.943, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2622457778127636371}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2401888506079162752
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45,7 +76,7 @@ PrefabInstance:
       objectReference: {fileID: 7108339969198208228, guid: 89ca97f571b7bb94ab9630cb814744f2, type: 3}
     - target: {fileID: 8180104375668624129, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
       propertyPath: m_Name
-      value: 03-SteamMan
+      value: 100-03-SteamMan
       objectReference: {fileID: 0}
     - target: {fileID: 8960671908098936616, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
       propertyPath: m_Sprite
@@ -53,3 +84,59 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 99750adc9ada1e44bba7c486d8cbdd8a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+--- !u!4 &2622457778127636371 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 374343760511972883, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+  m_PrefabInstance: {fileID: 2401888506079162752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5823340445625350785 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8180104375668624129, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+  m_PrefabInstance: {fileID: 2401888506079162752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &766437111690597971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823340445625350785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Owner: {fileID: 0}
+--- !u!114 &8379208009820484194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823340445625350785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9f411eb38d4cb4803c69770ef64c94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnNormalAttackTransform: {fileID: 2554768345249844328}
+  _spawnSkill1Transform: {fileID: 2554768345249844328}
+  _spawnSkill2Transform: {fileID: 2554768345249844328}
+  _spawnSkill3Transform: {fileID: 2554768345249844328}
+--- !u!114 &8908478113626515091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823340445625350785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f77349994f741749b6d14c7a96eb9a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  debugState: 0
+  data: {fileID: 11400000, guid: 6ce74f0836becc5459d4ba89b5e4c8b3, type: 2}
+  idleName: Idle
+  tree: {fileID: 11400000, guid: db4c772fd8b174a4f8b58591b146dd09, type: 2}

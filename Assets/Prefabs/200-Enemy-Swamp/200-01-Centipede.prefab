@@ -155,7 +155,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6777631110867211249, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
   m_PrefabInstance: {fileID: 4868240045804669206}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6754478917821666760
+--- !u!114 &2454991000169065138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,12 +164,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2126135610470341351}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7de594d06bd6427a977f29eb3191931c, type: 3}
+  m_Script: {fileID: 11500000, guid: 14764b8cb1ed40bea15471bd1ff195f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
   target: {fileID: 0}
   debugState: 0
+  animDie: Death
+  animHurt: Hurt
+  animIdle: Idle
   data: {fileID: 11400000, guid: 4e1d43d888d4642448e1b6186d5dfd9d, type: 2}
   tree: {fileID: 11400000, guid: f0260728def16bd4796234a37a6f4fc1, type: 2}
 --- !u!114 &7176637828861613292
@@ -184,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 6754478917821666760}
+  Owner: {fileID: 2454991000169065138}
 --- !u!1001 &6394090900198864626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,7 +241,7 @@ PrefabInstance:
     - target: {fileID: 269801185439441793, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
       propertyPath: owner
       value: 
-      objectReference: {fileID: 6754478917821666760}
+      objectReference: {fileID: 0}
     - target: {fileID: 269801185439441798, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
       propertyPath: m_Name
       value: enemy_damage_box

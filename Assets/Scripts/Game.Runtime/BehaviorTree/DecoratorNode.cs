@@ -14,7 +14,12 @@ namespace Game.Runtime
         {
             var node = Instantiate(this);
             Debug.Log("Clone " + GetType().Name);
-            node.child = this.child.Clone(tree);
+
+            if (this.child != null)
+            {
+                node.child = this.child.Clone(tree);
+            }
+          
 
             return node;
         }

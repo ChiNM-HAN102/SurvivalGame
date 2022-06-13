@@ -160,9 +160,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnNormalAttackTransform: {fileID: 2014923487739848423}
-  _spawnSkill1Transform: {fileID: 0}
-  _spawnSkill2Transform: {fileID: 0}
-  _spawnSkill3Transform: {fileID: 0}
+  _spawnSkill1Transform: {fileID: 2014923487739848423}
+  _spawnSkill2Transform: {fileID: 2014923487739848423}
+  _spawnSkill3Transform: {fileID: 2014923487739848423}
 --- !u!1 &2276775939242214943 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9211142617073987033, guid: 52e72ad17f9179f47a8387af59229410, type: 3}

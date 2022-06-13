@@ -25,6 +25,7 @@ namespace Game.Runtime
         
         [SerializeField] private Transform[] spawnCharacterList;
         [SerializeField] private Transform[] spawnEnemyList;
+        [SerializeField] private int indexEnemyTest;
 
         private CancellationTokenSource ctsCountSurvivalTime = new CancellationTokenSource();
 
@@ -215,7 +216,7 @@ namespace Game.Runtime
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    SpawnEnemy(0);
+                    SpawnEnemy(indexEnemyTest);
                 }
                 
                 // if (this.countDownSpawnEnemy >= this.data.timeCountDownSpawnEnemy)

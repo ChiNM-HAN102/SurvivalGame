@@ -16,7 +16,9 @@ MonoBehaviour:
   timeCountDownSpawnEnemy: 5
   heroBases:
   - {fileID: 5492529699011089295, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
-  - {fileID: 5492529699011089295, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
-  - {fileID: 5492529699011089295, guid: 2f6e914f522e8f24eae891df650531c8, type: 3}
+  - {fileID: 3565846129964354581, guid: 0024b83cb81afa2419090abe1434a1cd, type: 3}
+  - {fileID: 8908478113626515091, guid: 36114aa5ba39b8d4fb3231319fdb9c7d, type: 3}
   enemyBases:
-  - {fileID: 6754478917821666760, guid: c7683039a05304f4bb1033b2c7e9fcec, type: 3}
+  - {fileID: 2454991000169065138, guid: c7683039a05304f4bb1033b2c7e9fcec, type: 3}
+  - {fileID: 8652842269956131587, guid: 8d1aa37030588354483744e33c11ec26, type: 3}
+  - {fileID: 8216782367348930551, guid: f06e331b2e45a5c4ba4abf81e425f906, type: 3}

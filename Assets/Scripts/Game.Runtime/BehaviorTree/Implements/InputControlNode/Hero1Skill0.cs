@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
-    [CreateAssetMenu(fileName = "Hero1Skill0", menuName = "BehaviorTree/Node/InputControl/Hero1Skill0")]
+    [CreateAssetMenu(fileName = "Hero1Skill0", menuName = "BehaviorTree/Node/InputControl/Skill/Hero1Skill0")]
     public class Hero1Skill0 : SkillNode
     {
         public GameObject prefabBullet;
