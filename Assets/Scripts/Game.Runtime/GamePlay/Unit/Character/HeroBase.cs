@@ -76,6 +76,11 @@ namespace Game.Runtime
             CurrentControlType = InputControlType.NONE;
         }
 
+        public void SetCurrentControlType(InputControlType inputControlType)
+        {
+            CurrentControlType = inputControlType;
+        }
+
         public override void Remove()
         {
             

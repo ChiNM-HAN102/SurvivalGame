@@ -31,6 +31,8 @@ namespace Game.Runtime
 
         [SerializeField] private InfoUIController[] heroUIPrefabs;
 
+        [SerializeField] private SkillButtonUI[] _skillButtonUis;
+
         private CancellationTokenSource ctsCountDownChangeHero;
         
         public static UIManager Instance { get; set; }
@@ -68,6 +70,11 @@ namespace Game.Runtime
                     this.heroUIPrefabs[i].SetSelected(false);   
                     this.heroUIPrefabs[i].SetCountDown(countTime, this.ctsCountDownChangeHero.Token);
                 }
+            }
+
+            foreach (SkillButtonUI skillButtonUi in this._skillButtonUis)
+            {
+                skillButtonUi.InitData();
             }
         }
 

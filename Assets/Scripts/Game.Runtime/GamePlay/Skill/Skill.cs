@@ -1,33 +1,35 @@
-﻿namespace Game.Runtime
+﻿using System;
+
+namespace Game.Runtime
 {
     public class Skill : IUpdateSystem
     {
-        public float maxCoolDown;
-        public float currentCoolDown;
+        private float _maxCoolDown;
+        private float _currentCoolDown;
+
+        public Action<float> OnUpdateCoolDown;
 
         public void InitData(float maxCoolDown)
         {
-            this.maxCoolDown = maxCoolDown;
-        }
-
-        public void DecreaseCoolDown(float value)
-        {
-            this.currentCoolDown -= value;
+            this._maxCoolDown = maxCoolDown;
+            this._currentCoolDown = maxCoolDown;
         }
 
         public void StartCoolDown()
         {
-            this.currentCoolDown = 0;
+            this._currentCoolDown = 0;
         }
 
-        public bool CanUse => this.currentCoolDown >= this.maxCoolDown;
+        public bool CanUse => this._currentCoolDown >= this._maxCoolDown;
 
 
         public void OnUpdate(float deltaTime)
         {
-            if (this.currentCoolDown < this.maxCoolDown)
+            if (this._currentCoolDown < this._maxCoolDown)
             {
-                this.currentCoolDown += deltaTime;
+                this._currentCoolDown += deltaTime;
+                
+                this.OnUpdateCoolDown?.Invoke(1 - this._currentCoolDown / this._maxCoolDown);
             }
         }
     }
