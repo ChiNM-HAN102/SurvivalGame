@@ -29,6 +29,8 @@ namespace Game.Runtime
             
             this.clickButton.onClick.RemoveAllListeners();
             this.clickButton.onClick.AddListener(OnClick);
+            
+            UpdateCoolDown(this._skill.GetPercentCoolDown());
         }
 
         private void OnClick()

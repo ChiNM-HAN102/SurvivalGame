@@ -284,6 +284,7 @@ namespace Game.Runtime
             var oldPosition = oldSelectedHero.transform.position;
             var faceRight = oldSelectedHero.GetFaceRight();
             this.selectedHeroIdx = idx;
+            
             UIManager.Instance.SetSelectedHero(selectedHeroIdx, ((HeroData)this.listHeroes[this.selectedHeroIdx].Data).coolDownChangeHero);
             
             for (int i = 0; i < this.listHeroes.Count; i++)

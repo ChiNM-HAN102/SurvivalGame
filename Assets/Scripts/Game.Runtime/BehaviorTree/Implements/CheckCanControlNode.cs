@@ -12,19 +12,16 @@ namespace Game.Runtime
             this.owner = this.Tree.Owner;
         }
 
-        protected override void OnStop()
-        {
-           
-        }
-
         protected override NodeState OnUpdate(float deltaTime)
         {
             if (this.owner.UnitState.CanUseSkill())
             {
-                return NodeState.Success;
+                CurrentNodeState = NodeState.Success;
+                return CurrentNodeState;
             }
 
-            return NodeState.Failure;
+            CurrentNodeState = NodeState.Failure;
+            return CurrentNodeState;
         }
     }
 }

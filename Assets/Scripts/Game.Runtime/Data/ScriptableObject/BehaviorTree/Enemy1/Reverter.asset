@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961892a7839263b48945455a018f6058, type: 3}
-  m_Name: SequenceNodeSkill0
+  m_Script: {fileID: 11500000, guid: a3269d07416f2284e8a413e3f0057643, type: 3}
+  m_Name: Reverter
   m_EditorClassIdentifier: 
-  children:
-  - {fileID: 11400000, guid: 3879f103d64cc034eb72d4a3094690ab, type: 2}
-  - {fileID: 11400000, guid: fd4bb0358640e5244b0a47d9ec0fdd92, type: 2}
+  child: {fileID: 11400000, guid: 6b96a61c26700e54fbfcd83b7bd31c3e, type: 2}

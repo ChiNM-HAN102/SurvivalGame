@@ -22,6 +22,11 @@ namespace Game.Runtime
 
         public bool CanUse => this._currentCoolDown >= this._maxCoolDown;
 
+        public float GetPercentCoolDown()
+        {
+            return this._maxCoolDown == 0 ? 0 : 1 - this._currentCoolDown / this._maxCoolDown;
+        }
+
 
         public void OnUpdate(float deltaTime)
         {
@@ -29,8 +34,10 @@ namespace Game.Runtime
             {
                 this._currentCoolDown += deltaTime;
                 
-                this.OnUpdateCoolDown?.Invoke(1 - this._currentCoolDown / this._maxCoolDown);
+                
+                this.OnUpdateCoolDown?.Invoke(GetPercentCoolDown());
             }
         }
+        
     }
 }

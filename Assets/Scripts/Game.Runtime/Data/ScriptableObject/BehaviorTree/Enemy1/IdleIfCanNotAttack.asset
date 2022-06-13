@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 961892a7839263b48945455a018f6058, type: 3}
-  m_Name: SequenceNode
+  m_Script: {fileID: 11500000, guid: 9be133a8bf73406aaec9b9281e544206, type: 3}
+  m_Name: IdleIfCanNotAttack
   m_EditorClassIdentifier: 
-  children:
-  - {fileID: 11400000, guid: 00a8daba708acc547b55d0efc4302ac9, type: 2}
-  - {fileID: 11400000, guid: ad5f62d6632f68b42973f08d665677b0, type: 2}
+  idleAnim: Idle

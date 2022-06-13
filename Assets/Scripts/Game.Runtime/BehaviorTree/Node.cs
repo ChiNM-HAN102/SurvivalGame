@@ -28,12 +28,33 @@ namespace Game.Runtime
         
         private bool started = false;
 
+        protected bool GetStarted()
+        {
+            return this.started;
+        }
+
+        protected void SetStarted(bool value)
+        {
+            this.started = value;
+        }
+
+        private bool _reset;
+
+        protected bool IsReset() => this._reset;
+        
         public NodeState DoUpdate(float deltaTime, bool reset = false)
         {
             if (reset)
             {
+                this._reset = true;
                 this.started = false;
             }
+            else
+            {
+                this._reset = false;
+            }
+            
+            Prepare();
             
             if (!this.started)
             {
@@ -52,8 +73,20 @@ namespace Game.Runtime
             return this.CurrentNodeState;
         }
 
-        protected abstract void OnStart();
-        protected abstract void OnStop();
+        protected virtual void Prepare()
+        {
+            
+        }
+
+        protected virtual void OnStart()
+        {
+            
+        }
+
+        protected virtual void OnStop()
+        {
+            
+        }
         protected abstract NodeState OnUpdate(float deltaTime);
 
         public virtual Node Clone(BehaviorTree tree)

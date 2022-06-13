@@ -5,18 +5,6 @@ namespace Game.Runtime
     [CreateAssetMenu(fileName = "CheckNearToTarget", menuName = "BehaviorTree/Node/Condition/CheckNearToTarget")]
     public class CheckNearToTarget: ActionNode
     {
-        public string idleName;
-        
-        protected override void OnStart()
-        {
-            
-        }
-
-        protected override void OnStop()
-        {
-            
-        }
-
         protected override NodeState OnUpdate(float deltaTime)
         {
             var meleeDetect = this.Tree.Owner.Stats.GetStat<MeleeDetectRange>(RPGStatType.MeleeDetectRange);
@@ -26,11 +14,12 @@ namespace Game.Runtime
 
             if (Vector2.Distance(targetPosition, this.Tree.Owner.transform.position) > meleeDetectValue)
             {
-                return NodeState.Failure;
+                CurrentNodeState = NodeState.Failure;
+                return CurrentNodeState;
             }
-            
-            this.Tree.Owner.AnimController.DoAnim(this.idleName, State.IDLE);
-            return NodeState.Success;
+
+            CurrentNodeState = NodeState.Success;
+            return CurrentNodeState;
         }
     }
 }

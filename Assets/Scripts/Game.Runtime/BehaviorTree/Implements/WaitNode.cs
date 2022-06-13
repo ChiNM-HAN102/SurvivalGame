@@ -14,20 +14,18 @@ namespace Game.Runtime
         {
             this.startTime = Time.time;
         }
-
-        protected override void OnStop()
-        {
-            
-        }
+        
 
         protected override NodeState OnUpdate(float deltaTime)
         {
             if (Time.time - this.startTime > this.duration)
             {
-                return NodeState.Success;
+                CurrentNodeState = NodeState.Success;
+                return CurrentNodeState;
             }
 
-            return NodeState.Running;
+            CurrentNodeState = NodeState.Running;
+            return CurrentNodeState;
         }
     }
 }

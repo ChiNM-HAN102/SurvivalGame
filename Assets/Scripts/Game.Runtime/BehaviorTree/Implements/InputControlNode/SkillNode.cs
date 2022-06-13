@@ -8,12 +8,19 @@
         protected Skill skill;
 
         public string skillAnim;
-        public string idleName;
         
         protected bool successTrigger;
 
         protected bool startedSkill;
-        
+
+        protected override void Prepare()
+        {
+            if (Tree.Owner.UnitState.Current != State.ATTACK)
+            {
+                SetStarted(false);
+            }
+        }
+
         protected override void OnStart()
         {
             var owner = this.Tree.Owner;
@@ -49,20 +56,11 @@
         protected virtual void EndAction()
         {
             this.successTrigger = true;
-            if (this.Tree.Owner.UnitState.Current == this.state)
-            {
-                this.Tree.Owner.AnimController.DoAnim(this.idleName, State.IDLE);
-            }
         }
 
         protected virtual void TriggerAction()
         {
             
-        }
-
-        protected override void OnStop()
-        {
-         
         }
 
         protected override NodeState OnUpdate(float deltaTime)
@@ -74,10 +72,12 @@
 
             if (this.successTrigger)
             {
-                return NodeState.Success;
+                CurrentNodeState = NodeState.Success;
+                return CurrentNodeState;
             }
-            
-            return NodeState.Running;
+
+            CurrentNodeState = NodeState.Running;
+            return CurrentNodeState;
         }
     }
 }

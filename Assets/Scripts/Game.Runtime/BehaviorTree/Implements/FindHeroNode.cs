@@ -12,22 +12,19 @@ namespace Game.Runtime
         {
             this.owner = this.Tree.Owner;
         }
-
-        protected override void OnStop()
-        {
-            
-        }
-
+        
         protected override NodeState OnUpdate(float deltaTime)
         {
             var hero = GamePlayController.Instance.GetSelectedHero();
             if (hero == null)
             {
-                return NodeState.Running;
+                CurrentNodeState = NodeState.Running;
+                return CurrentNodeState;
             }
 
             this.owner.target = hero;
-            return NodeState.Success;
+            CurrentNodeState = NodeState.Success;
+            return CurrentNodeState;
         }
     }
 }

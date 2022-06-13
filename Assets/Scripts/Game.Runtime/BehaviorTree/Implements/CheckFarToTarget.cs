@@ -8,17 +8,6 @@ namespace Game.Runtime
     public class CheckFarToTarget : ActionNode
     {
 
-        public string idleName;
-        protected override void OnStart()
-        {
-            
-        }
-
-        protected override void OnStop()
-        {
-            
-        }
-
         protected override NodeState OnUpdate(float deltaTime)
         {
             var meleeDetect = this.Tree.Owner.Stats.GetStat<MeleeDetectRange>(RPGStatType.MeleeDetectRange);
@@ -28,10 +17,12 @@ namespace Game.Runtime
 
             if (Vector2.Distance(targetPosition, this.Tree.Owner.transform.position) > meleeDetectValue)
             {
-                return NodeState.Success;
+                CurrentNodeState = NodeState.Success;
+                return CurrentNodeState;
             }
-            
-            return NodeState.Failure;
+
+            CurrentNodeState = NodeState.Failure;
+            return CurrentNodeState;
         }
     }
 }

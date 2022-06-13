@@ -14,20 +14,14 @@ namespace Game.Runtime
         {
             this.owner = this.Tree.Owner;
         }
-
-        protected override void OnStop()
-        {
-            if (this.owner.UnitState.Current == State.MOVE)
-            {
-                this.owner.AnimController.DoAnim(this.idleName, State.IDLE);
-            }
-        }
+        
 
         protected override NodeState OnUpdate(float deltaTime)
         {
             if (this.owner.target == null)
             {
-                return NodeState.Failure;
+                CurrentNodeState = NodeState.Failure;
+                return CurrentNodeState;
             }
 
             var transform = this.owner.transform;
@@ -48,11 +42,13 @@ namespace Game.Runtime
                     this.owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
                 
                 this.owner.AnimController.DoAnim(this.moveName, State.MOVE);
-                
-                return NodeState.Running;
+
+                CurrentNodeState = NodeState.Running;
+                return CurrentNodeState;
             }
 
-            return NodeState.Success;
+            CurrentNodeState = NodeState.Success;
+            return CurrentNodeState;
         }
     }
 }

@@ -7,21 +7,13 @@ namespace Game.Runtime
     {
         public string idleAnim;
         
-        protected override void OnStart()
-        {
-           
-        }
-
-        protected override void OnStop()
-        {
-           
-        }
 
         protected override NodeState OnUpdate(float deltaTime)
         {
             this.Tree.Owner.AnimController.DoAnim(this.idleAnim, State.IDLE);
 
-            return NodeState.Success;
+            CurrentNodeState = NodeState.Success;
+            return CurrentNodeState;
         }
     }
 }

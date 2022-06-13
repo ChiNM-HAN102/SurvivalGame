@@ -4,17 +4,9 @@ using UnityEngine;
 
 namespace Game.Runtime
 {
+    [CreateAssetMenu(fileName = "Reverter", menuName = "BehaviorTree/Node/Decorator/Reverter")]
     public class Reverter : DecoratorNode
     {
-        protected override void OnStart()
-        {
-            
-        }
-
-        protected override void OnStop()
-        {
-            
-        }
 
         protected override NodeState OnUpdate(float deltaTime)
         {
@@ -23,14 +15,18 @@ namespace Game.Runtime
             switch (currentState)
             {
                 case  NodeState.Running:
-                    return NodeState.Running;
+                    CurrentNodeState = NodeState.Running;
+                    return CurrentNodeState;
                 case NodeState.Failure:
-                    return NodeState.Success;
+                    CurrentNodeState = NodeState.Success;
+                    return CurrentNodeState;
                 case NodeState.Success:
-                    return NodeState.Failure;
+                    CurrentNodeState = NodeState.Failure;
+                    return CurrentNodeState;
             }
 
-            return NodeState.Running;
+            CurrentNodeState = NodeState.Running;
+            return CurrentNodeState;
         }
     }
 }

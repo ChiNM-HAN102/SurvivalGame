@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba0e83d26e844632adf475a6f94e5e2d, type: 3}
-  m_Name: SelectorNodeDistanceTarget
+  m_Script: {fileID: 11500000, guid: 961892a7839263b48945455a018f6058, type: 3}
+  m_Name: SequenceSkill1
   m_EditorClassIdentifier: 
-  children:
-  - {fileID: 11400000, guid: 16cfe3d9dbc27ff458bc08a2dcae2056, type: 2}
-  - {fileID: 11400000, guid: cad0ad12b7b4ec44aae4bc214e0e0415, type: 2}
+  children: []

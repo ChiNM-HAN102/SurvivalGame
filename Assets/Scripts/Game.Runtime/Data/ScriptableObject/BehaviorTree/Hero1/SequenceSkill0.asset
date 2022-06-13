@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 961892a7839263b48945455a018f6058, type: 3}
-  m_Name: SequenceNodeNormalAttack
+  m_Name: SequenceSkill0
   m_EditorClassIdentifier: 
   children:
-  - {fileID: 11400000, guid: 3c415c94f27708442982fb6267c6fd3c, type: 2}
-  - {fileID: 11400000, guid: 3cd5726fba624df458aaa51d44707891, type: 2}
-  - {fileID: 11400000, guid: 06478b85148483140835d54a17a82fea, type: 2}
+  - {fileID: 11400000, guid: 3879f103d64cc034eb72d4a3094690ab, type: 2}
+  - {fileID: 11400000, guid: fd4bb0358640e5244b0a47d9ec0fdd92, type: 2}
+  - {fileID: 11400000, guid: a346c5899b2f55046b7df7b3f6e16bb8, type: 2}

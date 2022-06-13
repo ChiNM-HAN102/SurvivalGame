@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f1dc15b58144e258f438acee3badd6b, type: 3}
-  m_Name: CheckSkillCoolDownNode0
+  m_Name: CheckTriggerOrContinueSkill0
   m_EditorClassIdentifier: 
   skillType: 0

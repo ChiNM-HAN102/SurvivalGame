@@ -7,14 +7,21 @@ namespace Game.Runtime
     public class NormalMeleeAttackNode : Node
     {
         public string attackName;
-        public string idleName;
         
         private bool _successTrigger;
 
         private SkillTriggerEvent _skillTriggerEvent;
 
         private Skill _skill;
-        
+
+         protected override void Prepare()
+        {
+            if (Tree.Owner.UnitState.Current != State.ATTACK)
+            {
+                SetStarted(false);
+            }
+        }
+
         protected override void OnStart()
         {
             var owner = this.Tree.Owner;
@@ -33,10 +40,6 @@ namespace Game.Runtime
         void EndAction()
         {
             this._successTrigger = true;
-            if (this.Tree.Owner.UnitState.Current == State.ATTACK)
-            {
-                this.Tree.Owner.AnimController.DoAnim(this.idleName, State.IDLE);
-            }
         }
 
         protected override void OnStop()
@@ -49,15 +52,18 @@ namespace Game.Runtime
 
             if (this._skill == null)
             {
-                return NodeState.Failure;
+                CurrentNodeState = NodeState.Failure;
+                return CurrentNodeState;
             }
 
             if (this._successTrigger)
             {
-                return NodeState.Success;
+                CurrentNodeState = NodeState.Success;
+                return CurrentNodeState;
             }
-            
-            return NodeState.Running;
+
+            CurrentNodeState = NodeState.Running;
+            return CurrentNodeState;
         }
     }
 }

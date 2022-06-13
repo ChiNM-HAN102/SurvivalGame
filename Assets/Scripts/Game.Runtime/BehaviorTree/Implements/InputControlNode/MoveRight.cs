@@ -7,15 +7,6 @@ namespace Game.Runtime
     {
         public string moveAnim;
         
-        protected override void OnStart()
-        {
-            
-        }
-
-        protected override void OnStop()
-        {
-            
-        }
 
         protected override NodeState OnUpdate(float deltaTime)
         {

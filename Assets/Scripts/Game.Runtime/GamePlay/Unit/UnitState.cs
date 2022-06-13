@@ -48,8 +48,7 @@ namespace Game.Runtime
         
         public bool CanUseSkill()
         {
-            if (Current == State.DIE || Current == State.HURT || Current == State.ATTACK || 
-                Current == State.USE_SKILL_1 || Current == State.USE_SKILL_2 || Current == State.USE_SKILL_3)
+            if (Current == State.DIE || Current == State.HURT)
             {
                 return false;
             }

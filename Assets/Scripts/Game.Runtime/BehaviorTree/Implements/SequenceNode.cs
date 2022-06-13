@@ -7,19 +7,10 @@ namespace Game.Runtime
     [CreateAssetMenu(fileName = "SequenceNode", menuName = "BehaviorTree/Node/Composite/SequenceNode")]
     public class SequenceNode : CompositeNode
     {
-        protected override void OnStart()
-        {
-        }
-
-        protected override void OnStop()
-        {
-            
-        }
-
         protected override NodeState OnUpdate(float deltaTime)
         {
             
-            var childNeedReset = CurrentNodeState == NodeState.Failure;
+            var childNeedReset = CurrentNodeState == NodeState.Failure || this.IsReset(); 
             foreach (Node node in this.children)
             {
                 var nodeState = node.DoUpdate(deltaTime, childNeedReset);
@@ -35,7 +26,8 @@ namespace Game.Runtime
                         continue;
                 }
             }
-            
+
+            CurrentNodeState = NodeState.Success;
             return CurrentNodeState;
         }
     }

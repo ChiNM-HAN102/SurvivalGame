@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba0e83d26e844632adf475a6f94e5e2d, type: 3}
-  m_Name: SelectorNodeDistanceTarget
+  m_Name: SelectorCheckTriggerOrContinue
   m_EditorClassIdentifier: 
   children:
-  - {fileID: 11400000, guid: 16cfe3d9dbc27ff458bc08a2dcae2056, type: 2}
-  - {fileID: 11400000, guid: cad0ad12b7b4ec44aae4bc214e0e0415, type: 2}
+  - {fileID: 11400000, guid: 16fe020516055f644ac9ecb719437a26, type: 2}
+  - {fileID: 11400000, guid: f2660f21834fcea4a9c248b09be594d4, type: 2}

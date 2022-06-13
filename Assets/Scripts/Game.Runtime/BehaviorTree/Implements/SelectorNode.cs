@@ -5,19 +5,10 @@ namespace Game.Runtime
     [CreateAssetMenu(fileName = "SelectorNode", menuName = "BehaviorTree/Node/Composite/SelectorNode")]
     public class SelectorNode : CompositeNode
     {
-        protected override void OnStart()
-        {
-            
-        }
-
-        protected override void OnStop()
-        {
-           
-        }
 
         protected override NodeState OnUpdate(float deltaTime)
         {
-            var childNeedReset = CurrentNodeState != NodeState.Running;
+            var childNeedReset = CurrentNodeState != NodeState.Running || this.IsReset();
             foreach (Node node in this.children)
             {
                 var nodeState = node.DoUpdate(deltaTime, childNeedReset);
