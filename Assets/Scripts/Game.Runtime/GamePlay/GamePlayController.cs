@@ -23,7 +23,6 @@ namespace Game.Runtime
     {
         [SerializeField] private GamePlayData data;
         [SerializeField] private bool isTest;
-        [SerializeField] private Transform[] spawnCharacterList;
 
         private int _enemyLevel;
 
@@ -43,13 +42,7 @@ namespace Game.Runtime
 
         private int _totalKillEnemy;
         
-        private List<HeroBase> _listHeroes = new List<HeroBase>();
-        public List<HeroBase> ListHeroes
-        {
-            get => this._listHeroes;
-            set => this._listHeroes = value;
-        }
-
+        private readonly List<HeroBase> _listHeroes = new List<HeroBase>();
         public GameState State { get => this._state; }
         public bool IsTest { get => this.isTest;  }
 
@@ -172,19 +165,19 @@ namespace Game.Runtime
 
         void SpawnHeroes()
         {
-
             if (this._listHeroes.Count == 0)
             {
                 for (int i = 0; i < this.data.heroBases.Length; i++)
                 {
-                    var go = LeanPool.Spawn(this.data.heroBases[i], this.spawnCharacterList[i].position, Quaternion.identity);
+                    var go = LeanPool.Spawn(this.data.heroBases[i],  this.transform);
                     this._listHeroes.Add(go);
                 }
             }
 
-            foreach (HeroBase heroBase in this._listHeroes)
+            for (int i = 0; i < this._listHeroes.Count; i++)
             {
-                heroBase.SetInfo();
+                _listHeroes[i].SetInfo();
+                _listHeroes[i].transform.position = new Vector2(0, 1);
             }
 
             UIManager.Instance.InitCharacters(this._listHeroes.ToArray());
@@ -220,7 +213,6 @@ namespace Game.Runtime
                     {
                         this._listHeroes[i].Flip();
                     }
-                    
                 }
                 else
                 {

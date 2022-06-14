@@ -7,7 +7,6 @@ namespace Game.Runtime
 {
     public class SpawnController : Dummy
     {
-        [SerializeField] private Transform[] spawnCharacterList;
         [SerializeField] private Transform[] spawnEnemyList;
         [SerializeField] private SpawnData spawnData;
         
