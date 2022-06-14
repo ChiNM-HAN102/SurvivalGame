@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   children:
   - {fileID: 11400000, guid: 6989b8b4d91c2cc439c790c4d9772868, type: 2}
+  - {fileID: 11400000, guid: e12cf607b315bef48ab23cf73f8aae79, type: 2}
+  - {fileID: 11400000, guid: 2a24550223bbde5429f3ff3d21b7e026, type: 2}
   - {fileID: 11400000, guid: 274efc20665fe534dab6ce373a7630f3, type: 2}
   - {fileID: 11400000, guid: b58a850d9a9e8c048aa3d94f29d03dfe, type: 2}
   - {fileID: 11400000, guid: 4dfe1d5064500654385958937056381b, type: 2}

@@ -66,9 +66,17 @@ namespace Game.Runtime
             {
                 CurrentControlType = InputControlType.MOVE_LEFT;
             }
-            else if (Input.GetKeyDown(KeyCode.T))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 CurrentControlType = InputControlType.ATTACK;
+            }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                CurrentControlType = InputControlType.USE_SKILL_1;
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                CurrentControlType = InputControlType.USE_SKILL_2;
             }
 
             var state = this._cloneTree.DoUpdate(deltaTime);

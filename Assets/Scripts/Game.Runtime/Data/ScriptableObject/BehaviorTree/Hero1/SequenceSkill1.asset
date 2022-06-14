@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 961892a7839263b48945455a018f6058, type: 3}
   m_Name: SequenceSkill1
   m_EditorClassIdentifier: 
-  children: []
+  children:
+  - {fileID: 11400000, guid: cf35b984348b5944b8bf46bfd9186f67, type: 2}
+  - {fileID: 11400000, guid: d71502eeada50ec42be525a6b3789826, type: 2}
+  - {fileID: 11400000, guid: b5fe088dafa11e940a17d80b70102126, type: 2}

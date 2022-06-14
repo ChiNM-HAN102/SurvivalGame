@@ -10,6 +10,7 @@ namespace Game.Runtime
 
         protected override NodeState OnUpdate(float deltaTime)
         {
+            Debug.Log(this.ToString());
             this.Tree.Owner.AnimController.DoAnim(this.idleAnim, State.IDLE);
 
             CurrentNodeState = NodeState.Success;
