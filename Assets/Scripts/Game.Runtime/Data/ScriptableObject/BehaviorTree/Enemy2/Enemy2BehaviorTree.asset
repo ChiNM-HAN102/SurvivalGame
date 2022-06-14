@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e647c5a7b5a2b748ac36ddb991744be, type: 3}
   m_Name: Enemy2BehaviorTree
   m_EditorClassIdentifier: 
-  rootNode: {fileID: 0}
+  rootNode: {fileID: 11400000, guid: 985d27d12b1491343a8927261cdade1d, type: 2}
   listNode: []
