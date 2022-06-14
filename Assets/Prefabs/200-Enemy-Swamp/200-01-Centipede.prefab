@@ -241,7 +241,7 @@ PrefabInstance:
     - target: {fileID: 269801185439441793, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
       propertyPath: owner
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2454991000169065138}
     - target: {fileID: 269801185439441798, guid: 65074ac18c3fc7044b991f6d62f722c9, type: 3}
       propertyPath: m_Name
       value: enemy_damage_box

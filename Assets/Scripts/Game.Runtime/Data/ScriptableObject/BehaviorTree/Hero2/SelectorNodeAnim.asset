@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0e83d26e844632adf475a6f94e5e2d, type: 3}
+  m_Name: SelectorNodeAnim
+  m_EditorClassIdentifier: 
+  children:
+  - {fileID: 11400000, guid: 23ea25db3e3391444a55bc03b069df3f, type: 2}
+  - {fileID: 11400000, guid: 63ceea6eccd512d4e9fa49226e920dd8, type: 2}
+  - {fileID: 11400000, guid: a6372c71c55bb6446a4482ff12ece87a, type: 2}
+  - {fileID: 11400000, guid: 77dae10caaedd1c4da93350c7cec31a8, type: 2}
+  - {fileID: 11400000, guid: 75784ffa5405f17439545603b20bfd1f, type: 2}
+  - {fileID: 11400000, guid: c92a7b3ff955e3f4d98230472e7ceca7, type: 2}

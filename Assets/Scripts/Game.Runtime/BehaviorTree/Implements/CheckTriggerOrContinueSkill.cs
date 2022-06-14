@@ -6,12 +6,13 @@ namespace Game.Runtime
     public class CheckTriggerOrContinueSkill : ActionNode
     {
         public SkillType skillType;
+        public State state;
         
 
         protected override NodeState OnUpdate(float deltaTime)
         {
             var skill = this.Tree.Owner.Skills.GetSkill(this.skillType);
-            if ((skill == null || !skill.CanUse) && this.Tree.Owner.UnitState.Current != State.ATTACK)
+            if ((skill == null || !skill.CanUse) && this.Tree.Owner.UnitState.Current != state)
             {
                 CurrentNodeState = NodeState.Failure;
                 return CurrentNodeState;

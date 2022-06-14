@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da18e72943ca4e6398f9433983e96d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
+  Owner: {fileID: 8908478113626515091}
 --- !u!114 &8379208009820484194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +140,20 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: 6ce74f0836becc5459d4ba89b5e4c8b3, type: 2}
   idleName: Idle
   tree: {fileID: 11400000, guid: db4c772fd8b174a4f8b58591b146dd09, type: 2}
+--- !u!1 &6809923907145505881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9211142617073987033, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+  m_PrefabInstance: {fileID: 2401888506079162752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4771270199429702672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809923907145505881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2299832c354460b354542a99157e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

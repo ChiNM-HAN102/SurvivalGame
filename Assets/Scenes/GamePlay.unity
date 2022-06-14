@@ -5142,7 +5142,7 @@ MonoBehaviour:
   spawnEnemyList:
   - {fileID: 1484280253}
   - {fileID: 1172816717}
-  indexEnemyTest: 2
+  indexEnemyTest: 0
 --- !u!4 &1719757282
 Transform:
   m_ObjectHideFlags: 0
