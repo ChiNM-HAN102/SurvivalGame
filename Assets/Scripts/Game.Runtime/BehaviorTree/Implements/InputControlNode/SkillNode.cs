@@ -15,7 +15,7 @@
 
         protected override void Prepare()
         {
-            if (Tree.Owner.UnitState.Current != State.ATTACK)
+            if (Tree.Owner.UnitState.Current != this.state)
             {
                 SetStarted(false);
             }
