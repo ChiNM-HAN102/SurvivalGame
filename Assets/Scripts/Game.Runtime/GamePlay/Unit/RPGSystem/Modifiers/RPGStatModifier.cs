@@ -4,8 +4,6 @@
     {
         public float value;
 
-        public Unit owner;
-
         public RPGModifierType type;
 
         public float Value
@@ -14,9 +12,8 @@
             set => this.value = value;
         }
 
-        public RPGStatModifier( RPGModifierType type, float value, Unit owner = null)
+        public RPGStatModifier( RPGModifierType type, float value)
         {
-            this.owner = owner;
             this.value = value;
             this.type = type;
         }

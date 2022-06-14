@@ -10,7 +10,7 @@ namespace Game.Runtime
     {
         protected bool faceRight;
 
-        public Unit target;
+        public Unit Target { get; set; }
 
         public virtual UnitData Data { get;}
 
@@ -23,12 +23,12 @@ namespace Game.Runtime
         
         public UnitState UnitState { get; set; } = new UnitState();
 
-        public InputControlType CurrentControlType { get; set; } = InputControlType.NONE;
+        public InputControlType CurrentControlType { get; protected set; } = InputControlType.NONE;
 
         protected virtual void Awake()
         {
             Skills = new SkillController();
-            AnimController = new UnitAnimController(this);
+            AnimController = GetComponent<UnitAnimController>();
         }
 
         public virtual bool IsAlive
@@ -41,25 +41,6 @@ namespace Game.Runtime
             }
         }
         
-        public abstract void Remove();
-        
-        protected virtual void OnEnable()
-        {
-            if (GlobalUpdateSystem.Instance != null)
-            {
-                GlobalUpdateSystem.Instance.Add(this);
-            }
-        }
-
-        protected virtual void OnDisable()
-        {
-
-            if (GlobalUpdateSystem.Instance != null)
-            {
-                GlobalUpdateSystem.Instance.Remove(this);
-            }
-        }
-
         public override void OnUpdate(float deltaTime)
         {
             if (GamePlayController.Instance.State != GameState.RUNNING)
@@ -76,13 +57,7 @@ namespace Game.Runtime
             }
 
             CalculateHealthPoint(damageInfo);
-
-            if (IsAlive == false)
-            {
-                Remove();
-            }
         }
-        
         
         protected virtual void CalculateHealthPoint(float damageInfo)
         {
@@ -101,11 +76,6 @@ namespace Game.Runtime
         public bool GetFaceRight()
         {
             return this.faceRight;
-        }
-
-        public void UseSkill(string anim)
-        {
-            this.AnimController.DoAnim(anim, State.ATTACK);
         }
 
 #if UNITY_EDITOR

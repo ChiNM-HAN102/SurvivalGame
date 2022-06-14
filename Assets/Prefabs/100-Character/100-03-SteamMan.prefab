@@ -89,6 +89,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 374343760511972883, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
   m_PrefabInstance: {fileID: 2401888506079162752}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &2933851808699256708 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 712160775989968388, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
+  m_PrefabInstance: {fileID: 2401888506079162752}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5823340445625350785 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8180104375668624129, guid: 52e72ad17f9179f47a8387af59229410, type: 3}
@@ -107,6 +112,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 8908478113626515091}
+--- !u!114 &7714267351763889114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823340445625350785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e38b4ce0ee4c24be3fbed3deacac98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _owner: {fileID: 8908478113626515091}
+  _animator: {fileID: 2933851808699256708}
+  _animDie: Death
+  _animHurt: Hurt
+  _animIdle: Idle
+  _animMove: Run
 --- !u!114 &8379208009820484194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,10 +158,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f77349994f741749b6d14c7a96eb9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   debugState: 0
   data: {fileID: 11400000, guid: 6ce74f0836becc5459d4ba89b5e4c8b3, type: 2}
-  idleName: Idle
   tree: {fileID: 11400000, guid: db4c772fd8b174a4f8b58591b146dd09, type: 2}
 --- !u!1 &6809923907145505881 stripped
 GameObject:

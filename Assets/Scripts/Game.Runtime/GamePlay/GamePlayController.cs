@@ -19,51 +19,42 @@ namespace Game.Runtime
         WAITING = 3
     }
     
-    public class GamePlayController : MonoBehaviour, IUpdateSystem
+    public class GamePlayController : MonoBehaviour
     {
         [SerializeField] private GamePlayData data;
-        
+        [SerializeField] private bool isTest;
         [SerializeField] private Transform[] spawnCharacterList;
-        [SerializeField] private Transform[] spawnEnemyList;
-        [SerializeField] private int indexEnemyTest;
 
-        private CancellationTokenSource ctsCountSurvivalTime = new CancellationTokenSource();
+        private int _enemyLevel;
+
+        public int EnemyLevel
+        {
+            get => this._enemyLevel;
+            set => this._enemyLevel = value;
+        }
+
+        private CancellationTokenSource _ctsCountSurvivalTime = new CancellationTokenSource();
 
         private GameState _state;
 
-        private int selectedHeroIdx;
+        private int _selectedHeroIdx;
 
-        private int countTimeSurvival;
+        private int _countTimeSurvival;
 
-        private int enemyLevel;
-
-        private int totalKillEnemy;
+        private int _totalKillEnemy;
         
-        
-        private List<HeroBase> listHeroes = new List<HeroBase>();
+        private List<HeroBase> _listHeroes = new List<HeroBase>();
+        public List<HeroBase> ListHeroes
+        {
+            get => this._listHeroes;
+            set => this._listHeroes = value;
+        }
+
         public GameState State { get => this._state; }
-        
-        
-        public static GamePlayController Instance { get; set; }
+        public bool IsTest { get => this.isTest;  }
 
-        private void OnEnable()
-        {
-            if (GlobalUpdateSystem.Instance != null)
-            {
-                GlobalUpdateSystem.Instance.Add(this);
-            }
-        }
+        public static GamePlayController Instance { get; private set; }
 
-        private void OnDisable()
-        {
-            
-            if (GlobalUpdateSystem.Instance != null)
-            {
-                GlobalUpdateSystem.Instance.Remove(this);
-            }
-        }
-
-        
         private void Awake()
         {
             Instance = this;
@@ -79,12 +70,12 @@ namespace Game.Runtime
         {
             SoundController.Instance.PlayWaitingMusic();
             SoundController.Instance.PlayWaitingSound();
-            this.enemyLevel = 0;
-            this.totalKillEnemy = 0;
+            this._enemyLevel = 0;
+            this._totalKillEnemy = 0;
             UIManager.Instance.SetKillText(0);
             UIManager.Instance.SetCountDown(0);
             Time.timeScale = 1;
-            InitCharacter();
+            SpawnHeroes();
             this._state = GameState.WAITING;
             UIManager.Instance.WaitGame();
         }
@@ -92,7 +83,7 @@ namespace Game.Runtime
         public void StartGame()
         {
             SoundController.Instance.PlayStartSound();
-            this.countTimeSurvival = 0;
+            this._countTimeSurvival = 0;
             UIManager.Instance.StartGame(3, CallBackStartGame);
         }
 
@@ -106,11 +97,8 @@ namespace Game.Runtime
         public void ResetGame()
         {
             ClearMap();
-            
             UIManager.Instance.Clear();
-            
             GamePlayStatusController.Instance.ClearInventory();
-           
             WaitingGame();
         }
 
@@ -136,23 +124,22 @@ namespace Game.Runtime
             this._state = GameState.END;
             SaveData();
             UIManager.Instance.EndGame();
-           
         }
 
         void SaveData()
         {
-            PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this.countTimeSurvival);
+            PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this._countTimeSurvival);
             var highestScore = PlayerPrefs.GetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY);
-            if (this.countTimeSurvival > highestScore)
+            if (this._countTimeSurvival > highestScore)
             {
-                PlayerPrefs.SetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY, this.countTimeSurvival);
+                PlayerPrefs.SetInt(Constants.DATA_HIGHEST_SURVIVAL_TIME_KEY, this._countTimeSurvival);
             }
             
-            PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this.totalKillEnemy);
-            var highestScoreKill = PlayerPrefs.GetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY);
-            if (this.totalKillEnemy > highestScoreKill)
+            PlayerPrefs.SetInt(Constants.DATA_CURRENT_KILL_ENEMY, this._totalKillEnemy);
+            var highestScoreKill = PlayerPrefs.GetInt(Constants.DATA_CURRENT_KILL_ENEMY);
+            if (this._totalKillEnemy > highestScoreKill)
             {
-                PlayerPrefs.SetInt(Constants.DATA_CURRENT_SURVIVAL_TIME_KEY, this.totalKillEnemy);
+                PlayerPrefs.SetInt(Constants.DATA_CURRENT_KILL_ENEMY, this._totalKillEnemy);
             }
             
             PlayerPrefs.Save();
@@ -166,8 +153,8 @@ namespace Game.Runtime
         void CallBackStartGame()
         {
             this._state = GameState.RUNNING;
-            ctsCountSurvivalTime.Cancel();
-            ctsCountSurvivalTime = new CancellationTokenSource();
+            this._ctsCountSurvivalTime.Cancel();
+            this._ctsCountSurvivalTime = new CancellationTokenSource();
             StartCountTimeSurvival().Forget();
             Time.timeScale = 1;
             SoundController.Instance.PlayGamePlayMusic();
@@ -177,140 +164,75 @@ namespace Game.Runtime
         {
             while (this._state == GameState.RUNNING)
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: this.ctsCountSurvivalTime.Token);
-                this.countTimeSurvival += 1;
-                UIManager.Instance.SetCountDown(this.countTimeSurvival);
+                await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: this._ctsCountSurvivalTime.Token);
+                this._countTimeSurvival += 1;
+                UIManager.Instance.SetCountDown(this._countTimeSurvival);
             }
-        }
-        
-        void InitCharacter()
-        {
-            SpawnHeroes();
         }
 
         void SpawnHeroes()
         {
-            this.listHeroes.Clear();
-            
-            for (int i = 0; i < this.data.heroBases.Length; i++)
+
+            if (this._listHeroes.Count == 0)
             {
-                var go = LeanPool.Spawn(this.data.heroBases[i], this.spawnCharacterList[i].position, Quaternion.identity);
-                go.SetInfo();
-                this.listHeroes.Add(go);
-            }
-            
-            UIManager.Instance.InitCharacters(this.listHeroes.ToArray());
-            SelectHero(0);
-           
-        }
-        
-        private float countDownSpawnEnemy = 0;
-        public void OnUpdate(float deltaTime)
-        {
-            
-            if (State == GameState.END || State == GameState.WAITING)
-            {
-                this.countDownSpawnEnemy = 0;
-            }
-            else if (State == GameState.RUNNING)
-            {
-                if (Input.GetKeyDown(KeyCode.Q))
+                for (int i = 0; i < this.data.heroBases.Length; i++)
                 {
-                    SpawnEnemy(indexEnemyTest);
+                    var go = LeanPool.Spawn(this.data.heroBases[i], this.spawnCharacterList[i].position, Quaternion.identity);
+                    this._listHeroes.Add(go);
                 }
-                
-                // if (this.countDownSpawnEnemy >= this.data.timeCountDownSpawnEnemy)
-                // {
-                //    SpawnEnemy();
-                //    this.countDownSpawnEnemy = 0;
-                // }
-                // else
-                // {
-                //     this.countDownSpawnEnemy += deltaTime;
-                // }
             }
-        }
 
-        void SpawnEnemy()
-        {
-            var tranformIdx = Random.Range(0, this.spawnEnemyList.Length);
-
-            var randomTransform = this.spawnEnemyList[tranformIdx];
-
-            if (this.data.enemyBases.Length > 0)
+            foreach (HeroBase heroBase in this._listHeroes)
             {
-                var enemyIdx = Random.Range(0, data.enemyBases.Length);
-                var enemy = LeanPool.Spawn(this.data.enemyBases[enemyIdx], randomTransform.position, Quaternion.identity);
-                enemy.GetComponent<EnemyBase>().SetInfo(this.enemyLevel);
+                heroBase.SetInfo();
             }
+
+            UIManager.Instance.InitCharacters(this._listHeroes.ToArray());
+            SelectHero(0);
         }
         
-        void SpawnEnemy(int index)
-        {
-            var randomTransform = this.spawnEnemyList[0];
-
-            if (this.data.enemyBases.Length > 0)
-            {
-                var enemy = LeanPool.Spawn(this.data.enemyBases[index], randomTransform.position, Quaternion.identity);
-                enemy.GetComponent<EnemyBase>().SetInfo(this.enemyLevel);
-                this.enemyLevel += 1;
-            }
-        }
-
         public HeroBase GetSelectedHero()
         {
-            return this.listHeroes[this.selectedHeroIdx];
+            return this._listHeroes[this._selectedHeroIdx];
         }
 
         public List<HeroBase> GetAllHero()
         {
-            return this.listHeroes;
-        }
-
-        public void SelectHero()
-        {
-            if (this.selectedHeroIdx < this.listHeroes.Count - 1)
-            {
-                SelectHero(this.selectedHeroIdx + 1);
-            }
-            else
-            {
-                SelectHero(0);
-            }
+            return this._listHeroes;
         }
 
         public void SelectHero(int idx)
         {
-            var oldSelectedHero = this.listHeroes[this.selectedHeroIdx];
+            var oldSelectedHero = this._listHeroes[this._selectedHeroIdx];
             var oldPosition = oldSelectedHero.transform.position;
             var faceRight = oldSelectedHero.GetFaceRight();
-            this.selectedHeroIdx = idx;
+            this._selectedHeroIdx = idx;
             
-            UIManager.Instance.SetSelectedHero(selectedHeroIdx, ((HeroData)this.listHeroes[this.selectedHeroIdx].Data).coolDownChangeHero);
+            UIManager.Instance.SetSelectedHero(this._selectedHeroIdx, ((HeroData)this._listHeroes[this._selectedHeroIdx].Data).coolDownChangeHero);
             
-            for (int i = 0; i < this.listHeroes.Count; i++)
+            for (int i = 0; i < this._listHeroes.Count; i++)
             {
                 if (idx == i)
                 {
-                    this.listHeroes[i].gameObject.SetActive(true);
-                    this.listHeroes[i].transform.position = oldPosition;
-                    if (faceRight != this.listHeroes[i].GetFaceRight())
+                    this._listHeroes[i].gameObject.SetActive(true);
+                    this._listHeroes[i].transform.position = oldPosition;
+                    if (faceRight != this._listHeroes[i].GetFaceRight())
                     {
-                        this.listHeroes[i].Flip();
+                        this._listHeroes[i].Flip();
                     }
                     
                 }
                 else
                 {
-                    this.listHeroes[i].gameObject.SetActive(false);
+                    this._listHeroes[i].gameObject.SetActive(false);
                 }
             }
         }
 
         public void IncreaseTotalKillEnemy()
         {
-            this.totalKillEnemy++;
-            UIManager.Instance.SetKillText(this.totalKillEnemy);
+            this._totalKillEnemy++;
+            UIManager.Instance.SetKillText(this._totalKillEnemy);
         }
     }
 }

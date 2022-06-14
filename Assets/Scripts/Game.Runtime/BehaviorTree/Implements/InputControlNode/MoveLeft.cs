@@ -5,8 +5,7 @@ namespace Game.Runtime
     [CreateAssetMenu(fileName = "MoveLeft", menuName = "BehaviorTree/Node/InputControl/MoveLeft")]
     public class MoveLeft : InputControlNode
     {
-        public string moveAnim;
-        
+
         protected override NodeState OnUpdate(float deltaTime)
         {
             var owner = this.Tree.Owner;
@@ -19,7 +18,7 @@ namespace Game.Runtime
                 
                 var moveVector = new Vector2(-1, 0);
                 owner.transform.position = owner.transform.position + (Vector3)moveVector * (owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
-                owner.AnimController.DoAnim(this.moveAnim, State.MOVE);
+                owner.AnimController.Move();
                 CurrentNodeState = NodeState.Success;
 
                 return CurrentNodeState;

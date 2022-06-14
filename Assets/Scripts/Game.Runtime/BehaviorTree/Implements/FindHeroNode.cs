@@ -22,7 +22,7 @@ namespace Game.Runtime
                 return CurrentNodeState;
             }
 
-            this.owner.target = hero;
+            this.owner.Target = hero;
             CurrentNodeState = NodeState.Success;
             return CurrentNodeState;
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SequenceNodeNormal
   m_EditorClassIdentifier: 
   children:
-  - {fileID: 11400000, guid: 4db4caa9b9002e7449d1a793ab57d928, type: 2}
-  - {fileID: 11400000, guid: ea842ff3e3ae796438d99bb49c24482d, type: 2}
-  - {fileID: 11400000, guid: 16c41a88a79cb8f44b3f286b7bc15976, type: 2}
-  - {fileID: 11400000, guid: 7775b6f95b706704bbd85f46b5f7e0f6, type: 2}
+  - {fileID: 11400000, guid: 921a3a12d44545648ba64b75b7688f37, type: 2}
+  - {fileID: 11400000, guid: c2a1277a25ab67b41982b90b6c1d15e2, type: 2}
+  - {fileID: 11400000, guid: df8865b731aa1a24bb2637bb046ffd6a, type: 2}
+  - {fileID: 11400000, guid: daae86758ac58b74fb8444aac7affacd, type: 2}

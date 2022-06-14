@@ -6,7 +6,6 @@ namespace Game.Runtime
     public class HeroBase : Unit
     {
         [SerializeField] private HeroData data;
-        [SerializeField] protected string idleName;
         [SerializeField] private BehaviorTree tree;
 
         private BehaviorTree _cloneTree;
@@ -50,7 +49,7 @@ namespace Game.Runtime
         {
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = true;
-            this.AnimController.DoAnim(this.idleName, State.IDLE);
+            this.AnimController.Idle();
             Stats = new HeroStatsCollection(this, data);
         }
 
@@ -89,10 +88,6 @@ namespace Game.Runtime
             CurrentControlType = inputControlType;
         }
 
-        public override void Remove()
-        {
-            
-        }
 
         public override void GetHurt(float damageInfo)
         {

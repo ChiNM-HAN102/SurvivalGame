@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SequenceNodeNormalAttack
   m_EditorClassIdentifier: 
   children:
-  - {fileID: 11400000, guid: 3c415c94f27708442982fb6267c6fd3c, type: 2}
-  - {fileID: 11400000, guid: 3cd5726fba624df458aaa51d44707891, type: 2}
-  - {fileID: 11400000, guid: 06478b85148483140835d54a17a82fea, type: 2}
+  - {fileID: 11400000, guid: a1990b20bb7bee047b71e67a19d0a1c2, type: 2}
+  - {fileID: 11400000, guid: edcd2ca2f194f6247b25416387a47c90, type: 2}
+  - {fileID: 11400000, guid: cc3d7d5a391c3d7409c87cc8b2fc9523, type: 2}

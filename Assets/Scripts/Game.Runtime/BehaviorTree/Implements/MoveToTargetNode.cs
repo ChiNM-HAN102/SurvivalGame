@@ -7,9 +7,6 @@ namespace Game.Runtime
     {
         private Unit owner;
 
-        public string moveName;
-        public string idleName;
-        
         protected override void OnStart()
         {
             this.owner = this.Tree.Owner;
@@ -18,14 +15,20 @@ namespace Game.Runtime
 
         protected override NodeState OnUpdate(float deltaTime)
         {
-            if (this.owner.target == null)
+            if (this.owner.Target == null)
             {
                 CurrentNodeState = NodeState.Failure;
                 return CurrentNodeState;
             }
 
+            if (this.owner.UnitState.Current == State.ATTACK)
+            {
+                CurrentNodeState = NodeState.Success;
+                return CurrentNodeState;
+            }
+
             var transform = this.owner.transform;
-            var targetPosition = this.owner.target.transform.position;
+            var targetPosition = this.owner.Target.transform.position;
             
             if (targetPosition.x > transform.position.x && !this.owner.GetFaceRight() || 
                 targetPosition.x < transform.position.x && this.owner.GetFaceRight())
@@ -41,7 +44,7 @@ namespace Game.Runtime
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition,
                     this.owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
                 
-                this.owner.AnimController.DoAnim(this.moveName, State.MOVE);
+                this.owner.AnimController.Move();
 
                 CurrentNodeState = NodeState.Running;
                 return CurrentNodeState;

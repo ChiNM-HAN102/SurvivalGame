@@ -11,7 +11,12 @@ namespace Game.Runtime.Impact
         [SerializeField] EnemyBase owner;
 
         [SerializeField] private Collider2D _collider2D;
-        
+
+
+        private void OnEnable()
+        {
+            this._collider2D.enabled = false;
+        }
 
         public override float GetDamage(Unit target)
         {

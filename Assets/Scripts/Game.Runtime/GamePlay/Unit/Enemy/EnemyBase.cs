@@ -11,9 +11,6 @@ namespace Game.Runtime
 {
     public class EnemyBase : Unit
     {
-        [SerializeField] private string animDie = "Death";
-        [SerializeField] private string animHurt = "Hurt";
-        [SerializeField] private string animIdle = "Idle";
         [SerializeField] private EnemyData data;
         [SerializeField] private BehaviorTree tree;
 
@@ -27,10 +24,10 @@ namespace Game.Runtime
         {
             base.Awake();
             this._healthBarController = GetComponentInChildren<HealthBarController>();
-            InitSkill();
             
-            this._cloneTree = this.tree.CloneTree();
-            this._cloneTree.SetUpTree(this);
+            InitSkill();
+
+            InitBehaviorTree();
         }
 
         void InitSkill()
@@ -45,6 +42,12 @@ namespace Game.Runtime
             Skills?.RegisterSkill();
         }
 
+        void InitBehaviorTree()
+        {
+            this._cloneTree = this.tree.CloneTree();
+            this._cloneTree.SetUpTree(this);
+        }
+
         public virtual void SetInfo(int level)
         {
             Stats = new EnemyStatsCollection(this, data, level);
@@ -57,11 +60,6 @@ namespace Game.Runtime
             SoundController.Instance.PlayCallEnemy();
         }
         
-
-        public override void Remove()
-        {
-            
-        }
 
         public override void OnUpdate(float deltaTime)
         {
@@ -84,14 +82,12 @@ namespace Game.Runtime
             
             base.GetHurt(damageInfo);
             
-            UIManager.Instance.CreateFloatingText("-" + damageInfo, new Color32(219, 64, 53, 255),  
-                new Vector2(transform.position.x, transform.position.y + 1.5f));
-            
+            Helper.Instance.DisplayDamage(damageInfo, transform.position);
             SoundController.Instance.PlayEnemyHurt();
             
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0)
             {
-                AnimController.DoAnim(animDie, State.DIE,  () => {
+                AnimController.Die(() => {
                     Die().Forget();
                 });
                 
@@ -99,8 +95,8 @@ namespace Game.Runtime
             }
             else
             {
-                AnimController.DoAnim(this.animHurt, State.HURT, () => {
-                    AnimController.DoAnim(animIdle, State.IDLE);
+                AnimController.Hurt(() => {
+                    AnimController.Idle();
                 });
             }
         }
@@ -108,18 +104,16 @@ namespace Game.Runtime
         async UniTaskVoid Die()
         {
             await AnimController.WaitUntilFinishAnim();
-            var renderer = GetComponentInChildren<SpriteRenderer>();
-            if (renderer)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    renderer.color = new Color32(255, 255, 255 , 100);
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
-                    renderer.color = new Color32(255, 255, 255 , 255);
-                    await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
-                }
-            }
+            await Flicking();
+            
+            DropItem();
+            
+            LeanPool.Despawn(gameObject);
+            AnimController.Idle();
+        }
 
+        void DropItem()
+        {
             var data = (EnemyData)Data;
             if (data.dropItems.Length > 0)
             {
@@ -131,9 +125,21 @@ namespace Game.Runtime
                     LeanPool.Spawn(dropItem, new Vector2(this.transform.position.x,-3f), Quaternion.identity);
                 }
             }
+        }
 
-            LeanPool.Despawn(gameObject);
-            AnimController.DoAnim(animIdle, State.IDLE);
+        async UniTask Flicking()
+        {
+            var rendererInChildren = GetComponentInChildren<SpriteRenderer>();
+            if (rendererInChildren)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    rendererInChildren.color = new Color32(255, 255, 255 , 100);
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+                    rendererInChildren.color = new Color32(255, 255, 255 , 255);
+                    await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+                }
+            }
         }
 
     }

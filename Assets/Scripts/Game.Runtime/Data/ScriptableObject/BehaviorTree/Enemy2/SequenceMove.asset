@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SequenceMove
   m_EditorClassIdentifier: 
   children:
-  - {fileID: 11400000, guid: 0c4820b97e2ae5e41bc140893120bd9a, type: 2}
-  - {fileID: 11400000, guid: 21bbe93cce40fe946ac8a0215a1ca66c, type: 2}
+  - {fileID: 11400000, guid: ec46d5fdc5a508e4ab8b0efb406c2ae7, type: 2}
+  - {fileID: 11400000, guid: 7e6e453db52588549b3c6b2d153ac5c1, type: 2}

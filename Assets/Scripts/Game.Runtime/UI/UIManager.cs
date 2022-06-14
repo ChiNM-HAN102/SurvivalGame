@@ -17,23 +17,17 @@ namespace Game.Runtime
         [SerializeField] private GameObject startGamePanel;
         [SerializeField] private GameObject hurtPanel;
         [SerializeField] private GameObject startCountDown;
-
         [SerializeField] private Text startCountDownTxt;
-        
         [SerializeField] private Text currentKilledEnemyTxt;
         [SerializeField] private Text currentTimeCountTxt;
-
         [SerializeField] private Text highestKilledEnemyTxt;
         [SerializeField] private Text highestTimeCountTxt;
 
-        [SerializeField] private FloatingText floatTextPrefab;
+        [SerializeField] private InfoUIController[] heroUiPrefabs;
 
+        [SerializeField] private SkillButtonUI[] skillButtonUis;
 
-        [SerializeField] private InfoUIController[] heroUIPrefabs;
-
-        [SerializeField] private SkillButtonUI[] _skillButtonUis;
-
-        private CancellationTokenSource ctsCountDownChangeHero;
+        private CancellationTokenSource _ctsCountDownChangeHero;
         
         public static UIManager Instance { get; set; }
 
@@ -44,46 +38,46 @@ namespace Game.Runtime
 
         public void InitCharacters(HeroBase[] characterList)
         {
-            foreach (InfoUIController uiPrefab in this.heroUIPrefabs)
+            foreach (InfoUIController uiPrefab in this.heroUiPrefabs)
             {
                 uiPrefab.gameObject.SetActive(false);
             }
 
             for (int i = 0; i < characterList.Length; i++)
             {
-                this.heroUIPrefabs[i].InitData(characterList[i], i);
-                this.heroUIPrefabs[i].gameObject.SetActive(true);
+                this.heroUiPrefabs[i].InitData(characterList[i], i);
+                this.heroUiPrefabs[i].gameObject.SetActive(true);
             }
         }
 
         public void SetSelectedHero(int idx, int countTime)
         {
-            this.ctsCountDownChangeHero = new CancellationTokenSource();
-            for (int i = 0; i < this.heroUIPrefabs.Length; i++)
+            this._ctsCountDownChangeHero = new CancellationTokenSource();
+            for (int i = 0; i < this.heroUiPrefabs.Length; i++)
             {
                 if (i == idx)
                 {
-                    this.heroUIPrefabs[i].SetSelected(true);
+                    this.heroUiPrefabs[i].SetSelected(true);
                 }
                 else
                 {
-                    this.heroUIPrefabs[i].SetSelected(false);   
-                    this.heroUIPrefabs[i].SetCountDown(countTime, this.ctsCountDownChangeHero.Token);
+                    this.heroUiPrefabs[i].SetSelected(false);   
+                    this.heroUiPrefabs[i].SetCountDown(countTime, this._ctsCountDownChangeHero.Token);
                 }
             }
 
-            foreach (SkillButtonUI skillButtonUi in this._skillButtonUis)
+            foreach (SkillButtonUI skillButtonUi in this.skillButtonUis)
             {
                 skillButtonUi.InitData();
             }
         }
 
-        private bool isHurting = false;
+        private bool _isHurting = false;
         public void PresentHurtAnimation()
         {
-            if (!this.isHurting)
+            if (!this._isHurting)
             {
-                this.isHurting = true;
+                this._isHurting = true;
                 HurtPresent().Forget();
             }
         }
@@ -111,7 +105,7 @@ namespace Game.Runtime
             this.hurtPanel.SetActive(false);
             this.startCountDown.SetActive(true);
             
-            CountDown(time, callBack);
+            CountDown(time, callBack).Forget();
         }
 
         async UniTaskVoid CountDown(int time, Action callback)
@@ -154,12 +148,12 @@ namespace Game.Runtime
                 await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
             }
 
-            this.isHurting = false;
+            this._isHurting = false;
         }
 
         public void Clear()
         {
-            this.ctsCountDownChangeHero.Cancel();
+            this._ctsCountDownChangeHero.Cancel();
         }
 
         public void SetKillText(int number)
@@ -171,12 +165,6 @@ namespace Game.Runtime
         public void SetCountDown(int number)
         {
             this.currentTimeCountTxt.text = number + "s";
-        }
-
-        public void CreateFloatingText(string value, Color32 color, Vector3 position)
-        {
-           var floatingText = LeanPool.Spawn(this.floatTextPrefab, position, Quaternion.identity);
-            floatingText.Setup(value, color);
         }
     }
 }

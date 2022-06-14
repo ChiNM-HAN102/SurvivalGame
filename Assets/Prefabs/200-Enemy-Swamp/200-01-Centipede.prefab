@@ -145,6 +145,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2299832c354460b354542a99157e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &2126135609989435167 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6777631109866735113, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
+  m_PrefabInstance: {fileID: 4868240045804669206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2126135610470341350 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6777631110867211248, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}
@@ -167,7 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14764b8cb1ed40bea15471bd1ff195f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   debugState: 0
   animDie: Death
   animHurt: Hurt
@@ -187,6 +191,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 2454991000169065138}
+--- !u!114 &3099898258250316155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126135610470341351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e38b4ce0ee4c24be3fbed3deacac98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _owner: {fileID: 2454991000169065138}
+  _animator: {fileID: 2126135609989435167}
+  _animDie: Death
+  _animHurt: Hurt
+  _animIdle: Idle
+  _animMove: Walk
 --- !u!1001 &6394090900198864626
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,17 +16,14 @@ namespace Game.Runtime
             Instance = this;
         }
         
-        
-        private Dictionary<string, InventoryData> dictStatuses = new Dictionary<string, InventoryData>();
-
         public void ClearInventory()
         {
-            this.dictStatuses.Clear();
             foreach (Transform trans in this.container)
             {
                 LeanPool.Despawn(trans.gameObject);
             }
         }
+        
 
         public void AddInventory(string id, InventoryData data)
         {
@@ -38,24 +35,12 @@ namespace Game.Runtime
                 if (data.permanent)
                 {
                     currentHero.Stats.GetStat<Health>(RPGStatType.Health).Heal(data.value);
-                    UIManager.Instance.CreateFloatingText("+" + data.value, new Color32(0, 219, 4, 255),  
-                        new Vector2(currentHero.transform.position.x, currentHero.transform.position.y + 1.5f));
+                    Helper.Instance.DisplayHealthPlus(data.value, currentHero.transform.position);
                 }
             }
             else
             {
-                if (!this.dictStatuses.ContainsKey(id))
-                {
-                    this.dictStatuses.Add(id, data);
-                }
-                else
-                {
-                    this.dictStatuses[id] = data;
-                }
-
                 var allHeroes = GamePlayController.Instance.GetAllHero();
-
-                
                 
                 if (data.permanent)
                 {
@@ -66,18 +51,17 @@ namespace Game.Runtime
                 }
                 else
                 {
-                    var modifier = new RPGStatModifier(RPGModifierType.BaseAdd, data.value, null);
+                    var modifier = new RPGStatModifier(RPGModifierType.BaseAdd, data.value);
 
                     foreach (HeroBase hero in allHeroes)
                     {
                         hero.Stats.AddStatModifier(data.type, modifier);
                     }
                     
-                    UIManager.Instance.CreateFloatingText("+" + data.value, new Color32(101, 193, 219, 255),  
-                        new Vector2(currentHero.transform.position.x, currentHero.transform.position.y + 1.5f));
+                    Helper.Instance.DisplayInventoryPlus(data.value, currentHero.transform.position);
 
-                    var inventoryUI = LeanPool.Spawn(this.prefabUI, this.container);
-                    inventoryUI.InitData(data, () => {
+                    var inventoryUi = LeanPool.Spawn(this.prefabUI, this.container);
+                    inventoryUi.InitData(data, () => {
                         foreach (HeroBase hero in allHeroes)
                         {
                             hero.Stats.RemoveStatModifier(data.type, modifier);
