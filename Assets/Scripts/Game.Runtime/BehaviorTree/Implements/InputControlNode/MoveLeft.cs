@@ -16,8 +16,8 @@ namespace Game.Runtime
                     owner.Flip();
                 }
                 
-                var moveVector = new Vector2(-1, 0);
-                owner.transform.position = owner.transform.position + (Vector3)moveVector * (owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
+                var moveVector = new Vector3(-1, 0, 0);
+                owner.transform.position = owner.transform.position + moveVector * (owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * deltaTime);
                 owner.AnimController.Move();
                 CurrentNodeState = NodeState.Success;
 

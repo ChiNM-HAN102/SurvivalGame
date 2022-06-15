@@ -157,10 +157,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9f411eb38d4cb4803c69770ef64c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnNormalAttackTransform: {fileID: 2033832246548926946}
-  _spawnSkill1Transform: {fileID: 2033832246548926946}
-  _spawnSkill2Transform: {fileID: 2033832246548926946}
-  _spawnSkill3Transform: {fileID: 2033832246548926946}
+  spawnNormalAttackTransform:
+  - {fileID: 2033832246548926946}
+  spawnSkill1Transform:
+  - {fileID: 2033832246548926946}
+  spawnSkill2Transform:
+  - {fileID: 2033832246548926946}
+  spawnSkill3Transform: []
 --- !u!1 &8888496159151891180 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9211142617073987033, guid: 52e72ad17f9179f47a8387af59229410, type: 3}

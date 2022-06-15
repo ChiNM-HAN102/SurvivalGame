@@ -1,46 +1,47 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Game.Runtime
 {
     public class UnitBodyPositionController : MonoBehaviour
     {
-        [SerializeField] private Transform _spawnNormalAttackTransform;
-        [SerializeField] private Transform _spawnSkill1Transform;
-        [SerializeField] private Transform _spawnSkill2Transform;
-        [SerializeField] private Transform _spawnSkill3Transform;
+        [SerializeField] private Transform[] spawnNormalAttackTransform;
+        [SerializeField] private Transform[] spawnSkill1Transform;
+        [SerializeField] private Transform[] spawnSkill2Transform;
+        [SerializeField] private Transform[] spawnSkill3Transform;
 
-        public Vector2 GetSpawnPosition(SkillType type)
+        public Vector3[] GetSpawnPosition(SkillType type)
         {
             switch (type)
             {
                 case SkillType.Skill1:
-                    if (this._spawnSkill1Transform)
+                    if (this.spawnSkill1Transform.Length > 0)
                     {
-                        return this._spawnSkill1Transform.transform.position;
+                        return this.spawnNormalAttackTransform.Select(x => x.position).ToArray();
                     }
                     break;
                 case SkillType.NormalAttack:
-                    if (this._spawnNormalAttackTransform)
+                    if (this.spawnNormalAttackTransform.Length > 0)
                     {
-                        return this._spawnNormalAttackTransform.transform.position;
+                        return this.spawnNormalAttackTransform.Select(x => x.position).ToArray();
                     }
                     break;
                 case SkillType.Skill2:
-                    if (this._spawnSkill2Transform)
+                    if (this.spawnSkill2Transform.Length > 0)
                     {
-                        return this._spawnSkill2Transform.transform.position;
+                        return this.spawnSkill2Transform.Select(x => x.position).ToArray();
                     }
                     break;
                 case SkillType.Skill3:
-                    if (this._spawnSkill3Transform)
+                    if (this.spawnSkill3Transform.Length > 0)
                     {
-                        return this._spawnSkill3Transform.transform.position;
+                        return this.spawnSkill3Transform.Select(x => x.position).ToArray();
                     }
                     break;
                 
             }
             
-            return new Vector2(0,0);
+            return new []{Vector3.zero};
         }
 
     }

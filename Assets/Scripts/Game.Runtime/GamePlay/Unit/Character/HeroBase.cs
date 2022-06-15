@@ -22,10 +22,20 @@ namespace Game.Runtime
             this._cloneTree.SetUpTree(this);
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            Skills?.RegisterSkill();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Skills?.UnRegisterSkill();
+        }
+
         void InitSkill()
         {
-            this.Skills?.UnRegisterSkill();
-            
             var skillNormal = new Skill();
             skillNormal.InitData(this.data.attackSpeed);
             
@@ -42,7 +52,6 @@ namespace Game.Runtime
             };
             
             Skills?.Init(dict);
-            Skills?.RegisterSkill();
         }
         
         public virtual void SetInfo()

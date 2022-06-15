@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 200
   attack: 10
-  speed: 5
+  speed: 8
   attackSpeed: 1
   coolDownChangeHero: 20
   avatar: {fileID: 21300000, guid: 99750adc9ada1e44bba7c486d8cbdd8a, type: 3}
+  transformEffect: {fileID: 5359515901129693375, guid: 9963502531e2bcc478502c65de85de4a, type: 3}
   cooldownSkill1: 10
   cooldownSkill2: 10

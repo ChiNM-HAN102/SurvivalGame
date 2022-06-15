@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6415c1ef8c8e4d0fbb80ca7845ca47ec, type: 3}
+  m_Name: NormalRangeAttack
+  m_EditorClassIdentifier: 
+  attackName: Attack_3
+  bullet: {fileID: 6081594978799837321, guid: 15e05a46879249946b03f6a502de2986, type: 3}
+  forceX: 400
+  forceY: 400

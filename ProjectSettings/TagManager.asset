@@ -16,8 +16,8 @@ TagManager:
   - enemy_body
   - damage_box
   - inventory
-  - 
-  - 
+  - ground
+  - touch_ground_object
   - 
   - 
   - 

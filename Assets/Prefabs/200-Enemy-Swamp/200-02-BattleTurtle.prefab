@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4076627993087965037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4113609949465212377}
+  m_Layer: 0
+  m_Name: spawn_position_normal_attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4113609949465212377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4076627993087965037}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.88, y: 2.63, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1296809544623228095}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7380764227120922314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2467115433935831497}
+  m_Layer: 0
+  m_Name: spawn_position_normal_attack_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2467115433935831497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7380764227120922314}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 2.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1296809544623228095}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5357067384912573213
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -163,24 +225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 8652842269956131587}
---- !u!114 &8652842269956131587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1296809544623228094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14764b8cb1ed40bea15471bd1ff195f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugState: 0
-  animDie: Death
-  animHurt: Hurt
-  animIdle: Idle
-  data: {fileID: 11400000, guid: 25d0a83e7383f2f4e967995f94200a8a, type: 2}
-  tree: {fileID: 11400000, guid: 9183ca6b14eaecc44909162df11054d7, type: 2}
 --- !u!114 &6140752898417925864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +243,39 @@ MonoBehaviour:
   _animHurt: Hurt
   _animIdle: Idle
   _animMove: Walk
+--- !u!114 &8652842269956131587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296809544623228094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14764b8cb1ed40bea15471bd1ff195f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugState: 0
+  data: {fileID: 11400000, guid: 25d0a83e7383f2f4e967995f94200a8a, type: 2}
+  tree: {fileID: 11400000, guid: 9183ca6b14eaecc44909162df11054d7, type: 2}
+--- !u!114 &2091564131048219404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296809544623228094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9f411eb38d4cb4803c69770ef64c94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnNormalAttackTransform:
+  - {fileID: 4113609949465212377}
+  - {fileID: 2467115433935831497}
+  spawnSkill1Transform: []
+  spawnSkill2Transform: []
+  spawnSkill3Transform: []
 --- !u!4 &1296809544623228095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6777631110867211248, guid: d3b0eb33be76f974c8b5d3cdf4e4bab6, type: 3}

@@ -18,7 +18,9 @@ namespace Game.Runtime
             
             var targetPosition = this.Tree.Owner.Target.transform.position;
 
-            if (Vector2.Distance(targetPosition, this.Tree.Owner.transform.position) > meleeDetectValue)
+            if (Vector2.Distance(targetPosition, this.Tree.Owner.transform.position) > meleeDetectValue 
+                || (!this.Tree.Owner.GetFaceRight() && (targetPosition.x - this.Tree.Owner.transform.position.x) > 0)
+                || (this.Tree.Owner.GetFaceRight() && (targetPosition.x - this.Tree.Owner.transform.position.x) < 0))
             {
                 CurrentNodeState = NodeState.Failure;
                 return CurrentNodeState;

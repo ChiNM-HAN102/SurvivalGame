@@ -15,7 +15,7 @@ namespace Game.Runtime
             }
         }
 
-        protected void OnDisable()
+        protected virtual void OnDisable()
         {
             
             if (GlobalUpdateSystem.Instance != null)

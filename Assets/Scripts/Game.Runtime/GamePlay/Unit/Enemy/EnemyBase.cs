@@ -29,17 +29,26 @@ namespace Game.Runtime
 
             InitBehaviorTree();
         }
+        
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            Skills?.RegisterSkill();
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Skills?.UnRegisterSkill();
+        }
 
         void InitSkill()
         {
-            this.Skills?.UnRegisterSkill();
-            
             var skillNormal = new Skill();
             skillNormal.InitData(this.data.attackSpeed);
             var dict = new Dictionary<SkillType, Skill> {{SkillType.NormalAttack, skillNormal}};
             
             Skills?.Init(dict);
-            Skills?.RegisterSkill();
         }
 
         void InitBehaviorTree()

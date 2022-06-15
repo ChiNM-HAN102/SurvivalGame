@@ -16,4 +16,4 @@ MonoBehaviour:
   skillType: 2
   state: 6
   skillAnim: Attack_3
-  prefabBullet: {fileID: 3378334721232567569, guid: 4099337435f541d4bac67a971e02d761, type: 3}
+  prefabBullet: {fileID: 1433902598452439368, guid: 9af5705f027601b4d9fca2f20fee8a0f, type: 3}

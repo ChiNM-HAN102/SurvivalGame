@@ -142,10 +142,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9f411eb38d4cb4803c69770ef64c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnNormalAttackTransform: {fileID: 2554768345249844328}
-  _spawnSkill1Transform: {fileID: 2554768345249844328}
-  _spawnSkill2Transform: {fileID: 2554768345249844328}
-  _spawnSkill3Transform: {fileID: 2554768345249844328}
+  spawnNormalAttackTransform:
+  - {fileID: 2554768345249844328}
+  spawnSkill1Transform:
+  - {fileID: 2554768345249844328}
+  spawnSkill2Transform:
+  - {fileID: 2554768345249844328}
+  spawnSkill3Transform: []
 --- !u!114 &8908478113626515091
 MonoBehaviour:
   m_ObjectHideFlags: 0

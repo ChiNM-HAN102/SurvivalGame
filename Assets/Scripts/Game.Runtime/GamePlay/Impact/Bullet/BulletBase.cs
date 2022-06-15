@@ -117,7 +117,16 @@ namespace Game.Runtime
             if (this.canDamage || this.isAoe)
             {
                 this.canDamage = false;
-                Remove();
+                if (!this.isAoe)
+                {
+                    Remove();
+                    return this.data.Damage;
+                }
+                
+                if (this.prefabImpact != null)
+                {
+                    LeanPool.Spawn(this.prefabImpact, transform.position, Quaternion.identity);
+                }
                 return this.data.Damage;
             }
 

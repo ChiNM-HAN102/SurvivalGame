@@ -9,13 +9,8 @@ namespace Game.Runtime
     {
         [SerializeField] private Transform[] spawnEnemyList;
         [SerializeField] private SpawnData spawnData;
-        
+        [SerializeField] private bool isTest;
         private float _countDownSpawnEnemy = 0;
-
-        private void Awake()
-        {
-            
-        }
 
         public override void OnUpdate(float deltaTime)
         {
@@ -25,7 +20,7 @@ namespace Game.Runtime
             }
             else if (GamePlayController.Instance.State == GameState.RUNNING)
             {
-                if (!GamePlayController.Instance.IsTest)
+                if (!this.isTest)
                 {
                     if (this._countDownSpawnEnemy >= this.spawnData.timeCountDownSpawnEnemy)
                     {
@@ -57,9 +52,9 @@ namespace Game.Runtime
         
         void SpawnEnemy()
         {
-            var tranformIdx = Random.Range(0, this.spawnEnemyList.Length);
+            var transformIdx = Random.Range(0, this.spawnEnemyList.Length);
 
-            var randomTransform = this.spawnEnemyList[tranformIdx];
+            var randomTransform = this.spawnEnemyList[transformIdx];
 
             if (this.spawnData.enemyBases.Length > 0)
             {

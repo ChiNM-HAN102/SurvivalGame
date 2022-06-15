@@ -40,7 +40,7 @@ namespace Game.Runtime
 
         private void UpdateCoolDown(float value)
         {
-            this.countDownUI.fillAmount = value;
+            this.countDownUI.fillAmount = value < 0 ? 0 : value;
         }
     }
 }

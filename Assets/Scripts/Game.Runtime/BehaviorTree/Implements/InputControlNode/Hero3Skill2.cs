@@ -4,26 +4,82 @@ using UnityEngine;
 namespace Game.Runtime
 {
     [CreateAssetMenu(fileName = "Hero3Skill2", menuName = "BehaviorTree/Node/InputControl/Skill/Hero3Skill2")]
-    public class Hero3Skill2: SkillNode
+    public class Hero3Skill2: InputControlNode
     {
-        public GameObject prefabBullet;
+        public float timeToDash;
+        public string animDash;
+        public SkillType skillType;
+        public State state;
+        public int timeMultiplySpeed;
+
+        private float _currentTimeToFinishDash;
+        private Vector3 _directionDash;
+        private bool _startedSkill;
+        private Skill _skill;
         
-        protected override void TriggerAction()
+        protected override void Prepare()
         {
-            base.TriggerAction();
-            SpawnBullet();
+            if (Tree.Owner.UnitState.Current != this.state)
+            {
+                SetStarted(false);
+            }
         }
         
-        void SpawnBullet()
+        protected override void OnStart()
         {
-            var faceRight = this.Tree.Owner.GetFaceRight();
+            base.OnStart();
+            var owner = this.Tree.Owner;
+            if (owner.CurrentControlType == this.controlType)
+            {
+                this._skill = owner.Skills.GetSkill(this.skillType);
 
-            var positionList = this.Tree.Owner.GetComponent<UnitBodyPositionController>();
-            var spawnPosition = positionList ? positionList.GetSpawnPosition(this.skillType) : new Vector2(0, 0);
+                if (this._skill != null)
+                {
+                    this._skill.StartCoolDown();
+                    this._startedSkill = true;
+                    _currentTimeToFinishDash = 0;
+
+                    Tree.Owner.AnimController.DoAnim(this.animDash, this.state);
+                    if (Tree.Owner.GetFaceRight())
+                    {
+                        this._directionDash = new Vector3(1, 0, 0);
+                    }
+                    else
+                    {
+                        this._directionDash = new Vector3(-1, 0, 0);
+                    }
+                }
+                else
+                {
+                    this._startedSkill = false;
+                }
+            }
+            else
+            {
+                this._startedSkill = false;
+            }
+        }
+
+        protected override NodeState OnUpdate(float deltaTime)
+        {
+            if (!this._startedSkill)
+            {
+                return NodeState.Failure;
+            }
+
             
-            var bullet = LeanPool.Spawn(this.prefabBullet, spawnPosition, Quaternion.identity);
-            var bulletBase = bullet.GetComponent<BulletBase>();
-            bulletBase.InitBullet(new BulletData(2, faceRight ,20, this.Tree.Owner.Stats.GetStat<Damage>(RPGStatType.Damage).StatValue));
+            if (this._currentTimeToFinishDash >= this.timeToDash)
+            {
+                CurrentNodeState = NodeState.Success;
+                return NodeState.Success;
+            }
+
+            var transform = this.Tree.Owner.transform;
+            var speed = this.Tree.Owner.Stats.GetStat<MoveSpeed>(RPGStatType.MoveSpeed).StatValue * timeMultiplySpeed;
+            transform.position = transform.position + this._directionDash * (deltaTime * speed);
+            _currentTimeToFinishDash += deltaTime;
+            CurrentNodeState = NodeState.Running;
+            return CurrentNodeState;
         }
     }
 }

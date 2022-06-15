@@ -4,11 +4,10 @@
     {
         public SkillType skillType;
         public State state;
-
-        protected Skill skill;
-
         public string skillAnim;
         
+        protected Skill skill;
+
         protected bool successTrigger;
 
         protected bool startedSkill;

@@ -22,7 +22,6 @@ namespace Game.Runtime
     public class GamePlayController : MonoBehaviour
     {
         [SerializeField] private GamePlayData data;
-        [SerializeField] private bool isTest;
 
         private int _enemyLevel;
 
@@ -44,7 +43,6 @@ namespace Game.Runtime
         
         private readonly List<HeroBase> _listHeroes = new List<HeroBase>();
         public GameState State { get => this._state; }
-        public bool IsTest { get => this.isTest;  }
 
         public static GamePlayController Instance { get; private set; }
 
@@ -75,7 +73,6 @@ namespace Game.Runtime
 
         public void StartGame()
         {
-            SoundController.Instance.PlayStartSound();
             this._countTimeSurvival = 0;
             UIManager.Instance.StartGame(3, CallBackStartGame);
         }
@@ -200,14 +197,18 @@ namespace Game.Runtime
             var oldPosition = oldSelectedHero.transform.position;
             var faceRight = oldSelectedHero.GetFaceRight();
             this._selectedHeroIdx = idx;
+
+            var heroData = (HeroData)this._listHeroes[this._selectedHeroIdx].Data;
             
-            UIManager.Instance.SetSelectedHero(this._selectedHeroIdx, ((HeroData)this._listHeroes[this._selectedHeroIdx].Data).coolDownChangeHero);
+            UIManager.Instance.SetSelectedHero(this._selectedHeroIdx, heroData.coolDownChangeHero);
             
             for (int i = 0; i < this._listHeroes.Count; i++)
             {
                 if (idx == i)
                 {
                     this._listHeroes[i].gameObject.SetActive(true);
+                    SoundController.Instance.PlayStartSound();
+                    LeanPool.Spawn(heroData.transformEffect, oldPosition, Quaternion.identity);
                     this._listHeroes[i].transform.position = oldPosition;
                     if (faceRight != this._listHeroes[i].GetFaceRight())
                     {
