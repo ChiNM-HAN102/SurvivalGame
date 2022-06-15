@@ -8,10 +8,16 @@ namespace Game.Runtime.Impact
     {
         [SerializeField] private GameObject prefabImpact;
 
-        [SerializeField] EnemyBase owner;
+        [SerializeField] Unit owner;
 
         [SerializeField] private Collider2D _collider2D;
 
+
+        public void Init(Unit creator)
+        {
+            this.owner = creator;
+        }
+        
 
         private void OnEnable()
         {
