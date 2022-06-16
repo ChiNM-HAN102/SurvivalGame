@@ -10,7 +10,8 @@
         "Unity.2D.Animation.Runtime",
         "UniTask",
         "LeanCommon",
-        "LeanPool"
+        "LeanPool",
+        "BehaviorDesigner"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
