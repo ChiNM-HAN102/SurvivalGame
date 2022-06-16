@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AttackInventory
   m_EditorClassIdentifier: 
   type: 2
-  value: 20
+  value: 10
   lastTime: 90
   permanent: 0
   icon: {fileID: -1235597215, guid: 6bc95c69506f3b9489bf88c9f69ff20c, type: 3}

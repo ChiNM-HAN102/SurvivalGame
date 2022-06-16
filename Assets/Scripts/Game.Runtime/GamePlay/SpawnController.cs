@@ -61,6 +61,7 @@ namespace Game.Runtime
                 var enemyIdx = Random.Range(0, spawnData.enemyBases.Length);
                 var enemy = LeanPool.Spawn(this.spawnData.enemyBases[enemyIdx], randomTransform.position, Quaternion.identity);
                 enemy.GetComponent<EnemyBase>().SetInfo(GamePlayController.Instance.EnemyLevel);
+                GamePlayController.Instance.EnemyLevel += 1;
             }
         }
         

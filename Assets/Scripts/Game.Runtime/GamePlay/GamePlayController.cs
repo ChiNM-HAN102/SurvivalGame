@@ -126,10 +126,10 @@ namespace Game.Runtime
             }
             
             PlayerPrefs.SetInt(Constants.DATA_CURRENT_KILL_ENEMY, this._totalKillEnemy);
-            var highestScoreKill = PlayerPrefs.GetInt(Constants.DATA_CURRENT_KILL_ENEMY);
+            var highestScoreKill = PlayerPrefs.GetInt(Constants.DATA_HIGHEST_KILL_ENEMY);
             if (this._totalKillEnemy > highestScoreKill)
             {
-                PlayerPrefs.SetInt(Constants.DATA_CURRENT_KILL_ENEMY, this._totalKillEnemy);
+                PlayerPrefs.SetInt(Constants.DATA_HIGHEST_KILL_ENEMY, this._totalKillEnemy);
             }
             
             PlayerPrefs.Save();

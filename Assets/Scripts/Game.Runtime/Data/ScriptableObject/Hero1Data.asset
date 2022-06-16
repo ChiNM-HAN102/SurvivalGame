@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Hero1Data
   m_EditorClassIdentifier: 
   hp: 200
-  attack: 40
+  attack: 100
   speed: 8
   attackSpeed: 1
   coolDownChangeHero: 5
   avatar: {fileID: 21300000, guid: ef2c91129ac99a6459f3b790e9aa532d, type: 3}
   transformEffect: {fileID: 5359515901129693375, guid: 9963502531e2bcc478502c65de85de4a, type: 3}
   cooldownSkill1: 5
-  cooldownSkill2: 5
+  cooldownSkill2: 15

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Game.Runtime
@@ -9,6 +10,8 @@ namespace Game.Runtime
         [SerializeField] private BehaviorTree tree;
 
         private BehaviorTree _cloneTree;
+
+        private bool _forceControl = false;
 
         public override UnitData Data { get => this.data;}
 
@@ -58,6 +61,7 @@ namespace Game.Runtime
         {
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = true;
+            this._forceControl = false;
             this.AnimController.Idle();
             Stats = new HeroStatsCollection(this, data);
         }
@@ -88,13 +92,17 @@ namespace Game.Runtime
             }
 
             var state = this._cloneTree.DoUpdate(deltaTime);
-            
-            CurrentControlType = InputControlType.NONE;
+
+            if (!this._forceControl)
+            {
+                CurrentControlType = InputControlType.NONE;
+            }
         }
 
-        public void SetCurrentControlType(InputControlType inputControlType)
+        public void SetCurrentControlType(InputControlType inputControlType, bool forceControl = false)
         {
             CurrentControlType = inputControlType;
+            this._forceControl = forceControl;
         }
 
 
