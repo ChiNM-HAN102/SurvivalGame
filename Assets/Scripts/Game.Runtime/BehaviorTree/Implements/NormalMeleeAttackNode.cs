@@ -14,7 +14,7 @@ namespace Game.Runtime
 
         private Skill _skill;
 
-         protected override void Prepare()
+        protected override void Prepare()
         {
             if (Tree.Owner.UnitState.Current != State.ATTACK)
             {

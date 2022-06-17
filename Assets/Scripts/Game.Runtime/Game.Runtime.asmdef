@@ -11,7 +11,7 @@
         "UniTask",
         "LeanCommon",
         "LeanPool",
-        "BehaviorDesigner"
+        "NewAssembly"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

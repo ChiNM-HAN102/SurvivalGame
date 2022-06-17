@@ -16,6 +16,8 @@ namespace Game.Runtime
 
         private BehaviorTree _cloneTree;
 
+        private BehaviorDesigner.Runtime.BehaviorTree _designerTree;
+
         protected HealthBarController _healthBarController;
 
         public override UnitData Data { get => this.data;}
@@ -65,7 +67,11 @@ namespace Game.Runtime
             this._healthBarController.transform.localScale = new Vector3(1,1,1);
             this.transform.localScale = new Vector3(1,1,1);
             this.faceRight = false;
-
+            _designerTree = GetComponent<BehaviorDesigner.Runtime.BehaviorTree>();
+            if (this._designerTree)
+            {
+                _designerTree.EnableBehavior();
+            }
             SoundController.Instance.PlayCallEnemy();
         }
         
@@ -73,7 +79,12 @@ namespace Game.Runtime
         public override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
-            this._cloneTree.DoUpdate(deltaTime);
+
+            if (this._designerTree == null)
+            {
+                this._cloneTree.DoUpdate(deltaTime);
+            }
+
         }
         
         
@@ -96,6 +107,11 @@ namespace Game.Runtime
             
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0)
             {
+                if (this._designerTree)
+                {
+                    this._designerTree.DisableBehavior();
+                }
+          
                 AnimController.Die(() => {
                     Die().Forget();
                 });
@@ -104,8 +120,16 @@ namespace Game.Runtime
             }
             else
             {
+                if (this._designerTree)
+                {
+                    this._designerTree.DisableBehavior();
+                }
                 AnimController.Hurt(() => {
                     AnimController.Idle();
+                    if (this._designerTree)
+                    {
+                        this._designerTree.EnableBehavior();
+                    }
                 });
             }
         }

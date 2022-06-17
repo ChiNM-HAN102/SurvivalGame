@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Hero1Data
   m_EditorClassIdentifier: 
   hp: 200
-  attack: 100
+  attack: 70
   speed: 8
   attackSpeed: 1
   coolDownChangeHero: 5
