@@ -107,10 +107,10 @@ namespace Game.Runtime
             
             if (Stats.GetStat<Health>(RPGStatType.Health).CurrentValue <= 0)
             {
-                if (this._designerTree)
-                {
-                    this._designerTree.DisableBehavior();
-                }
+                // if (this._designerTree)
+                // {
+                //     this._designerTree.DisableBehavior();
+                // }
           
                 AnimController.Die(() => {
                     Die().Forget();
@@ -120,16 +120,16 @@ namespace Game.Runtime
             }
             else
             {
-                if (this._designerTree)
-                {
-                    this._designerTree.DisableBehavior();
-                }
+                // if (this._designerTree)
+                // {
+                //     this._designerTree.DisableBehavior();
+                // }
                 AnimController.Hurt(() => {
                     AnimController.Idle();
-                    if (this._designerTree)
-                    {
-                        this._designerTree.EnableBehavior();
-                    }
+                    // if (this._designerTree)
+                    // {
+                    //     this._designerTree.EnableBehavior();
+                    // }
                 });
             }
         }

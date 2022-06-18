@@ -1749,7 +1749,7 @@ MonoBehaviour:
   - {fileID: 1484280253}
   - {fileID: 1172816717}
   spawnData: {fileID: 11400000, guid: f2b90d427fb4994449731d2ad3daccb0, type: 2}
-  isTest: 0
+  isTest: 1
 --- !u!1 &384425126
 GameObject:
   m_ObjectHideFlags: 0
